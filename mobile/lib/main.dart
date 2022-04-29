@@ -12,14 +12,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return MaterialApp(
-      title: 'Welcome to Flutter',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Welcome to Flutter'),
-        ),
-        body: const Center(
-          child: RandomWords(),
-        ),
+      home: (
+        Center(
+          child: Container(
+            color:  const Color.fromRGBO(2, 2, 39, 1)
+          ),
+        )
       ),
     );
   }
@@ -35,7 +33,7 @@ class RandomWords extends StatefulWidget {
 class _RandomWordsState extends State<RandomWords> {
   final _suggestions = <WordPair>[];
   final _biggerFont = const TextStyle(fontSize: 18.0);
-  //okokokqzdioj
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
