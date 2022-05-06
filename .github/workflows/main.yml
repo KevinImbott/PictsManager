@@ -87,7 +87,7 @@ jobs:
 #            echo "running the docker image"
 #            echo "Testing the nodejs app endpoints"
 #            echo ${{ steps.docker_build.outputs.digest }}
-            
+        
   deploy:
     runs-on: ubuntu-latest   
     needs: [push_to_docker_hub]
