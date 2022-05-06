@@ -5,6 +5,6 @@ RUBY
 
 rails --version
 7.0.2.3
-bundle install
-rake db:migrate
-rails server
+
+TO START THE API RUN:
+sh ./start.sh
