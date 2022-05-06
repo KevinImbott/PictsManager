@@ -15,4 +15,7 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           password: ${{ secrets.SERVER_PASSWORD }}
           passphrase: ${{ secrets.PASSPHRASE }}
-          script: cd ${{ secrets.PROJECT_PATH }} && git pull
+          script: |
+            whoami
+            ls -al
+          #script: cd ${{ secrets.PROJECT_PATH }} && git pull
