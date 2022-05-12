@@ -7,8 +7,8 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
 
-u1 = User.create(first_name: "test", last_name: "test", email: "test@test.com", password: "password")
-u2 = User.create(first_name: "test2", last_name: "test2", email: "test2@test2.com", password: "password")
+u1 = User.create(pseudo: "test", email: "test@test.com", password: "password")
+u2 = User.create(pseudo: "test2", email: "test2@test2.com", password: "password")
 p1 = Picture.create(name: "First Picture", description: "This is my first Picture #seed")
 p2 = Picture.create(name: "Second Picture", description: "This is my second Picture #seed")
 a1 = Album.create(name: "First Album", users: [u1, u2], pictures: [p1, p2])
