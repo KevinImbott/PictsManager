@@ -1,4 +1,6 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile/screens/ChoosePicture/ScreenChoosePicture.dart';
 
 class Navbar extends StatefulWidget {
   const Navbar({Key? key}) : super(key: key);
@@ -10,12 +12,16 @@ class Navbar extends StatefulWidget {
 class _NavbarState extends State<Navbar> {
   int _selectedIndex = 0;
 
-  void _onItemTapped(int index) {
+  void _onItemTapped(int index) async {
+    final cameras = await availableCameras();
+    final camera = cameras[1];
     setState(() {
       _selectedIndex = index;
     });
-    if (_selectedIndex == 2) {
-      
+    if (_selectedIndex == 1) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ScreenChoosePicture(camera: camera)));
     }
   }
 
@@ -37,31 +43,3 @@ class _NavbarState extends State<Navbar> {
     
   }
 }
-
-
-// return Container(
-//       body: Center(
-//         child: _widgetOptions.elementAt(_selectedIndex),
-//       ),
-//       bottomNavigationBar: BottomNavigationBar(
-//         items: const <BottomNavigationBarItem>[
-//           BottomNavigationBarItem(
-//             icon: Icon(Icons.home),
-//             label: 'Home',
-//           ),
-//           BottomNavigationBarItem(
-//             icon: Icon(Icons.business),
-//             label: 'Business',
-//           ),
-//           BottomNavigationBarItem(
-//             icon: Icon(Icons.school),
-//             label: 'School',
-//           ),
-//         ],
-//         currentIndex: _selectedIndex,
-//         selectedItemColor: Colors.amber[800],
-//         onTap: _onItemTapped,
-//       ),
-//     );
-//   }
-// }
