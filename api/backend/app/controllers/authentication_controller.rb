@@ -1,6 +1,6 @@
 class AuthenticationController < ApplicationController
   def signup
-    user = User.new(email: params[:email], password: params[:password])
+    user = User.new(permitted_params)
     # if user is saved
     if user.save
       # we encrypt user info using the pre-define methods in application controller
@@ -24,5 +24,11 @@ class AuthenticationController < ApplicationController
     else
       render json: { message: "Invalid credentials" }
     end
+  end
+
+  private
+
+  def permitted_params
+    params.permit([:email, :pseudo, :password])
   end
 end
