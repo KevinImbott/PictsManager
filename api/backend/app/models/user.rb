@@ -12,5 +12,4 @@ class User < ActiveRecord::Base
 
   scope :by_recently_created, -> { order(created_at: :desc).limit(20) }
   scope :by_earliest_created, -> { order(created_at: :asc).limit(20) }
-  # Ex:- scope :active, -> {where(:active => true)}
 end
