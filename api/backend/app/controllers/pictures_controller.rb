@@ -4,6 +4,15 @@ class PicturesController < ApplicationController
     render json: @pictures, status: :ok
   end
 
+  def show
+    @picture = Picture.find_by(id: params[:id])
+    if @picture&.owner == @current_user
+        render json: @picture, status: :ok
+    else
+      render json: {message: "Unauthorized"}, status: :unauthorized
+    end
+  end
+
   def create
     @picture = Picture.new(permitted_params)
     if @picture.save
