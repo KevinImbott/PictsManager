@@ -7,18 +7,22 @@ class PicturesController < ApplicationController
   def show
     @picture = Picture.find_by(id: params[:id])
     if @picture&.owner == @current_user
-        render json: @picture, status: :ok
+      render json: @picture, status: :ok
     else
-      render json: {message: "Unauthorized"}, status: :unauthorized
+      render json: {message: 'Unauthorized'}, status: :unauthorized
     end
   end
 
   def create
     @picture = Picture.new(permitted_params)
-    if @picture.save
+    @album = Album.new(name: params['name'], pictures: [@picture])
+    if @picture.save && @album.save
+      @album.users = [@current_user]
+      @album.save
+      @picture.img.attach(params['picture'])
       render json: @picture, status: :created
     else
-      render json: { errors: @picture.errors.full_messages },
+      render json: { errors: @album.errors.full_messages },
             status: :unprocessable_entity
     end
   end
@@ -31,7 +35,7 @@ class PicturesController < ApplicationController
                 status: :unprocessable_entity
       end
     else
-      render json: {message: "Unauthorized"}, status: :unauthorized
+      render json: {message: 'Unauthorized'}, status: :unauthorized
     end
   end
 
@@ -43,7 +47,7 @@ class PicturesController < ApplicationController
                 status: :unprocessable_entity
       end
     else
-      render json: {message: "Unauthorized"}, status: :unauthorized
+      render json: {message: 'Unauthorized'}, status: :unauthorized
     end
   end
 
