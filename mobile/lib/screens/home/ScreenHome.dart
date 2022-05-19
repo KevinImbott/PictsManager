@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
-import 'component/ImportButton.dart';
+import '../ChoosePicture/component/ImportButton.dart';
 import 'component/Navbar.dart';
 
 class ScreenHome extends StatefulWidget {
