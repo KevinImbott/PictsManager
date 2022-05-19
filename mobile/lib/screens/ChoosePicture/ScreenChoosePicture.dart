@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:mobile/screens/ChoosePicture/component/Camera.dart';
 
 class ScreenChoosePicture extends StatefulWidget {
-  const ScreenChoosePicture({ Key? key, required this.camera }) : super(key: key);
+  const ScreenChoosePicture({ Key? key, required this.cameras }) : super(key: key);
   
-  final CameraDescription camera;
+  final List<CameraDescription> cameras;
 
   @override
   State<ScreenChoosePicture> createState() => _ScreenChoosePicture();
@@ -22,12 +22,13 @@ class _ScreenChoosePicture extends State<ScreenChoosePicture> {
               primary: const Color.fromRGBO(226, 101, 47, 1)
               ),
             onPressed: () {
-              print(widget.camera);
+              Navigator.push(context, 
+              MaterialPageRoute(builder: (context) => TakePictureScreen(cameras: widget.cameras)));
             },
             child: const Text('Prendre une photo',
             style: TextStyle(color: Color.fromRGBO(236, 236, 254, 1) ))
           ),
-          HandleCamera(camera: widget.camera)
+          //HandleCamera(camera: widget.camera)
         ],)
         
         

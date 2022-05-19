@@ -14,14 +14,13 @@ class _NavbarState extends State<Navbar> {
 
   void _onItemTapped(int index) async {
     final cameras = await availableCameras();
-    final camera = cameras[1];
     setState(() {
       _selectedIndex = index;
     });
     if (_selectedIndex == 1) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => ScreenChoosePicture(camera: camera)));
+        MaterialPageRoute(builder: (context) => ScreenChoosePicture(cameras: cameras)));
     }
   }
 
