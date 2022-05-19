@@ -16,6 +16,8 @@ class AlbumsController < ApplicationController
   def create
     @album = Album.new(permitted_params)
     if @album.save
+      @album.users = [@current_user]
+      @album.save
       render json: @album, status: :created
     else
       render json: { errors: @album.errors.full_messages },
