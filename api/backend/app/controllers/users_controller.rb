@@ -1,8 +1,12 @@
 class UsersController < ApplicationController
-
   def index
-    @users = User.all
-    render json: @users, status: :ok
+    @users = User.by_recently_created
+    render json: @users, status: :ok, only: [:pseudo, :email, :created_at]
+  end
+
+  def show
+    @user = User.includes(:pictures, :albums).find_by(id: params[:id])
+    render json: @user, status: :ok, only: [:pseudo, :email, :created_at]
   end
 
   def update
