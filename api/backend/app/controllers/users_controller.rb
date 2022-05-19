@@ -5,6 +5,11 @@ class UsersController < ApplicationController
     render json: @users, status: :ok, only: [:pseudo, :email, :created_at]
   end
 
+  def show
+    @user = User.includes(:pictures, :albums).find_by(id: params[:id])
+    render json: @user, status: :ok, only: [:pseudo, :email, :created_at]
+  end
+
   def update
     unless @current_user.update(permitted_params)
       render json: { errors: @current_user.errors.full_messages },
