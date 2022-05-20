@@ -15,14 +15,13 @@ class PicturesController < ApplicationController
 
   def create
     @picture = Picture.new(permitted_params)
-    @album = Album.new(name: params['name'], pictures: [@picture])
-    if @picture.save && @album.save
-      @album.users = [@current_user]
-      @album.save
+    if @picture.save
+      @picture.users = [@current_user]
+      @picture.save
       @picture.img.attach(params['picture'])
       render json: @picture, status: :created
     else
-      render json: { errors: @album.errors.full_messages },
+      render json: { errors: @picture.errors.full_messages },
             status: :unprocessable_entity
     end
   end
