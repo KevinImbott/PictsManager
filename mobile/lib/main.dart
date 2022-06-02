@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:mobile/screens/home/login.dart';
 import 'screens/home/register.dart';
 
 void main() {
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
 
     return const MaterialApp(
       title: 'Welcome to Flutter',
-      home: MyHomePage()
+      home: MyLoginPage()
     );
   }
 }
