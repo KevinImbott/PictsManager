@@ -1,6 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile/screens/ChoosePicture/ScreenChoosePicture.dart';
+import 'package:mobile/screens/ScreenChoosePicture.dart';
 
 class Navbar extends StatefulWidget {
   const Navbar({Key? key}) : super(key: key);

@@ -2,10 +2,10 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mobile/screens/ChoosePicture/component/Camera.dart';
+import 'package:mobile/components/Camera.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../home/component/Navbar.dart';
+import '../components/Navbar.dart';
 
 class ScreenChoosePicture extends StatefulWidget {
   const ScreenChoosePicture({ Key? key, required this.cameras }) : super(key: key);
