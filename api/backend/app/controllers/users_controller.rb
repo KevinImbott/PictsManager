@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UsersController < ApplicationController
   def index
     @users = User.by_recently_created
@@ -10,10 +12,9 @@ class UsersController < ApplicationController
   end
 
   def update
-    unless @current_user.update(permitted_params)
-      render json: { errors: @current_user.errors.full_messages },
-              status: :unprocessable_entity
-    end
+    return if @current_user.update(permitted_params)
+
+    render json: { errors: @current_user.errors.full_messages }, status: :unprocessable_entity
   end
 
   def destroy
@@ -21,7 +22,7 @@ class UsersController < ApplicationController
   end
 
   def profile
-    render json: @current_user, status: :ok
+    render json: @current_user
   end
 
   private

@@ -1,86 +1,80 @@
+# frozen_string_literal: true
+
 class PicturesController < ApplicationController
   def index
-    @pictures = @current_user.pictures
-    render json: @pictures, status: :ok
+    pictures = @current_user.pictures
+    render json: pictures
   end
 
   def show
-    @picture = Picture.find_by(id: params[:id])
-    if @picture&.owner == @current_user
-      render json: @picture, :include => [:users, :albums], status: :ok
+    if picture&.owner == @current_user
+      render json: picture
     else
-      render json: {message: 'Unauthorized'}, status: :unauthorized
+      render json: { message: 'Unauthorized' }, status: :unauthorized
     end
   end
 
   def create
-    @picture = Picture.new(permitted_params)
-    if @picture.save
-      @picture.users = [@current_user]
-      @picture.save
-      @picture.img.attach(params['picture'])
-      render json: @picture, status: :created
+    new_picture = Picture.new(permitted_params)
+    if new_picture.save
+      new_picture.users = [@current_user]
+      new_picture.img.attach(params['picture'])
+      render json: new_picture, status: :created
     else
-      render json: { errors: @picture.errors.full_messages },
-            status: :unprocessable_entity
+      render json: { errors: new_picture.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   def update
-    @picture = Picture.find_by(id: params[:id])
-    if @picture&.owner == @current_user
-      unless @picture&.update(permitted_params)
-        render json: { errors: @picture&.errors&.full_messages },
-                status: :unprocessable_entity
+    if picture&.owner == @current_user
+      unless picture&.update(permitted_params)
+        render json: { errors: picture&.errors&.full_messages }, status: :unprocessable_entity
       end
     else
-      render json: {message: 'Unauthorized'}, status: :unauthorized
+      render json: { message: 'Unauthorized' }, status: :unauthorized
     end
   end
 
   def add_or_delete_user
-    @picture = Picture.find_by(id: params[:id])
-    if @picture&.owner == @current_user
-      @user = User.find_by(id: params[:user_id])
-      if user_exist_in_picture?(@picture, @user)
-        @picture.users.delete(@user)
+    if picture&.owner == @current_user
+      if user_exist_in_picture?
+        picture.users.delete(user)
+        picture.save
+        render json: { message: 'User Deleted' }
       else
-        @picture.users.push(@user)
+        picture.users.push(user)
+        picture.save
+        render json: { message: 'User Added' }
       end
-      @picture.save
-      render json: {message: "User Changed"}, status: :ok
     else
-      render json: {message: "Unauthorized"}, status: :unauthorized
+      render json: { message: 'Unauthorized' }, status: :unauthorized
     end
   end
 
+  ## ADD POLICY TO CHECK IF I CAN ADD A PICTURE ONLY ON MY OWNED ALBUM
   def add_or_delete_album
-    @picture = Picture.find_by(id: params[:id])
-    if @picture&.owner == @current_user
-      @album = Album.find_by(id: params[:album_id])
-      if picture_exist_in_album?(@picture, @album)
-        @picture.albums.delete(@album)
-        @picture.save
-        render json: {message: "Picture Deleted"}, status: :ok
+    if picture&.owner == @current_user
+      if picture_exist_in_album?
+        picture.albums.delete(album)
+        picture.save
+        render json: { message: 'Picture Deleted' }
       else
-        @picture.albums.push(@album)
-        @picture.save
-        render json: {message: "Picture Added"}, status: :ok
+        picture.albums.push(album)
+        picture.save
+        render json: { message: 'Picture Added' }
       end
     else
-      render json: {message: "Unauthorized"}, status: :unauthorized
+      render json: { message: 'Unauthorized' }, status: :unauthorized
     end
   end
 
   def destroy
-    @picture = Picture.find_by(id: params[:id])
-    if @picture&.owner == @current_user
-      unless @picture&.destroy
-        render json: { errors: @picture&.errors&.full_messages },
-                status: :unprocessable_entity
+    if picture&.owner == @current_user
+      unless picture&.destroy
+        render json: { errors: picture&.errors&.full_messages }, status: :unprocessable_entity
       end
     else
-      render json: {message: 'Unauthorized'}, status: :unauthorized
+      render json: { message: 'Unauthorized' }, status: :unauthorized
     end
   end
 
@@ -90,13 +84,23 @@ class PicturesController < ApplicationController
     params.permit([:name, :description, :url])
   end
 
-  def user_exist_in_picture?(picture, user)
-    @picture = Picture.find_by(id: params[:id])
-    @picture.users.find_by(id: params[:user_id])
+  def user_exist_in_picture?
+    picture.users.find_by(id: user.id)
   end
 
-  def picture_exist_in_album?(picture, album)
-    @picture = Picture.find_by(id: params[:id])
-    @picture.albums.find_by(id: params[:album_id])
+  def picture_exist_in_album?
+    picture.albums.find_by(id: album.id)
+  end
+
+  def picture
+    picture ||= Picture.find_by(id: params[:id])
+  end
+
+  def album
+    album ||= Album.find_by(id: params[:album_id])
+  end
+
+  def user
+    user ||= User.find_by(id: params[:user_id])
   end
 end

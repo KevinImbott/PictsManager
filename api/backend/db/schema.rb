@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_20_085439) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_03_142505) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -44,12 +44,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_20_085439) do
 
   create_table "albums", force: :cascade do |t|
     t.string "name"
-    t.bigint "user_id"
-    t.bigint "picture_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["picture_id"], name: "index_albums_on_picture_id"
-    t.index ["user_id"], name: "index_albums_on_user_id"
   end
 
   create_table "albums_pictures", force: :cascade do |t|
@@ -68,7 +64,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_20_085439) do
 
   create_table "pictures", force: :cascade do |t|
     t.string "name"
-    t.string "url"
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
