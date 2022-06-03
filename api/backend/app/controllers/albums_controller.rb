@@ -1,67 +1,63 @@
+# frozen_string_literal: true
+
 class AlbumsController < ApplicationController
   def index
-    @albums = @current_user.albums
-    render json: @albums
+    albums = @current_user.albums
+    render json: albums
   end
 
   def show
-    @album = Album.find_by(id: params[:id])
-    if @album&.owner == @current_user
-        render json: @album, :include => :users, status: :ok
+    if album&.owner == @current_user
+      render json: album
     else
-      render json: {message: "Unauthorized"}, status: :unauthorized
+      render json: { message: 'Unauthorized' }, status: :unauthorized
     end
   end
 
   def create
-    @album = Album.new(permitted_params)
-    if @album.save
-      @album.users = [@current_user]
-      @album.save
-      render json: @album, status: :created
+    new_album = Album.new(permitted_params)
+    if new_album.save
+      new_album.users = [@current_user]
+      new_album.save
+      render json: new_album, status: :created
     else
-      render json: { errors: @album.errors.full_messages },
-            status: :unprocessable_entity
+      render json: { errors: new_album.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   def add_or_delete_user
-    @album = Album.find_by(id: params[:id])
-    if @album&.owner == @current_user
-      @user = User.find_by(id: params[:user_id])
-      if user_exist_in_album?(@album, @user)
-        @album.users.delete(@user)
+    if album&.owner == @current_user
+      if user_exist_in_album?
+        album.users.delete(user)
+        album.save
+        render json: { message: 'User Deleted' }
       else
-        @album.users.push(@user)
+        album.users.push(user)
+        album.save
+        render json: { message: 'User Added' }
       end
-      @album.save
-      render json: {message: "User Changed"}, status: :ok
     else
-      render json: {message: "Unauthorized"}, status: :unauthorized
+      render json: { message: 'Unauthorized' }, status: :unauthorized
     end
   end
 
   def update
-    @album = Album.find_by(id: params[:id])
-    if @album&.owner == @current_user
-      unless @album&.update(permitted_params)
-        render json: { errors: @album&.errors&.full_messages },
-                status: :unprocessable_entity
+    if album&.owner == @current_user
+      unless album&.update(permitted_params)
+        render json: { errors: album&.errors&.full_messages }, status: :unprocessable_entity
       end
     else
-      render json: {message: "Unauthorized"}, status: :unauthorized
+      render json: { message: 'Unauthorized' }, status: :unauthorized
     end
   end
 
   def destroy
-    @album = Album.find_by(id: params[:id])
-    if @album&.owner == @current_user
-      unless @album&.destroy
-        render json: { errors: @album&.errors&.full_messages },
-                status: :unprocessable_entity
+    if album&.owner == @current_user
+      unless album&.destroy
+        render json: { errors: album&.errors&.full_messages }, status: :unprocessable_entity
       end
-    else
-      render json: {message: "Unauthorized"}, status: :unauthorized
+    else:ù
+      render json: { message: 'Unauthorized' }, status: :unauthorized
     end
   end
 
@@ -71,8 +67,15 @@ class AlbumsController < ApplicationController
     params.permit([:name])
   end
 
-  def user_exist_in_album?(album, user)
-    @album = Album.find_by(id: params[:id])
-    @album.users.find_by(id: params[:user_id])
+  def user_exist_in_album?
+    album.users.find_by(id: user.id)
+  end
+
+  def album
+    album ||= Album.find_by(id: params[:id])
+  end
+
+  def user
+    user ||= User.find_by(id: params[:user_id])
   end
 end
