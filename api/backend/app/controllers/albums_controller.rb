@@ -39,8 +39,6 @@ class AlbumsController < ApplicationController
     else
       render json: {message: "Unauthorized"}, status: :unauthorized
     end
-
-
   end
 
   def update
