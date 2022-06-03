@@ -67,6 +67,10 @@ flutter:
     - img/Fondbleu.png
     - img/google.png
     - img/facebook.png
+    - img/Vector.png
+    - img/Vectorbot.png
+    
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

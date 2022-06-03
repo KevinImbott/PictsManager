@@ -53,16 +53,17 @@ class _MyLoginPageState extends State<MyLoginPage> {
                   image: AssetImage(fond))),
           child: Column(children: [
             Container(
-              margin: const EdgeInsets.only(top: 40),
-              height: MediaQuery.of(context).size.height * 0.025,
-              width: MediaQuery.of(context).size.width * 0.9,
+              height: MediaQuery.of(context).size.height * 0.2,
+              decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage("img/Vector.png"),
+                            fit: BoxFit.fitWidth,
+                          ),
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
               ),
             ),
-            SizedBox(
-                height: MediaQuery.of(context).size.height * 0.1,
-                width: MediaQuery.of(context).size.height),
             SizedBox(
                 height: MediaQuery.of(context).size.height * 0.15,
                 width: MediaQuery.of(context).size.height * 0.70,
@@ -184,6 +185,19 @@ class _MyLoginPageState extends State<MyLoginPage> {
                         fontSize: MediaQuery.of(context).size.height * 0.025),
                   ),
                 ),
+              ),
+            ),
+            SizedBox(
+                height: MediaQuery.of(context).size.height * 0.1,
+                ),
+            Container(
+              
+              height: MediaQuery.of(context).size.height * 0.14,
+              decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage("img/Vectorbot.png"),
+                            fit: BoxFit.fitWidth,
+                          ),
               ),
             ),
           ]),
