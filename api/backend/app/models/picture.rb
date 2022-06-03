@@ -10,7 +10,11 @@ class Picture < ActiveRecord::Base
   after_destroy :destroy_blob
 
   def owner
-    users.first
+    User.find_by(id: owner_id)
+  end
+
+  def owner=(user)
+    self.owner_id = user.id
   end
 
   private

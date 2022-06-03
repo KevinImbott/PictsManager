@@ -5,6 +5,10 @@ class Album < ActiveRecord::Base
   validates :name, presence: true
 
   def owner
-    users.first
+    User.find_by(id: owner_id)
+  end
+
+  def owner=(user)
+    self.owner_id = user.id
   end
 end
