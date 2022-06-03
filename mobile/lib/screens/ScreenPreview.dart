@@ -28,12 +28,15 @@ class _ScreenPreview extends State<ScreenPreview> {
             Row(
               children: [
                 Container(
-                  margin: const EdgeInsets.only(top: 50, left: 50, right: 50),
+                  width: 220,
+                  margin: const EdgeInsets.only(top: 50, left: 48, bottom: 20, right: 5),
                   child: TextFormField(
                     style: const TextStyle(color: Color.fromRGBO(255, 255, 255, 1)),
                     decoration: InputDecoration(
+                      filled: true,
+                      fillColor: const Color.fromRGBO(236, 236, 254, 0.25),
                       enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.white, width: 3),
+                        borderSide: const BorderSide(color: Color.fromRGBO(236, 236, 254, 1), width: 3),
                         borderRadius: BorderRadius.circular(30.0)
                       ),
                       hintStyle: const TextStyle(color: Color.fromRGBO(255, 255, 255, 1)),
@@ -42,28 +45,40 @@ class _ScreenPreview extends State<ScreenPreview> {
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(top: 50, left: 50, right: 50),
+                  width: 80,
+                  margin: const EdgeInsets.only(top: 50, bottom: 20, left: 5),
                   child: TextFormField(
                     style: const TextStyle(color: Color.fromRGBO(255, 255, 255, 1)),
                     decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.only(left: 25),
+                      filled: true,
+                      fillColor: const Color.fromRGBO(226, 101, 47, 0.75),
                       enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.white, width: 3),
+                        borderSide: const BorderSide(color: Color.fromRGBO(226, 101, 47, 0.2), width: 3),
                         borderRadius: BorderRadius.circular(30.0)
                       ),
-                      hintStyle: const TextStyle(color: Color.fromRGBO(226, 101, 47, 1)),
+                      hintStyle: const TextStyle(color: Colors.white),
                       hintText: 'Tag',
                     ),
                   ),
                 )
               ],
-            )
-            ,
+            ),
             Container(
               width: 550,
               height: 550,
               child: img,
             ),
-
+            TextButton(
+              style: TextButton.styleFrom(
+                primary: Colors.white,
+                fixedSize: const Size(100, 40),
+              ),
+              onPressed: () {
+                print('object');
+              },
+              child: const Text('Submit')
+            )
           ],
         ),
     
