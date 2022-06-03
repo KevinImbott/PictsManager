@@ -7,7 +7,15 @@ class Picture < ActiveRecord::Base
   validates :name, presence: true
   validates :description, presence: true
 
+  after_destroy :destroy_blob
+
   def owner
     users.first
+  end
+
+  private
+
+  def destroy_blob
+    self&.img&.purge
   end
 end
