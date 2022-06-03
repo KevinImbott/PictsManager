@@ -1,15 +1,24 @@
-
-import 'package:flutter/material.dart';
+import 'dart:io';
 import 'package:mobile/screens/home/login.dart';
 import 'screens/home/register.dart';
+import 'package:camera/camera.dart';
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:flutter/material.dart';
+import 'screens/home/ScreenHome.dart';
 
 void main() {
-  
-  runApp(const MyApp());
+  try {
+    WidgetsFlutterBinding.ensureInitialized();
+  } on CameraException catch (e) {
+    print(e.code);
+    print(e.description);
+  }
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
