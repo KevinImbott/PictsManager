@@ -42,14 +42,13 @@ class _ScreenChoosePicture extends State<ScreenChoosePicture> {
             borderRadius: BorderRadius.circular(10)
           ),
           child: Row(
-            
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               IconButton(icon: const Icon(Icons.photo_camera),
               iconSize: 80,
               color: const Color.fromRGBO(226, 101, 47, 1),
               onPressed: () {
-                Navigator.push(context, 
+                Navigator.push(context,
                 MaterialPageRoute(builder: (context) => TakePictureScreen(cameras: widget.cameras)));
               },),
               const VerticalDivider( color: Colors.white, thickness: 2, indent: 0, endIndent: 0),

@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile/screens/ScreenPreview.dart';
 
 import '../screens/ScreenChoosePicture.dart';
 
@@ -76,7 +77,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
         // If the picture was taken, display it on a new screen.
         await Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => DisplayPictureScreen(
+            builder: (context) => ScreenPreview(
               // Pass the automatically generated path to
               // the DisplayPictureScreen widget.
               imagePath: image.path,
