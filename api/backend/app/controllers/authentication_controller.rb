@@ -1,5 +1,6 @@
-class AuthenticationController < ApplicationController
+# frozen_string_literal: true
 
+class AuthenticationController < ApplicationController
   skip_before_action :authenticate_request
 
   def signup
@@ -8,7 +9,7 @@ class AuthenticationController < ApplicationController
       token = jwt_encode(user_id: user.id)
       render json: { token: token }, status: :ok
     else
-      render json: { message: "Invalid credentials" }, status: :unauthorized
+      render json: { message: 'Invalid credentials' }, status: :unauthorized
     end
   end
 
@@ -18,7 +19,7 @@ class AuthenticationController < ApplicationController
       token = jwt_encode(user_id: user.id)
       render json: { token: token }, status: :ok
     else
-      render json: { message: "Invalid credentials" }, status: :unauthorized
+      render json: { message: 'Invalid credentials' }, status: :unauthorized
     end
   end
 
