@@ -7,7 +7,7 @@ class PicturesController < ApplicationController
   def show
     @picture = Picture.find_by(id: params[:id])
     if @picture&.owner == @current_user
-      render json: @picture, status: :ok
+      render json: @picture, :include => :users, status: :ok
     else
       render json: {message: 'Unauthorized'}, status: :unauthorized
     end
@@ -38,6 +38,22 @@ class PicturesController < ApplicationController
     end
   end
 
+  def add_or_delete_user
+    @picture = Picture.find_by(id: params[:id])
+    if @picture&.owner == @current_user
+      @user = User.find_by(id: params[:user_id])
+      if user_exist_in_picture?(@picture, @user)
+        @picture.users.delete(@user)
+      else
+        @picture.users.push(@user)
+      end
+      @picture.save
+      render json: {message: "User Changed"}, status: :ok
+    else
+      render json: {message: "Unauthorized"}, status: :unauthorized
+    end
+  end
+
   def destroy
     @picture = Picture.find_by(id: params[:id])
     if @picture&.owner == @current_user
@@ -54,5 +70,10 @@ class PicturesController < ApplicationController
 
   def permitted_params
     params.permit([:name, :description, :url])
+  end
+
+  def user_exist_in_picture?(picture, user)
+    @picture = Picture.find_by(id: params[:id])
+    @picture.users.find_by(id: params[:user_id])
   end
 end
