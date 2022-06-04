@@ -18,6 +18,7 @@ class AlbumsController < ApplicationController
     new_album = Album.new(permitted_params)
     if new_album.save
       new_album.owner = @current_user
+      new_album.users = [@current_user]
       new_album.save
       render json: new_album, status: :created
     else
