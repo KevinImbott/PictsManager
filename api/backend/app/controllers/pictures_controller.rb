@@ -18,6 +18,7 @@ class PicturesController < ApplicationController
     new_picture = Picture.new(permitted_params)
     new_picture.owner = @current_user
     if new_picture.save
+      new_picture.users = [@current_user]
       new_picture.img.attach(params['picture'])
       render json: new_picture, status: :created
     else
