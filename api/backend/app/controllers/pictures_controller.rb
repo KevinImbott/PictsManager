@@ -3,7 +3,7 @@
 class PicturesController < ApplicationController
   def index
     pictures = @current_user.pictures
-    render json: pictures
+    render json: pictures, each_serializer: PicturePreviewSerializer
   end
 
   def show
