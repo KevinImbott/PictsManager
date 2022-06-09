@@ -17,6 +17,8 @@ class ScreenPreview extends StatefulWidget {
 class _ScreenPreview extends State<ScreenPreview> {
   late Image img;
   late Uri path;
+  TextEditingController name = TextEditingController();
+  TextEditingController description = TextEditingController();
 
   @override
   void initState() {
@@ -28,11 +30,11 @@ class _ScreenPreview extends State<ScreenPreview> {
     var uri = Uri.parse('http://10.0.2.2:3000/pictures');
     var req = http.MultipartRequest('POST', uri);
     req.headers['Authorization'] = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozLCJleHAiOjE2NTUzNjc1NTV9.n2p11b2wYlPbzWnru8FYcyJpCxX6O8IyDNwLU70vMAM';
-    req.fields['name'] = 'ok';
-    req.fields['descprition'] = 'ok';
+    req.fields['name'] = name.text;
+    req.fields['description'] = description.text;
     req.files.add(await http.MultipartFile.fromPath('img', widget.imagePath, contentType: MediaType('image', 'jpeg')));
     req.send().then((response) {
-      if (response.statusCode == 200) print("Uploaded!");
+      if (response.statusCode == 201) print("Uploaded!");
       else {
         print(response.toString());
         print('Buuggugggugu');
@@ -53,6 +55,7 @@ class _ScreenPreview extends State<ScreenPreview> {
                   width: 220,
                   margin: const EdgeInsets.only(top: 50, left: 48, bottom: 20, right: 5),
                   child: TextFormField(
+                    controller: name,
                     style: const TextStyle(color: Color.fromRGBO(255, 255, 255, 1)),
                     decoration: InputDecoration(
                       filled: true,
@@ -70,6 +73,7 @@ class _ScreenPreview extends State<ScreenPreview> {
                   width: 80,
                   margin: const EdgeInsets.only(top: 50, bottom: 20, left: 5),
                   child: TextFormField(
+                    controller: description,
                     style: const TextStyle(color: Color.fromRGBO(255, 255, 255, 1)),
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.only(left: 25),
