@@ -17,6 +17,10 @@ class Picture < ActiveRecord::Base
     self.owner_id = user.id
   end
 
+  def invited_users
+    users.reject { |user| user == owner }
+  end
+
   private
 
   def destroy_blob
