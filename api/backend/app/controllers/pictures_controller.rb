@@ -17,9 +17,9 @@ class PicturesController < ApplicationController
   def create
     new_picture = Picture.new(permitted_params)
     new_picture.owner = @current_user
+    new_picture.img.attach(params['img'])
     if new_picture.save
       new_picture.users = [@current_user]
-      new_picture.img.attach(params['picture'])
       render json: new_picture, status: :created
     else
       render json: { errors: new_picture.errors.full_messages }, status: :unprocessable_entity
