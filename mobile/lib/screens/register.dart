@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/screens/login.dart';
 
 void main() => runApp(const MyApp());
-String fond = 'img/Fondbleu.png';
+
 String pseudo = '';
 String email = '';
 String password = '';
@@ -32,33 +33,32 @@ class _MyHomePageState extends State<MyHomePage> {
  
   @override
   Widget build(BuildContext context) {
-
+    Color getColor(Set<MaterialState> states) {
+      const Set<MaterialState> interactiveStates = <MaterialState>{
+        MaterialState.pressed,
+        MaterialState.hovered,
+        MaterialState.focused,
+      };
+      return Color.fromRGBO(236, 236, 254, 1);
+    }
     return Scaffold(
     backgroundColor: const Color.fromRGBO(2, 2,39 , 1),
       body:Container(
-        height: double.infinity,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.5), BlendMode.dstATop),
-            fit: BoxFit.cover, image: AssetImage(fond),
-          ),
-        ),
-        child: Column(
-          children:[
+          height: double.infinity,
+          width: double.infinity,
+          
+          child: Column(children: [
             Container(
-              margin: const EdgeInsets.only(top: 40),
-              height:MediaQuery.of(context).size.height*0.025,
-              width:MediaQuery.of(context).size.width*0.9,
+              height: MediaQuery.of(context).size.height * 0.2,
+              decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage("img/Vectortopregister.png"),
+                            fit: BoxFit.fitWidth,
+                          ),
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
-                
               ),
-              ),
-            SizedBox(
-              height:MediaQuery.of(context).size.height *0.1,
-              width:MediaQuery.of(context).size.height,
-              
             ),
             SizedBox(
               height:MediaQuery.of(context).size.height *0.15,
@@ -68,79 +68,86 @@ class _MyHomePageState extends State<MyHomePage> {
               )
             ),SizedBox(
                height:MediaQuery.of(context).size.height *0.05,
-              width:MediaQuery.of(context).size.width *0.70,
+              width:MediaQuery.of(context).size.width *0.60,
               child:TextFormField(
-                                style: TextStyle(color:const Color.fromRGBO(236, 236, 254, 1),fontSize: MediaQuery.of(context).size.height *0.020),
-                                onChanged: (val){
-                                  setState(()=>pseudo = val);
-                                },
-                                validator:(val) =>
-                                val!.isEmpty ? 'Email manquant' : null,
-                                
-                                decoration: InputDecoration(
-                                  labelStyle: TextStyle(color:const Color.fromRGBO(236, 236, 254, 1),fontSize: MediaQuery.of(context).size.height *0.020),
-                                  hintText: 'Pseudo',
-                                  hintStyle: const TextStyle(color: Color.fromRGBO(236, 236, 254, 1)),
-                                ),
-                                ),
+              style: TextStyle(color:const Color.fromRGBO(236, 236, 254, 1),fontSize: MediaQuery.of(context).size.height *0.020),
+              onChanged: (val){
+                    setState(()=>pseudo = val);
+                  },
+                  validator:(val) =>
+                  val!.isEmpty ? 'Email manquant' : null,
+                  
+                  decoration: InputDecoration(
+                    labelStyle: TextStyle(color:const Color.fromRGBO(236, 236, 254, 1),fontSize: MediaQuery.of(context).size.height *0.020),
+                    hintText: 'Pseudo',
+                    hintStyle: const TextStyle(color: Color.fromRGBO(236, 236, 254, 1)),
+                  ),
+              ),
             ),
             SizedBox(
                height:MediaQuery.of(context).size.height *0.05,
-              width:MediaQuery.of(context).size.width *0.70,
+              width:MediaQuery.of(context).size.width *0.60,
               child:TextFormField(
-                                style: TextStyle(color: fond == 'img/Fondbleu.png' ? Colors.white : Colors.black),
-                                onChanged: (val){
-                                  setState(()=>email = val);
-                                },
-                                validator:(val) =>
-                                val!.isEmpty ? 'Email manquant' : null,
-                                decoration: InputDecoration(
-                                  labelStyle:TextStyle(color: fond == 'img/Fondbleu.png' ? const Color.fromARGB(255, 255, 255, 255):const Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.bold,) ,
-                                  hintText: 'Email',
-                                  hintStyle: TextStyle(color:fond == 'img/Fondbleu.png' ? const Color.fromARGB(255, 255, 255, 255):const Color.fromARGB(255, 0, 0, 0)),
-                                ),
-                                ),
+                style: TextStyle(color:const Color.fromRGBO(236, 236, 254, 1),fontSize: MediaQuery.of(context).size.height *0.020),
+                onChanged: (val){
+                  setState(()=>email = val);
+                },
+                validator:(val) =>
+                val!.isEmpty ? 'Email manquant' : null,
+                decoration: InputDecoration(
+                  labelStyle: TextStyle(color:const Color.fromRGBO(236, 236, 254, 1),fontSize: MediaQuery.of(context).size.height *0.020),
+                    hintText: 'Email',
+                  hintStyle: const TextStyle(color: Color.fromRGBO(236, 236, 254, 1)),
+                  ),
+                ),
+            ),
+    SizedBox(
+               height:MediaQuery.of(context).size.height *0.05,
+              width:MediaQuery.of(context).size.width *0.60,
+              child: TextFormField(
+                style: TextStyle(
+                    color: const Color.fromRGBO(236, 236, 254, 1),
+                    fontSize: MediaQuery.of(context).size.height * 0.020),
+                    obscureText: true,
+                    enableSuggestions: false,
+                    autocorrect: false,
+                onChanged: (val) {
+                  setState(() => password = val);
+                },
+                validator: (val) => val!.isEmpty ? 'Password manquant' : null,
+                decoration: InputDecoration(
+                  labelStyle: TextStyle(
+                      color: const Color.fromRGBO(236, 236, 254, 1),
+                      fontSize: MediaQuery.of(context).size.height * 0.020),
+                  hintText: 'Password',
+                  hintStyle:
+                      const TextStyle(color: Color.fromRGBO(236, 236, 254, 1)),
+                ),
+              ),
             ),
             SizedBox(
                height:MediaQuery.of(context).size.height *0.05,
-              width:MediaQuery.of(context).size.width *0.70,
-              child:TextFormField(
-                                style: TextStyle(color: fond == 'img/Fondbleu.png' ? const Color.fromARGB(255, 255, 255, 255):const Color.fromARGB(255, 0, 0, 0)),
-                                onChanged: (val){
-                                  setState(()=>email = val);
-                                },
-                                validator:(val) =>
-                                val!.isEmpty ? 'Password manquant' : null,
-                                decoration: InputDecoration(
-                                  labelStyle:TextStyle(color: fond == 'img/Fondbleu.png' ? const Color.fromARGB(255, 255, 255, 255):const Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.bold,) ,
-                                  hintText: 'Password',
-                                  hintStyle: TextStyle(color:fond == 'img/Fondbleu.png' ? const Color.fromARGB(255, 255, 255, 255):const Color.fromARGB(255, 0, 0, 0)),
-                                ),
-                                ),
-            ),
-            SizedBox(
-               height:MediaQuery.of(context).size.height *0.05,
-              width:MediaQuery.of(context).size.width *0.70,
-              child:TextFormField(
-                                style: TextStyle(color: fond == 'img/Fondbleu.png' ? const Color.fromARGB(255, 255, 255, 255):const Color.fromARGB(255, 0, 0, 0)),
-                                onChanged: (val){
-                                  setState(()=>email = val);
-                                },
-                                validator:(val) =>
-                                val!.isEmpty ? 'Password manquant' : null,
-                                decoration: InputDecoration(
-                                  labelStyle:TextStyle(color: fond == 'img/Fondbleu.png' ? const Color.fromARGB(255, 255, 255, 255):const Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.bold,) ,
-                                  hintText: 'Password confirm',
-                                  hintStyle: TextStyle(color:fond == 'img/Fondbleu.png' ? const Color.fromARGB(255, 255, 255, 255):const Color.fromARGB(255, 0, 0, 0)),
-                                ),
-                                ),
-            ),
-            SizedBox(
-              height:MediaQuery.of(context).size.height *0.1,
-              width:MediaQuery.of(context).size.height *0.70,
-              child:Center(
-                child: Text('Ou',style: TextStyle(color:fond == 'img/Fondbleu.png' ? const Color.fromARGB(255, 255, 255, 255):const Color.fromARGB(255, 0, 0, 0),fontSize: MediaQuery.of(context).size.height *0.02),),
-              )
+              width:MediaQuery.of(context).size.width *0.60,
+              child: TextFormField(
+                style: TextStyle(
+                    color: const Color.fromRGBO(236, 236, 254, 1),
+                    fontSize: MediaQuery.of(context).size.height * 0.020),
+                    obscureText: true,
+                    enableSuggestions: false,
+                    autocorrect: false,
+                onChanged: (val) {
+                  setState(() => password = val);
+                },
+                validator: (val) => val!.isEmpty ? 'password is not identical' : null,
+                decoration: InputDecoration(
+                  labelStyle: TextStyle(
+                      color: const Color.fromRGBO(236, 236, 254, 1),
+                      fontSize: MediaQuery.of(context).size.height * 0.020),
+                  hintText: 'Password confirm',
+                  hintStyle:
+                      const TextStyle(color: Color.fromRGBO(236, 236, 254, 1)),
+                ),
+              ),
             ),
             SizedBox(
               height:MediaQuery.of(context).size.height *0.10,
@@ -173,25 +180,25 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Row(
               children: [
-                Checkbox(onChanged: (bool? value) {setState(() {
-                  choix1 = !choix1;
-                });   }, value: choix1,),
-                Text('Sign up for Newsletter.',style: TextStyle(color:fond == 'img/Fondbleu.png' ? const Color.fromARGB(255, 255, 255, 255):const Color.fromARGB(255, 0, 0, 0)),)
-              ],
-            ),
-            Row(
-              children: [
-                Checkbox(onChanged: (bool? value) {setState(() {
-                  choix2 = !choix2;
-                });   }, value: choix2,),
-                Text('I agree to the Teams of service and Privacy Policy.',style: TextStyle(color:fond == 'img/Fondbleu.png' ? const Color.fromARGB(255, 255, 255, 255):const Color.fromARGB(255, 0, 0, 0)),)
+                Checkbox(
+                  fillColor: MaterialStateProperty.resolveWith(getColor),
+                  onChanged: (bool? value) {
+                    setState(() {
+                      choix1 = !choix1;
+                    });
+                  },
+                  value: choix1,
+                ),
+                const Text('Se souvenir de moi.',
+                    style:
+                        TextStyle(color: Color.fromARGB(255, 255, 255, 255))),
               ],
             ),
             GestureDetector(
               onTap: (){},
               child: Container(
                 height:MediaQuery.of(context).size.height *0.05,
-                width:MediaQuery.of(context).size.width *0.75,
+                width:MediaQuery.of(context).size.width *0.70,
                 decoration: BoxDecoration(
                   color: Color.fromARGB(255, 226, 101, 1),
                   borderRadius: BorderRadius.circular(25)
@@ -201,6 +208,27 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
             ),
+            TextButton(onPressed: (){
+              Navigator.push(context,
+                            MaterialPageRoute<void>(
+                                builder:(BuildContext context) {
+                                  return MyLoginPage();
+                                }));
+            }, child: Text('Deja un compte',style: TextStyle(color:Color.fromARGB(255, 255, 255, 255),fontSize: MediaQuery.of(context).size.height *0.015),))
+          ,
+          SizedBox(
+                height: MediaQuery.of(context).size.height * 0.04,
+            ),
+            Container(
+              
+              height: MediaQuery.of(context).size.height * 0.14,
+              decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage("img/Vectorbot.png"),
+                            fit: BoxFit.fitWidth,
+                          ),
+              ),
+            )
           ],
         ),
       )
