@@ -11,4 +11,8 @@ class Album < ActiveRecord::Base
   def owner=(user)
     self.owner_id = user.id
   end
+
+  def invited_users
+    users.reject { |user| user == owner }
+  end
 end
