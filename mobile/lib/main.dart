@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
 
     return const MaterialApp(
       title: 'Welcome to Flutter',
-      home: MyLoginPage()
+      home: MyHomePage()
     );
   }
 }
