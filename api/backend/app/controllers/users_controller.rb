@@ -3,7 +3,7 @@
 class UsersController < ApplicationController
   def index
     @users = User.by_recently_created
-    render json: @users
+    render json: @users, each_serializer: UserPreviewSerializer
   end
 
   def show

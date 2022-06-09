@@ -1,11 +1,10 @@
 import 'dart:io';
-import 'package:mobile/screens/home/login.dart';
-import 'screens/home/register.dart';
+
 import 'package:camera/camera.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
-import 'screens/home/ScreenHome.dart';
+import 'screens/ScreenHome.dart';
 
 void main() {
   try {
@@ -25,7 +24,7 @@ class MyApp extends StatelessWidget {
 
     return const MaterialApp(
       title: 'Welcome to Flutter',
-      home: MyHomePage()
+      home: ScreenHome()
     );
   }
 }

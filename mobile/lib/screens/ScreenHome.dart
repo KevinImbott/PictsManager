@@ -1,7 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
-import 'component/ImportButton.dart';
-import 'component/Navbar.dart';
+import '../components/ImportButton.dart';
+import '../components/Navbar.dart';
 
 class ScreenHome extends StatefulWidget {
   const ScreenHome({ Key? key }) : super(key: key);

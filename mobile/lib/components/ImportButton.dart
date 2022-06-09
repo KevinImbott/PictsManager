@@ -12,7 +12,7 @@ class ImportButton extends StatefulWidget {
 }
 
 class _ImportButtonState extends State<ImportButton> {
-    File? image;
+  File? image;
 
   Future pickImage() async {
     try {
