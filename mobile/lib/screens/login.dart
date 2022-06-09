@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/screens/home/register.dart';
+import 'package:mobile/screens/register.dart';
 import 'package:path/path.dart';
 
 void main() => runApp(const MyApp());
