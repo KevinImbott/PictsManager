@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 
-void main() => runApp(const MyApp());
 String fond = 'img/Fondbleu.png';
 String pseudo = '';
 String email = '';
@@ -10,7 +9,8 @@ bool choix1 = false;
 
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({Key? key, required this.token}) : super(key: key);
+  final String? token;
 
   // This widget is the root of your application.
   @override
