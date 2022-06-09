@@ -77,7 +77,6 @@ packages:
       name: cross_file
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< HEAD
     version: "0.3.2"
   crypto:
     dependency: transitive
@@ -86,9 +85,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.2"
-=======
-    version: "0.3.3+1"
->>>>>>> 344e429efc3a5909f899e9b95ae0d41756fef3d9
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -166,7 +162,6 @@ packages:
       name: http_parser
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< HEAD
     version: "4.0.0"
   image:
     dependency: "direct main"
@@ -175,9 +170,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.3"
-=======
-    version: "4.0.1"
->>>>>>> 344e429efc3a5909f899e9b95ae0d41756fef3d9
   image_picker:
     dependency: "direct main"
     description:
