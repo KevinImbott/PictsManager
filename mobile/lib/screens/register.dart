@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(const MyApp());
 String fond = 'img/Fondbleu.png';
 String pseudo = '';
 String email = '';
