@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mobile/components/Camera.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mobile/screens/ScreenPreview.dart';
 
 import '../components/Navbar.dart';
 
@@ -18,11 +19,13 @@ class ScreenChoosePicture extends StatefulWidget {
 
 class _ScreenChoosePicture extends State<ScreenChoosePicture> {
   File? image;
+  String imgPath = '';
 
   Future pickImage() async {
     try {
       final image = await ImagePicker().pickImage(source: ImageSource.gallery);
       if (image == null) return;
+      imgPath = image.path;
       final imageTmp = File(image.path);
       setState(() => this.image = imageTmp);
     } on PlatformException catch (e) {
@@ -55,8 +58,11 @@ class _ScreenChoosePicture extends State<ScreenChoosePicture> {
               IconButton(icon: const Icon(Icons.photo_size_select_actual_rounded),
               iconSize: 80,
               color: const Color.fromRGBO(226, 101, 47, 1),
-              onPressed: () {
-                pickImage();
+              onPressed: () async {
+                await pickImage();
+                imgPath != '' ?
+                Navigator.push(context,
+                MaterialPageRoute(builder: (context) => ScreenPreview(imagePath: imgPath))) : null;
               },)
             ],
           ),

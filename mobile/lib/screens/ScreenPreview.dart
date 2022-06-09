@@ -1,6 +1,8 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
-
+import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
 import '../components/Navbar.dart';
 
 class ScreenPreview extends StatefulWidget {
@@ -14,10 +16,30 @@ class ScreenPreview extends StatefulWidget {
 
 class _ScreenPreview extends State<ScreenPreview> {
   late Image img;
+  late Uri path;
 
   @override
   void initState() {
     img = Image.file(File(widget.imagePath));
+    path = Uri.file(widget.imagePath);
+  }
+
+  void sendPic () async {
+    var uri = Uri.parse('http://10.0.2.2:3000/pictures');
+    var req = http.MultipartRequest('POST', uri);
+    req.headers['Authorization'] = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozLCJleHAiOjE2NTUzNjc1NTV9.n2p11b2wYlPbzWnru8FYcyJpCxX6O8IyDNwLU70vMAM';
+    req.fields['name'] = 'ok';
+    req.fields['descprition'] = 'ok';
+    req.files.add(await http.MultipartFile.fromPath('img', widget.imagePath, contentType: MediaType('image', 'jpeg')));
+    req.send().then((response) {
+      if (response.statusCode == 200) print("Uploaded!");
+      else {
+        print(response.toString());
+        print('Buuggugggugu');
+      }
+    }).catchError((onError) {
+      print(onError);
+    });
   }
 
   Widget build(BuildContext context) {
@@ -66,16 +88,17 @@ class _ScreenPreview extends State<ScreenPreview> {
             ),
             Container(
               width: 550,
-              height: 550,
+              height: 400,
               child: img,
             ),
             TextButton(
               style: TextButton.styleFrom(
+                backgroundColor: const Color.fromRGBO(226, 101, 47, 1),
                 primary: Colors.white,
                 fixedSize: const Size(100, 40),
               ),
               onPressed: () {
-                print('object');
+                sendPic();
               },
               child: const Text('Submit')
             )
