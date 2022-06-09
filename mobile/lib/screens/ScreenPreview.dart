@@ -37,7 +37,6 @@ class _ScreenPreview extends State<ScreenPreview> {
       if (response.statusCode == 201) print("Uploaded!");
       else {
         print(response.toString());
-        print('Buuggugggugu');
       }
     }).catchError((onError) {
       print(onError);
