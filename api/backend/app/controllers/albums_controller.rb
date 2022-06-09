@@ -3,7 +3,7 @@
 class AlbumsController < ApplicationController
   def index
     albums = @current_user.albums
-    render json: albums
+    render json: albums,  each_serializer: AlbumPreviewSerializer
   end
 
   def show
