@@ -1,10 +1,10 @@
-class UserPolicy
+class UserPolicy < ApplicationPolicy
     def initialize
     end
 
 
     def show?
-        true
+      false
     end
 
     def update?
