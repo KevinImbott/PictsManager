@@ -1,8 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:mobile/screens/register.dart';
-import 'package:path/path.dart';
+import 'dart:convert';
 
-void main() => runApp(const MyApp());
+import 'package:flutter/material.dart';
+import 'package:mobile/screens/ScreenHome.dart';
+import 'package:mobile/screens/register.dart';
+import 'package:path/path.dart' as Path;
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+
+
 String fond = 'img/Fondbleu.png';
 String pseudo = '';
 String email = '';
@@ -10,8 +15,9 @@ String password = '';
 bool choix1 = false;
 
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class Login extends StatelessWidget {
+  Login({Key? key, this.token}) : super(key: key);
+  final String? token;
 
   // This widget is the root of your application.
   @override
@@ -24,12 +30,36 @@ class MyApp extends StatelessWidget {
 }
 
 class MyLoginPage extends StatefulWidget {
-  const MyLoginPage({Key? key});
+  MyLoginPage({Key? key, this.token});
+  String? token;
   @override
   _MyLoginPageState createState() => _MyLoginPageState();
 }
 
+
 class _MyLoginPageState extends State<MyLoginPage> {
+
+  void sendLogin () async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final response = await http.post(
+    Uri.parse('http://10.0.2.2:3000/login'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, String>{
+      'email': email,
+      'password': password
+    })
+    );
+    if (response.statusCode == 200) {
+      print(json.decode(response.body)['token']);
+      await prefs.setString('jwt', json.decode(response.body)['token']);
+      Navigator.push(context, MaterialPageRoute(builder: (context) => ScreenHome()));
+    } else {
+      print(response.statusCode);
+      throw Exception('Failed to create USER.');
+    }
+  }
   @override
   Widget build(BuildContext context) {
     Color getColor(Set<MaterialState> states) {
@@ -38,7 +68,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
         MaterialState.hovered,
         MaterialState.focused,
       };
-      return Color.fromRGBO(236, 236, 254, 1);
+      return const Color.fromRGBO(236, 236, 254, 1);
     }
 
     return Scaffold(
@@ -68,7 +98,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
                     'Connection',
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Color.fromRGBO(236, 236, 254, 1),
+                        color: const Color.fromRGBO(236, 236, 254, 1),
                         fontSize: MediaQuery.of(context).size.height * 0.05),
                   ),
                 )),
@@ -169,7 +199,9 @@ class _MyLoginPageState extends State<MyLoginPage> {
                 height: MediaQuery.of(context).size.height * 0.1,
                 width: MediaQuery.of(context).size.height),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                sendLogin();
+              },
               child: Container(
                 height: MediaQuery.of(context).size.height * 0.05,
                 width: MediaQuery.of(context).size.width * 0.75,
@@ -186,17 +218,29 @@ class _MyLoginPageState extends State<MyLoginPage> {
                 ),
               ),
             ),
-            TextButton(onPressed: (){
-              Navigator.push(context,
-                            MaterialPageRoute<void>(
-                                builder:(BuildContext context) {
-                                  return MyHomePage();
-                                }));
-            }, child: Text('C’est la premiere fois ! Inscris toi',style: TextStyle(color:Color.fromARGB(255, 255, 255, 255),fontSize: MediaQuery.of(context).size.height *0.015),))
-          ,
-          SizedBox(
-                height: MediaQuery.of(context).size.height * 0.04,
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => MyHomePage()));
+              },
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.05,
+                width: MediaQuery.of(context).size.width * 0.75,
+                child: Center(
+                  child: Text(
+                    'Pas de compte ?',
+                    style: TextStyle(
+                        color: Color.fromARGB(255, 255, 255, 255),
+                        fontSize: MediaQuery.of(context).size.height * 0.025),
+                  ),
+                ),
+              ),
             ),
+            SizedBox(
+                height: MediaQuery.of(context).size.height * 0.1,
+                ),
             Container(
               
               height: MediaQuery.of(context).size.height * 0.14,
