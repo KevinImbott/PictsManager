@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AlbumsController < ApplicationController
+class AlbumsController < AuthenticatedController
   def index
     albums = @current_user.albums
     render json: albums,  each_serializer: AlbumPreviewSerializer

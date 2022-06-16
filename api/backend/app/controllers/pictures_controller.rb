@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class PicturesController < ApplicationController
+class PicturesController < AuthenticatedController
   def index
     pictures = @current_user.pictures
     render json: pictures, each_serializer: PicturePreviewSerializer
