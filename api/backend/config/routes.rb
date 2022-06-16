@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  ActiveAdmin.routes(self)
   post "/login", to: "authentication#login"
   post "/signup", to: "authentication#signup"
 
