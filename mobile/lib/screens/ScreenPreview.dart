@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../components/Navbar.dart';
 
 class ScreenPreview extends StatefulWidget {
@@ -19,17 +20,27 @@ class _ScreenPreview extends State<ScreenPreview> {
   late Uri path;
   TextEditingController name = TextEditingController();
   TextEditingController description = TextEditingController();
+  late SharedPreferences prefs;
+  String token = '';
+  
 
   @override
   void initState() {
+    initPref();
     img = Image.file(File(widget.imagePath));
     path = Uri.file(widget.imagePath);
   }
 
+  void initPref() async {
+    prefs = await SharedPreferences.getInstance();
+    token = prefs.getString('jwt') ?? '';
+  }
+
   void sendPic () async {
+    prefs = await SharedPreferences.getInstance();
     var uri = Uri.parse('http://10.0.2.2:3000/pictures');
     var req = http.MultipartRequest('POST', uri);
-    req.headers['Authorization'] = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozLCJleHAiOjE2NTU5NzM1MjN9.Yu_FAKJLIjqbv6tMTLdycCLht1UKu6eV5ioxubEOdY0';
+    req.headers['Authorization'] = 'Bearer ' + token;
     req.fields['name'] = name.text;
     req.fields['description'] = description.text;
     req.files.add(await http.MultipartFile.fromPath('img', widget.imagePath, contentType: MediaType('image', 'jpeg')));

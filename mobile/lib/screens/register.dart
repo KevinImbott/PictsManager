@@ -14,21 +14,7 @@ String password = '';
 bool choix1 = false;
 bool choix2 = false;
 bool choix3 = false;
-// class MyApp extends StatelessWidget {
-//   const MyApp({Key? key}) : super(key: key);
 
-//   // This widget is the root of your application.
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       theme: ThemeData(
-//         primarySwatch: Colors.blue,
-//         fontFamily: 'OSWALD'
-//       ),
-//       home: MyHomePage(),
-//     );
-//   }
-// }
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key});
   @override

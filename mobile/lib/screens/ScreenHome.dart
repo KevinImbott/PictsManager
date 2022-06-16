@@ -14,13 +14,7 @@ class ScreenHome extends StatefulWidget {
 class _ScreenHome extends State<ScreenHome> {
   SharedPreferences? prefs;
 
-  void initPref() async {
-    prefs = await SharedPreferences.getInstance();
-    print(prefs?.getString('jwt'));
-  }
-
   Widget build(BuildContext context) {
-    initPref();
     return Scaffold(
       body: Container(
       ),
