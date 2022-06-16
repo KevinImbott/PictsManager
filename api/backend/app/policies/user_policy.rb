@@ -1,13 +1,24 @@
 class UserPolicy < ApplicationPolicy
-    def initialize
-    end
+  attr_reader :user, :record
 
-
-    def show?
-      false
-    end
-
-    def update?
-      user.admin? || !post.published?
-    end
+  def initialize(user, record)
+    @user = user
+    @record = record
   end
+
+  def index?
+    true
+  end
+
+  def show?
+    true
+  end
+
+  def update?
+    true
+  end
+
+  def destroy?
+    true
+  end
+end
