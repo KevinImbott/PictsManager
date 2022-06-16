@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   put "/profile", to: "users#update"
   get "/profile", to: "users#profile"
+  delete "/profile", to: "users#destroy"
 
   resources :users
   resources :albums
