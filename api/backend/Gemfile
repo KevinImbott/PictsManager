@@ -45,6 +45,9 @@ gem "bootsnap", require: false
 # Use Sass to process CSS
 # gem "sassc-rails"
 
+# Policies
+gem "pundit"
+
 # Token Generation
 gem "jwt"
 
