@@ -10,7 +10,8 @@ ActiveAdmin.register User do
       row :updated_at
       table_for user.pictures do
         column 'Pictures' do |picture|
-          link_to picture.name, admin_picture_path(picture.id)
+          img = image_tag url_for(picture.img)
+          link_to img, admin_picture_path(picture.id)
         end
       end
       table_for user.albums do
