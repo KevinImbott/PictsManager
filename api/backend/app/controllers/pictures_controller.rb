@@ -2,24 +2,22 @@
 
 class PicturesController < AuthenticatedController
   def index
-    pictures = @current_user.pictures
+    pictures = policy_scope(current_user.pictures)
     render json: pictures, each_serializer: PicturePreviewSerializer
   end
 
   def show
-    if picture&.owner == @current_user
-      render json: picture
-    else
-      render json: { message: 'Unauthorized' }, status: :unauthorized
-    end
+    authorize picture
+    render json: picture
+    # end
   end
 
   def create
     new_picture = Picture.new(permitted_params)
-    new_picture.owner = @current_user
+    new_picture.owner = current_user
     new_picture.img.attach(params['img'])
     if new_picture.save
-      new_picture.users = [@current_user]
+      new_picture.users = [current_user]
       render json: new_picture, status: :created
     else
       render json: { errors: new_picture.errors.full_messages }, status: :unprocessable_entity
@@ -27,56 +25,43 @@ class PicturesController < AuthenticatedController
   end
 
   def update
-    if picture&.owner == @current_user
-      unless picture&.update(permitted_params)
-        render json: { errors: picture&.errors&.full_messages }, status: :unprocessable_entity
-      end
-    else
-      render json: { message: 'Unauthorized' }, status: :unauthorized
-    end
+    authorize picture
+    return if picture&.update(permitted_params)
+
+    render json: { errors: picture&.errors&.full_messages }, status: :unprocessable_entity
   end
 
   def add_or_delete_user
-    if picture&.owner == @current_user
-      if user_exist_in_picture?
-        picture.users.delete(user)
-        picture.save
-        render json: { message: 'User Deleted' }
-      else
-        picture.users.push(user)
-        picture.save
-        render json: { message: 'User Added' }
-      end
+    authorize picture
+    if user_exist_in_picture?
+      picture.users.delete(user)
+      picture.save
+      render json: { message: 'User Deleted' }
     else
-      render json: { message: 'Unauthorized' }, status: :unauthorized
+      picture.users.push(user)
+      picture.save
+      render json: { message: 'User Added' }
     end
   end
 
-  ## ADD POLICY TO CHECK IF I CAN ADD A PICTURE ONLY ON MY OWNED ALBUM
   def add_or_delete_album
-    if picture&.owner == @current_user
-      if picture_exist_in_album?
-        picture.albums.delete(album)
-        picture.save
-        render json: { message: 'Picture Deleted' }
-      else
-        picture.albums.push(album)
-        picture.save
-        render json: { message: 'Picture Added' }
-      end
+    authorize picture
+    if picture_exist_in_album?
+      picture.albums.delete(album)
+      picture.save
+      render json: { message: 'Picture Deleted' }
     else
-      render json: { message: 'Unauthorized' }, status: :unauthorized
+      picture.albums.push(album)
+      picture.save
+      render json: { message: 'Picture Added' }
     end
   end
 
   def destroy
-    if picture&.owner == @current_user
-      unless picture&.destroy
-        render json: { errors: picture&.errors&.full_messages }, status: :unprocessable_entity
-      end
-    else
-      render json: { message: 'Unauthorized' }, status: :unauthorized
-    end
+    authorize picture
+    return if picture&.destroy
+
+    render json: { errors: picture&.errors&.full_messages }, status: :unprocessable_entity
   end
 
   private

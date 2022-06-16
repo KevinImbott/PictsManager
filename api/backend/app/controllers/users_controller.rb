@@ -14,19 +14,19 @@ class UsersController < AuthenticatedController
   end
 
   def update
-    authorize @current_user
-    return if @current_user.update(permitted_params)
+    authorize current_user
+    return if current_user.update(permitted_params)
 
-    render json: { errors: @current_user.errors.full_messages }, status: :unprocessable_entity
+    render json: { errors: current_user.errors.full_messages }, status: :unprocessable_entity
   end
 
   def destroy
-    authorize @current_user
-    @current_user.destroy
+    authorize current_user
+    current_user.destroy
   end
 
   def profile
-    render json: @current_user
+    render json: current_user
   end
 
   private
