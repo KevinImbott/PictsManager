@@ -9,7 +9,6 @@ class PicturesController < AuthenticatedController
   def show
     authorize picture
     render json: picture
-    # end
   end
 
   def create
