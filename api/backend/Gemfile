@@ -53,8 +53,6 @@ gem "jwt"
 
 # Serializers
 gem 'active_model_serializers', '~> 0.10.2'
-# Authorizations
-gem "pundit"
 
 # Variants for images
 gem 'image_processing'
