@@ -71,6 +71,7 @@ flutter:
     - img/facebook.png
     - img/Vector.png
     - img/Vectorbot.png
+    - img/VectorProfile.png
     
 
   # An image asset can refer to one or more resolution-specific "variants", see

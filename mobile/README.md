@@ -19,3 +19,5 @@ samples, guidance on mobile development, and a full API reference.
 Linux/Android Studio:
 https://stackoverflow.com/questions/42718973/run-avd-emulator-without-android-studio
 
+cd ~/Android/Sdk/emulator/
+./emulator -avd PictsManager
