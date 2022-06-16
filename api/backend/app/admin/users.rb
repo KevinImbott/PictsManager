@@ -15,24 +15,9 @@ ActiveAdmin.register User do
       end
       table_for user.albums do
         column 'Albums' do |album|
-          link_to [album.id, album.name], admin_album_path(album.id)
+          link_to "Album #{album.id}: #{album.name}", admin_album_path(album.id)
         end
       end
     end
   end
-  # See permitted parameters documentation:
-  # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  #
-  # Uncomment all parameters which should be permitted for assignment
-  #
-  # permit_params :pseudo, :email, :password
-  #
-  # or
-  #
-  # permit_params do
-  #   permitted = [:pseudo, :email, :password_digest]
-  #   permitted << :other if params[:action] == 'create' && current_user.admin?
-  #   permitted
-  # end
-  
 end
