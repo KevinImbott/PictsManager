@@ -23,7 +23,7 @@ ActiveAdmin.register Picture do
       end
       table_for picture.albums do
         column 'Albums' do |album|
-          link_to [album.id, album.name], admin_album_path(album.id)
+          link_to "Album #{album.id}: #{album.name}", admin_album_path(album.id)
         end
       end
     end
