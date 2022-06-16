@@ -2,6 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import '../components/ImportButton.dart';
 import '../components/Navbar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ScreenHome extends StatefulWidget {
   const ScreenHome({ Key? key }) : super(key: key);
@@ -11,8 +12,15 @@ class ScreenHome extends StatefulWidget {
 }
 
 class _ScreenHome extends State<ScreenHome> {
+  SharedPreferences? prefs;
+
+  void initPref() async {
+    prefs = await SharedPreferences.getInstance();
+    print(prefs?.getString('jwt'));
+  }
 
   Widget build(BuildContext context) {
+    initPref();
     return Scaffold(
       body: Container(
       ),

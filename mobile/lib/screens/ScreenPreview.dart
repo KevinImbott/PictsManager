@@ -29,7 +29,7 @@ class _ScreenPreview extends State<ScreenPreview> {
   void sendPic () async {
     var uri = Uri.parse('http://10.0.2.2:3000/pictures');
     var req = http.MultipartRequest('POST', uri);
-    req.headers['Authorization'] = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozLCJleHAiOjE2NTUzNjc1NTV9.n2p11b2wYlPbzWnru8FYcyJpCxX6O8IyDNwLU70vMAM';
+    req.headers['Authorization'] = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozLCJleHAiOjE2NTU5NzM1MjN9.Yu_FAKJLIjqbv6tMTLdycCLht1UKu6eV5ioxubEOdY0';
     req.fields['name'] = name.text;
     req.fields['description'] = description.text;
     req.files.add(await http.MultipartFile.fromPath('img', widget.imagePath, contentType: MediaType('image', 'jpeg')));

@@ -1,5 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
+import 'package:mobile/screens/ScreenHome.dart';
+import 'package:path/path.dart' as Path;
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 String fond = 'img/Fondbleu.png';
 String pseudo = '';
@@ -8,8 +14,8 @@ String password = '';
 bool choix1 = false;
 
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key, required this.token}) : super(key: key);
+class Login extends StatelessWidget {
+  Login({Key? key, this.token}) : super(key: key);
   final String? token;
 
   // This widget is the root of your application.
@@ -23,53 +29,36 @@ class MyApp extends StatelessWidget {
 }
 
 class MyLoginPage extends StatefulWidget {
-  const MyLoginPage({Key? key});
+  MyLoginPage({Key? key, this.token});
+  String? token;
   @override
   _MyLoginPageState createState() => _MyLoginPageState();
 }
 
-void sendLogin () async {
+
+class _MyLoginPageState extends State<MyLoginPage> {
+
+  void sendLogin () async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     final response = await http.post(
     Uri.parse('http://10.0.2.2:3000/login'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
     body: jsonEncode(<String, String>{
-      'pseudo': pseudo
-      'email': email
+      'email': email,
       'password': password
     })
-  )
-  if (response.statusCode == 201) {
-    // If the server did return a 201 CREATED response,
-    // then parse the JSON.
-    print("SIGNED IN")
-    return
-  } else {
-    // If the server did not return a 201 CREATED response,
-    // then throw an exception.
-    throw Exception('Failed to create USER.');
+    );
+    if (response.statusCode == 200) {
+      print(json.decode(response.body)['token']);
+      await prefs.setString('jwt', json.decode(response.body)['token']);
+      Navigator.push(context, MaterialPageRoute(builder: (context) => ScreenHome()));
+    } else {
+      print(response.statusCode);
+      throw Exception('Failed to create USER.');
+    }
   }
-
-
-
-    var uri = Uri.parse('http://10.0.2.2:3000/pictures');
-    var req = http.Request('POST', uri);
-    req.headers['Authorization'] = 'Bearr eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozLCJleHAiOjE2NTUzNjc1NTV9.n2p11b2wYlPbzWnru8FYcyJpCxX6O8IyDNwLU70vMAM';
-    req.fields['name'] = name.text;
-    req.fields['description'] = description.text;
-    req.files.add(await http.MultipartFile.fromPath('img', widget.imagePath, contentType: MediaType('image', 'jpeg')));
-    req.send().then((response) {
-      if (response.statusCode == 201) print("Uploaded!");
-      else {
-        print(response.toString());
-      }
-    }).catchError((onError) {
-      print(onError);
-    });
-  }
-
-class _MyLoginPageState extends State<MyLoginPage> {
   @override
   Widget build(BuildContext context) {
     Color getColor(Set<MaterialState> states) {
@@ -78,7 +67,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
         MaterialState.hovered,
         MaterialState.focused,
       };
-      return Color.fromRGBO(236, 236, 254, 1);
+      return const Color.fromRGBO(236, 236, 254, 1);
     }
 
     return Scaffold(
@@ -113,7 +102,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
                     'Connection',
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Color.fromRGBO(236, 236, 254, 1),
+                        color: const Color.fromRGBO(236, 236, 254, 1),
                         fontSize: MediaQuery.of(context).size.height * 0.05),
                   ),
                 )),
@@ -211,7 +200,9 @@ class _MyLoginPageState extends State<MyLoginPage> {
                 height: MediaQuery.of(context).size.height * 0.1,
                 width: MediaQuery.of(context).size.height),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                sendLogin();
+              },
               child: Container(
                 height: MediaQuery.of(context).size.height * 0.05,
                 width: MediaQuery.of(context).size.width * 0.75,

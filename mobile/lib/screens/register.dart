@@ -1,4 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:mobile/screens/ScreenHome.dart';
+import 'package:path/path.dart' as Path;
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 String fond = 'img/Fondbleu.png';
 String pseudo = '';
@@ -7,27 +13,50 @@ String password = '';
 bool choix1 = false;
 bool choix2 = false;
 bool choix3 = false;
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+// class MyApp extends StatelessWidget {
+//   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        fontFamily: 'OSWALD'
-      ),
-      home: MyHomePage(),
-    );
-  }
-}
+//   // This widget is the root of your application.
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       theme: ThemeData(
+//         primarySwatch: Colors.blue,
+//         fontFamily: 'OSWALD'
+//       ),
+//       home: MyHomePage(),
+//     );
+//   }
+// }
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key});
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 class _MyHomePageState extends State<MyHomePage> {
+
+    void sendLogin () async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final response = await http.post(
+    Uri.parse('http://10.0.2.2:3000/signup'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, String>{
+      'email': email,
+      'password': password,
+      'pseudo': pseudo
+    })
+    );
+    if (response.statusCode == 200) {
+      print(json.decode(response.body)['token']);
+      await prefs.setString('jwt', json.decode(response.body)['token']);
+      Navigator.push(context, MaterialPageRoute(builder: (context) => ScreenHome()));
+    } else {
+      print(response.statusCode);
+      throw Exception('Failed to create USER.');
+    }
+  }
  
   @override
   Widget build(BuildContext context) {
