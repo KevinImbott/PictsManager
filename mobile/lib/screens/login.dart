@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:mobile/screens/ScreenHome.dart';
+import 'package:mobile/screens/register.dart';
 import 'package:path/path.dart' as Path;
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -148,6 +149,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
                   hintStyle:
                       const TextStyle(color: Color.fromRGBO(236, 236, 254, 1)),
                 ),
+                obscureText: true,
               ),
             ),
             SizedBox(
@@ -212,6 +214,26 @@ class _MyLoginPageState extends State<MyLoginPage> {
                 child: Center(
                   child: Text(
                     'Connection',
+                    style: TextStyle(
+                        color: Color.fromARGB(255, 255, 255, 255),
+                        fontSize: MediaQuery.of(context).size.height * 0.025),
+                  ),
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => MyHomePage()));
+              },
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.05,
+                width: MediaQuery.of(context).size.width * 0.75,
+                child: Center(
+                  child: Text(
+                    'Pas de compte ?',
                     style: TextStyle(
                         color: Color.fromARGB(255, 255, 255, 255),
                         fontSize: MediaQuery.of(context).size.height * 0.025),

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:mobile/screens/ScreenHome.dart';
+import 'package:mobile/screens/login.dart';
 import 'package:path/path.dart' as Path;
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -92,7 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
               height:MediaQuery.of(context).size.height *0.15,
               width:MediaQuery.of(context).size.height*0.70,
               child:Center(
-                child: Text('Inscriptions',style: TextStyle(fontWeight:FontWeight.bold,color:Color.fromRGBO(236, 236, 254, 1),fontSize: MediaQuery.of(context).size.height *0.05),),
+                child: Text('Register',style: TextStyle(fontWeight:FontWeight.bold,color:Color.fromRGBO(236, 236, 254, 1),fontSize: MediaQuery.of(context).size.height *0.05),),
               )
             ),SizedBox(
                height:MediaQuery.of(context).size.height *0.05,
@@ -135,7 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child:TextFormField(
                                 style: TextStyle(color: fond == 'img/Fondbleu.png' ? const Color.fromARGB(255, 255, 255, 255):const Color.fromARGB(255, 0, 0, 0)),
                                 onChanged: (val){
-                                  setState(()=>email = val);
+                                  setState(()=>password = val);
                                 },
                                 validator:(val) =>
                                 val!.isEmpty ? 'Password manquant' : null,
@@ -144,6 +145,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   hintText: 'Password',
                                   hintStyle: TextStyle(color:fond == 'img/Fondbleu.png' ? const Color.fromARGB(255, 255, 255, 255):const Color.fromARGB(255, 0, 0, 0)),
                                 ),
+                                obscureText: true,
                                 ),
             ),
             SizedBox(
@@ -152,7 +154,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child:TextFormField(
                                 style: TextStyle(color: fond == 'img/Fondbleu.png' ? const Color.fromARGB(255, 255, 255, 255):const Color.fromARGB(255, 0, 0, 0)),
                                 onChanged: (val){
-                                  setState(()=>email = val);
+                                  
                                 },
                                 validator:(val) =>
                                 val!.isEmpty ? 'Password manquant' : null,
@@ -161,6 +163,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   hintText: 'Password confirm',
                                   hintStyle: TextStyle(color:fond == 'img/Fondbleu.png' ? const Color.fromARGB(255, 255, 255, 255):const Color.fromARGB(255, 0, 0, 0)),
                                 ),
+                                obscureText: true,
                                 ),
             ),
             SizedBox(
@@ -216,7 +219,9 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
             ),
             GestureDetector(
-              onTap: (){},
+              onTap: (){
+                sendLogin();
+              },
               child: Container(
                 height:MediaQuery.of(context).size.height *0.05,
                 width:MediaQuery.of(context).size.width *0.75,
@@ -225,7 +230,27 @@ class _MyHomePageState extends State<MyHomePage> {
                   borderRadius: BorderRadius.circular(25)
                 ),
                 child: Center(
-                  child: Text('Inscription',style: TextStyle(color:Color.fromARGB(255, 255, 255, 255),fontSize: MediaQuery.of(context).size.height *0.025),),
+                  child: Text('Register',style: TextStyle(color:Color.fromARGB(255, 255, 255, 255),fontSize: MediaQuery.of(context).size.height *0.025),),
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => MyLoginPage()));
+              },
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.05,
+                width: MediaQuery.of(context).size.width * 0.75,
+                child: Center(
+                  child: Text(
+                    'Deja un compte ?',
+                    style: TextStyle(
+                        color: Color.fromARGB(255, 255, 255, 255),
+                        fontSize: MediaQuery.of(context).size.height * 0.025),
+                  ),
                 ),
               ),
             ),
