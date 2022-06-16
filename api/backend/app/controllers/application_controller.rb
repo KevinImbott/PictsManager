@@ -2,9 +2,6 @@
 
 class ApplicationController < ActionController::API
   include JsonWebToken
-  include Pundit
-
-  before_action :authenticate_request
 
   private
 
