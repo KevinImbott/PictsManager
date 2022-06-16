@@ -1,27 +1,21 @@
-ActiveAdmin.register Picture do
+ActiveAdmin.register Album do
   show do
     attributes_table do
       row :id
       row :name
-      row :description
       row :owner do |picture|
         link_to picture.owner.pseudo, admin_user_path(picture.owner)
       end
-      row :image do |picture|
-        if picture.img.attached?
-          image_tag url_for(picture.img)
-        end
-      end
       row :created_at
       row :updated_at
-      table_for picture.invited_users do
-        column 'Invited Users' do |user|
-          link_to user.pseudo, admin_user_path(user.id)
+      table_for album.pictures do
+        column 'Pictures' do |picture|
+          link_to picture.name, admin_picture_path(picture.id)
         end
       end
-      table_for picture.albums do
-        column 'Albums' do |album|
-          link_to "Album #{album.id}: #{album.name}", admin_album_path(album.id)
+      table_for album.invited_users do
+        column 'Users' do |user|
+          link_to user.pseudo, admin_user_path(user.id)
         end
       end
     end
@@ -31,12 +25,12 @@ ActiveAdmin.register Picture do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-  # permit_params :name, :description, :owner_id
+  # permit_params :name, :owner_id
   #
   # or
   #
   # permit_params do
-  #   permitted = [:name, :description, :owner_id]
+  #   permitted = [:name, :owner_id]
   #   permitted << :other if params[:action] == 'create' && current_user.admin?
   #   permitted
   # end
