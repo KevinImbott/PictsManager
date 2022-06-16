@@ -29,6 +29,10 @@ class PicturePolicy < ApplicationPolicy
     picture.owner == user
   end
 
+  def add_or_delete_album?
+    picture.owner == user
+  end
+
   def destroy?
     picture.owner == user
   end
