@@ -1,9 +1,18 @@
 # frozen_string_literal: true
 
-class ApplicationController < ActionController::API
+class AuthenticatedController < ApplicationController
   include JsonWebToken
+  include Pundit
+
+  before_action :authenticate_request
+
+  helper_method :current_user
 
   private
+
+  def current_user
+    @current_user ||= authenticate_request
+  end
 
   def authenticate_request
     header = request.headers['Authorization']

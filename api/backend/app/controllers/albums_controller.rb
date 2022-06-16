@@ -1,17 +1,14 @@
 # frozen_string_literal: true
 
-class AlbumsController < ApplicationController
+class AlbumsController < AuthenticatedController
   def index
-    albums = @current_user.albums
-    render json: albums,  each_serializer: AlbumPreviewSerializer
+    albums = policy_scope(@current_user.albums)
+    render json: albums, each_serializer: AlbumPreviewSerializer
   end
 
   def show
-    if album&.owner == @current_user
-      render json: album
-    else
-      render json: { message: 'Unauthorized' }, status: :unauthorized
-    end
+    authorize album
+    render json: album
   end
 
   def create
@@ -27,39 +24,30 @@ class AlbumsController < ApplicationController
   end
 
   def add_or_delete_user
-    if album&.owner == @current_user
-      if user_exist_in_album?
-        album.users.delete(user)
-        album.save
-        render json: { message: 'User Deleted' }
-      else
-        album.users.push(user)
-        album.save
-        render json: { message: 'User Added' }
-      end
+    authorize album
+    if user_exist_in_album?
+      album.users.delete(user)
+      album.save
+      render json: { message: 'User Deleted' }
     else
-      render json: { message: 'Unauthorized' }, status: :unauthorized
+      album.users.push(user)
+      album.save
+      render json: { message: 'User Added' }
     end
   end
 
   def update
-    if album&.owner == @current_user
-      unless album&.update(permitted_params)
-        render json: { errors: album&.errors&.full_messages }, status: :unprocessable_entity
-      end
-    else
-      render json: { message: 'Unauthorized' }, status: :unauthorized
-    end
+    authorize album
+    return if album&.update(permitted_params)
+
+    render json: { errors: album&.errors&.full_messages }, status: :unprocessable_entity
   end
 
   def destroy
-    if album&.owner == @current_user
-      unless album&.destroy
-        render json: { errors: album&.errors&.full_messages }, status: :unprocessable_entity
-      end
-    else:ù
-      render json: { message: 'Unauthorized' }, status: :unauthorized
-    end
+    authorize album
+    return if album&.destroy
+
+    render json: { errors: album&.errors&.full_messages }, status: :unprocessable_entity
   end
 
   private

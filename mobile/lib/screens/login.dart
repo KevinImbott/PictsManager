@@ -76,12 +76,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
         body: Container(
           height: double.infinity,
           width: double.infinity,
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  colorFilter: ColorFilter.mode(
-                      Color.fromARGB(255, 0, 0, 0).withOpacity(0.5), BlendMode.dstATop),
-                  fit: BoxFit.cover,
-                  image: AssetImage(fond))),
+          
           child: Column(children: [
             Container(
               height: MediaQuery.of(context).size.height * 0.2,
@@ -137,6 +132,9 @@ class _MyLoginPageState extends State<MyLoginPage> {
                 style: TextStyle(
                     color: const Color.fromRGBO(236, 236, 254, 1),
                     fontSize: MediaQuery.of(context).size.height * 0.020),
+                    obscureText: true,
+                    enableSuggestions: false,
+                    autocorrect: false,
                 onChanged: (val) {
                   setState(() => password = val);
                 },
@@ -149,7 +147,6 @@ class _MyLoginPageState extends State<MyLoginPage> {
                   hintStyle:
                       const TextStyle(color: Color.fromRGBO(236, 236, 254, 1)),
                 ),
-                obscureText: true,
               ),
             ),
             SizedBox(
