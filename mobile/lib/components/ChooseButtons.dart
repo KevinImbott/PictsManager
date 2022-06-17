@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:mobile/components/Photos.dart';
 
 import 'Albums.dart';
 
@@ -62,7 +63,9 @@ class _ChooseButtonsProfileState extends State<ChooseButtonsProfile> {
           endIndent: 20,
         ),
         ),
-        Albums()
+        SizedBox(height: 5),
+
+        select==false?Albums():Photos()
       ],
       );
   }
