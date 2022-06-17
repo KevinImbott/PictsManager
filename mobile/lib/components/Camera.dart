@@ -12,10 +12,10 @@ import '../screens/ScreenChoosePicture.dart';
 class TakePictureScreen extends StatefulWidget {
   TakePictureScreen({
     Key? key,
-    this.cameras,
+    required this.cameras,
   }) : super(key: key);
 
-  List<CameraDescription>? cameras;
+  final List<CameraDescription> cameras;
 
   @override
   TakePictureScreenState createState() => TakePictureScreenState();
@@ -35,7 +35,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     // create a CameraController.
     _controller = CameraController(
       // Get a specific camera from the list of available cameras.
-      widget.cameras![2],
+      widget.cameras[2],
       // Define the resolution to use.
       ResolutionPreset.high,
     );
@@ -93,10 +93,10 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     camera = !camera;
     setState(() {
       if (camera) {
-        _controller = CameraController(widget.cameras![1], ResolutionPreset.high);
+        _controller = CameraController(widget.cameras[1], ResolutionPreset.high);
         _initializeControllerFuture = _controller.initialize();
       } else {
-        _controller = CameraController(widget.cameras![2], ResolutionPreset.high);
+        _controller = CameraController(widget.cameras[2], ResolutionPreset.high);
         _initializeControllerFuture = _controller.initialize();
       }
     });

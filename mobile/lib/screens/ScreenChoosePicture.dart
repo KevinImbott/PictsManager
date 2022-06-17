@@ -9,9 +9,9 @@ import 'package:mobile/screens/ScreenPreview.dart';
 import '../components/Navbar.dart';
 
 class ScreenChoosePicture extends StatefulWidget {
-  ScreenChoosePicture({ Key? key, this.cameras }) : super(key: key);
+  const ScreenChoosePicture({ Key? key, required this.cameras }) : super(key: key);
   
-  List<CameraDescription>? cameras;
+  final List<CameraDescription> cameras;
 
   @override
   State<ScreenChoosePicture> createState() => _ScreenChoosePicture();
