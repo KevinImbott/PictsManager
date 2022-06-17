@@ -42,7 +42,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
   void sendLogin () async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final response = await http.post(
-    Uri.parse('http://10.0.2.2:3000/login'),
+    Uri.parse('http://127.0.0.1:3000/login'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
@@ -78,6 +78,17 @@ class _MyLoginPageState extends State<MyLoginPage> {
           width: double.infinity,
           
           child: Column(children: [
+          ElevatedButton(
+          child: Text('HomePage'),
+            onPressed: () {
+              setState(() {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ScreenHome()),
+                );
+              });
+            },),
             Container(
               height: MediaQuery.of(context).size.height * 0.2,
               decoration: const BoxDecoration(

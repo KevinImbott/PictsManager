@@ -25,7 +25,7 @@ class _MyHomePageState extends State<MyHomePage> {
     void sendLogin () async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final response = await http.post(
-    Uri.parse('http://10.0.2.2:3000/signup'),
+    Uri.parse('http://127.0.0.1:3000/signup'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
