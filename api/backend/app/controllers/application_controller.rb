@@ -11,6 +11,11 @@ class ApplicationController < ActionController::Base
   rescue_from Pundit::NotDefinedError do
     render json: { error: 'Not Found' }, status: :not_found
   end
+
+  rescue_from Pundit::NotAuthorizedError do
+    render json: { error: 'You are not authorized to access this resource' }, status: :unauthorized
+  end
+
   private
 
   def authenticate_request
