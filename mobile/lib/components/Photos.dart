@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:mobile/screens/ShowPicture.dart';
 
 class PhotoItem {
   final String image;
@@ -9,17 +10,20 @@ class PhotoItem {
 }
 
 class Photos extends StatefulWidget {
-  const Photos({Key? key}) : super(key: key);
+  const Photos({Key? key,required this.album}) : super(key: key);
+  final bool album;
 
   @override
   State<Photos> createState() => _PhotosState();
 }
 
 class _PhotosState extends State<Photos> {
-  final List<PhotoItem> _items = [
-    PhotoItem(
-        "https://images.pexels.com/photos/1772973/pexels-photo-1772973.png?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-        "Stephan Seeber"),
+
+  bool get album => widget.album;
+
+  List<PhotoItem> TheListPictures=[];
+  List<PhotoItem> _itemsFolder = [PhotoItem("https://cdn-icons.flaticon.com/png/512/2821/premium/2821739.png?token=exp=1655490534~hmac=1d89745c4c14fd0c4135372e569d1d96", "Album Back")];
+  List<PhotoItem> _items = [
     PhotoItem(
         "https://images.pexels.com/photos/1758531/pexels-photo-1758531.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
         "Liam Gant"),
@@ -125,49 +129,20 @@ class _PhotosState extends State<Photos> {
         "Tobi"),    PhotoItem(
         "https://images.pexels.com/photos/707344/pexels-photo-707344.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
         "Eberhard"),
-    PhotoItem(
-        "https://images.pexels.com/photos/691034/pexels-photo-691034.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-        "Mirsad Mujanovic"),
-    PhotoItem(
-        "https://images.pexels.com/photos/655676/pexels-photo-655676.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-        "Vittorio Staffolani"),
-    PhotoItem(
-        "https://images.pexels.com/photos/592941/pexels-photo-592941.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-        "Tobi"),    PhotoItem(
-        "https://images.pexels.com/photos/707344/pexels-photo-707344.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-        "Eberhard"),
-    PhotoItem(
-        "https://images.pexels.com/photos/691034/pexels-photo-691034.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-        "Mirsad Mujanovic"),
-    PhotoItem(
-        "https://images.pexels.com/photos/655676/pexels-photo-655676.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-        "Vittorio Staffolani"),
-    PhotoItem(
-        "https://images.pexels.com/photos/592941/pexels-photo-592941.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-        "Tobi"),    PhotoItem(
-        "https://images.pexels.com/photos/707344/pexels-photo-707344.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-        "Eberhard"),
-    PhotoItem(
-        "https://images.pexels.com/photos/691034/pexels-photo-691034.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-        "Mirsad Mujanovic"),
-    PhotoItem(
-        "https://images.pexels.com/photos/655676/pexels-photo-655676.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-        "Vittorio Staffolani"),
-    PhotoItem(
-        "https://images.pexels.com/photos/592941/pexels-photo-592941.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-        "Tobi"),    PhotoItem(
-        "https://images.pexels.com/photos/707344/pexels-photo-707344.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-        "Eberhard"),
-    PhotoItem(
-        "https://images.pexels.com/photos/691034/pexels-photo-691034.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-        "Mirsad Mujanovic"),
-    PhotoItem(
-        "https://images.pexels.com/photos/655676/pexels-photo-655676.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-        "Vittorio Staffolani"),
-    PhotoItem(
-        "https://images.pexels.com/photos/592941/pexels-photo-592941.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-        "Tobi"),
   ];
+
+  @override
+  initState() {
+    super.initState();
+    if(album==true){
+      TheListPictures = [..._itemsFolder, ..._items];
+    }else{
+      TheListPictures = [..._items];
+    }
+    print(TheListPictures);
+  }
+
+
 
   Widget build(BuildContext context) {
     return
@@ -175,7 +150,7 @@ class _PhotosState extends State<Photos> {
         height: 380, // Some height
         child: Column(
       children: [
-    new Flexible(
+    Flexible(
     child:GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisSpacing: 0,
@@ -184,18 +159,29 @@ class _PhotosState extends State<Photos> {
         ),
         itemCount: _items.length,
         itemBuilder: (context, index) {
-          return new GestureDetector(
-            onTap: () {},
-            child: Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: NetworkImage(_items[index].image),
+          print(context);
+          print(index);
+
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ShowPicture(
+                        image: TheListPictures[index].image, name: TheListPictures[index].name),
+                  ),
+                );
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: NetworkImage(TheListPictures[index].image),
+                  ),
                 ),
               ),
-            ),
-          );
-        })
+            );
+          })
     )])
     );
   }

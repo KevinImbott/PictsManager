@@ -24,6 +24,15 @@ class _Profile extends State<Profile> {
           height: double.infinity,
           width: double.infinity,
           child: Column(children: [
+            Container(
+              decoration:  BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage("img/folderAlbums.png"),
+                  //image: NetworkImage("https://pixvisu.files.wordpress.com/2021/01/landscape3.jpg"),
+                ),
+              ),
+            ),
             ProfileInfos(username: (username), email: email),
             ChooseButtonsProfile(),
 

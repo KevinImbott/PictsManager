@@ -72,7 +72,8 @@ flutter:
     - img/Vector.png
     - img/Vectorbot.png
     - img/VectorProfile.png
-    
+    - img/folderAlbums.png
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

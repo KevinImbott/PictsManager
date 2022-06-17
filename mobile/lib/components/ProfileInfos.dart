@@ -48,7 +48,7 @@ class _ProfileInfosState extends State<ProfileInfos> {
             left: 20,
             child: CircleAvatar(
               radius: 46,
-              backgroundColor: Colors.orange.shade700,
+              backgroundColor: Color.fromRGBO(226, 101, 47, 1),
               child: Text(
                 initial,
                 style: TextStyle(
