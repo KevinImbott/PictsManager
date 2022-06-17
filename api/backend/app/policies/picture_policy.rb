@@ -2,7 +2,11 @@ class PicturePolicy < ApplicationPolicy
   class Scope < Scope
     # NOTE: Be explicit about which records you allow access to!
     def resolve
-      scope.all
+      scope.where(owner_id: user.id)
+    end
+
+    def resolve_all
+      scope.where.not(owner_id: user.id).map{ |album| album.pictures }.flatten
     end
   end
 

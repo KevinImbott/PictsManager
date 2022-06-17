@@ -4,6 +4,18 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session
   include JsonWebToken
 
+  rescue_from ActiveRecord::RecordNotFound do
+    render json: { error: 'Not Found' }, status: :not_found
+  end
+
+  rescue_from Pundit::NotDefinedError do
+    render json: { error: 'Not Found' }, status: :not_found
+  end
+
+  rescue_from Pundit::NotAuthorizedError do
+    render json: { error: 'You are not authorized to access this resource' }, status: :unauthorized
+  end
+
   private
 
   def authenticate_request
