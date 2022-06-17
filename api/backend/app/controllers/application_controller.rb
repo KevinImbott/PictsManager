@@ -8,6 +8,9 @@ class ApplicationController < ActionController::Base
     render json: { error: 'Not Found' }, status: :not_found
   end
 
+  rescue_from Pundit::NotDefinedError do
+    render json: { error: 'Not Found' }, status: :not_found
+  end
   private
 
   def authenticate_request
