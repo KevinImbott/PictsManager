@@ -15,10 +15,11 @@ ActiveAdmin.register_page "Dashboard" do
       end
 
       column do
-        panel "Last 10 Pictures" do
+        panel "Last 5 Pictures" do
           ul do
-            Picture.last(10).map do |picture|
-              li link_to "#{picture.name}", admin_picture_path(picture.id)
+            Picture.last(5).map do |picture|
+              img = image_tag url_for(picture.img), height: 100
+              li link_to img, admin_picture_path(picture.id)
             end
           end
         end
