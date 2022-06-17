@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/screens/login.dart';
 
 import 'Albums.dart';
 
@@ -41,7 +42,9 @@ class _ProfileInfosState extends State<ProfileInfos> {
                       Icons.sensor_door_rounded,
                       color: const Color.fromRGBO(2, 2, 39, 1),
                     ),
-                    onPressed: () {})),
+                    onPressed: () {
+                      _disconnectDialog(context);
+                    })),
           ),
           Positioned(
             top: 60,
@@ -101,4 +104,35 @@ class _ProfileInfosState extends State<ProfileInfos> {
       ),
     ]);
   }
+}
+
+
+void _disconnectDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: new Text("Déconnexion"),
+        content: Text("Voulez-vous vous déconnecter?"),
+        actions: <Widget>[
+          new FlatButton(
+            child: new Text("Annuler"),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          new FlatButton(
+            color: Colors.red,
+            child: new Text("Déconnexion"),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => Login()),
+              );            },
+          ),
+        ],
+      );
+    },
+  );
 }

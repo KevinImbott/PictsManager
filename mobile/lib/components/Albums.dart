@@ -52,7 +52,7 @@ class _AlbumsState extends State<Albums> {
                         onTap: () {
                           if (index == 0 && album == true) {
                             print("openAlert");
-                            _showDialog(context);
+                            _CreateAlbumDialog(context);
                           } else {
                             Navigator.push(
                               context,
@@ -99,7 +99,7 @@ class _AlbumsState extends State<Albums> {
   }
 }
 
-void _showDialog(BuildContext context) {
+void _CreateAlbumDialog(BuildContext context) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
