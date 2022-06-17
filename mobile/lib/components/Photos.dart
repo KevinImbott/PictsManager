@@ -148,7 +148,7 @@ class _PhotosState extends State<Photos> {
   Widget build(BuildContext context) {
     return
       SizedBox(
-        height: 380, // Some height
+        height: MediaQuery.of(context).size.height, // Some height
         child: Column(
       children: [
     Flexible(
