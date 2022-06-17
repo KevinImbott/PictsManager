@@ -182,6 +182,7 @@ class _PhotosState extends State<Photos> {
               },
               child: Container(
                 decoration: BoxDecoration(
+                  color: Color.fromRGBO(2, 2, 39, 1),
                   image: DecorationImage(
                     fit: BoxFit.cover,
                     image: NetworkImage(TheListPictures[index].image),
