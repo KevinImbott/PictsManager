@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:mobile/components/Navbar.dart';
 import 'package:mobile/screens/login.dart';
 import 'package:mobile/screens/register.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
     if (token != null) {
       return const MaterialApp(
         title: 'Welcome to Flutter',
-        home: ScreenHome()
+        home: Navbar()
       ); 
     }
     else {
