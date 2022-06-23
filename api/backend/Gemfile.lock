@@ -308,6 +308,7 @@ DEPENDENCIES
   byebug
   debug
   down
+  factory_bot
   factory_bot_rails
   faker
   image_processing
