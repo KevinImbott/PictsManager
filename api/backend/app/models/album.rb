@@ -4,6 +4,8 @@ class Album < ActiveRecord::Base
 
   validates :name, presence: true
 
+  self.per_page = 10
+
   def owner
     User.find_by(id: owner_id)
   end

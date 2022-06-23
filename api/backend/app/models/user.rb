@@ -3,6 +3,8 @@ require 'bcrypt'
 class User < ActiveRecord::Base
   has_secure_password
 
+  self.per_page = 25
+
   has_and_belongs_to_many :albums
   has_and_belongs_to_many :pictures
 

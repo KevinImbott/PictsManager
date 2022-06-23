@@ -4,7 +4,7 @@ class UsersController < AuthenticatedController
   def index
     @users = User.by_recently_created
     authorize @users
-    render json: @users, each_serializer: UserPreviewSerializer
+    render json: @users.paginate(page: params[:page]), each_serializer: UserPreviewSerializer
   end
 
   def show
