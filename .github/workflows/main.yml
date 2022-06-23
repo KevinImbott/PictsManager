@@ -1,6 +1,6 @@
 name: CI RSpec Tests
 
-on: [push]
+on: [push, pull_request]
   push:
    paths:
    - 'api/**'
