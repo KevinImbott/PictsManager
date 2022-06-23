@@ -24,17 +24,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (token != null) {
+    // if (token != null) {
       return const MaterialApp(
         title: 'Welcome to Flutter',
         home: ScreenHome()
       ); 
-    }
-    else {
-      return MaterialApp(
-        title: 'Welcome to Flutter',
-        home: MyLoginPage(token: token)
-      ); 
-    }
+    // }
+    // else {
+    //   return MaterialApp(
+    //     title: 'Welcome to Flutter',
+    //     home: MyLoginPage(token: token)
+    //   ); 
+    // }
   }
 }
