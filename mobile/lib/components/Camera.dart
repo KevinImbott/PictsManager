@@ -27,6 +27,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   late bool camera;
   int _selectedIndex = 0;
 
+
   @override
   void initState() {
     super.initState();
@@ -80,7 +81,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             builder: (context) => ScreenPreview(
               // Pass the automatically generated path to
               // the DisplayPictureScreen widget.
-              imagePath: image.path,
+              imgPath: image.path,
             ),
           ),
         );
