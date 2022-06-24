@@ -34,22 +34,22 @@ class _ScreenPreview extends State<ScreenPreview> {
   }
 
 
-  void sendPic() {
-    // var uri = Uri.parse('http://10.0.2.2:3000/pictures');
-    // var req = http.MultipartRequest('POST', uri);
-    // req.headers['Authorization'] = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozLCJleHAiOjE2NTUzNjc1NTV9.n2p11b2wYlPbzWnru8FYcyJpCxX6O8IyDNwLU70vMAM';
-    // req.fields['name'] = name.text;
-    // req.fields['description'] = description.text;
-    // req.files.add(await http.MultipartFile.fromPath('img', widget.imagePath, contentType: MediaType('image', 'jpeg')));
-    // req.send().then((response) {
-    //   if (response.statusCode == 201) print("Uploaded!");
-    //   else {
-    //     print(response.toString());
-    //     print('Buuggugggugu');
-    //   }
-    // }).catchError((onError) {
-    //   print(onError);
-    // });
+  void sendPic() async {
+    var uri = Uri.parse('http://10.0.2.2:3000/pictures');
+    var req = http.MultipartRequest('POST', uri);
+    req.headers['Authorization'] = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozLCJleHAiOjE2NTUzNjc1NTV9.n2p11b2wYlPbzWnru8FYcyJpCxX6O8IyDNwLU70vMAM';
+    req.fields['name'] = name.text;
+    req.fields['description'] = description.text;
+    req.files.add(await http.MultipartFile.fromPath('img', widget.imgPath, contentType: MediaType('image', 'png')));
+    req.send().then((response) {
+      if (response.statusCode == 201) print("Uploaded!");
+      else {
+        print(response.toString());
+        print('Buuggugggugu');
+      }
+    }).catchError((onError) {
+      print(onError);
+    });
   }
 
   Widget build(BuildContext context) {
@@ -102,7 +102,9 @@ class _ScreenPreview extends State<ScreenPreview> {
               )
             ],
           ),
-          Container(
+          SizedBox(
+            width: 550,
+            height: 400,
             child: img,
           ),
           TextButton(
@@ -112,7 +114,7 @@ class _ScreenPreview extends State<ScreenPreview> {
                 fixedSize: const Size(100, 40),
               ),
               onPressed: () {
-              
+                sendPic();
               },
               child: const Text('Submit')),
           

@@ -36,7 +36,7 @@ class _ScreenChoosePicture extends State<ScreenChoosePicture> {
       print('Failed to pick image: $e');
     }
     print("testCompressFile");
-
+    
     final result = await FlutterImageCompress.compressWithFile(
       imgPath,
       minWidth: 2,
