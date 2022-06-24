@@ -23,6 +23,10 @@ class Picture < ActiveRecord::Base
     users.reject { |user| user == owner }
   end
 
+  def all_invited
+    PicturePolicy::Scope.new(self, albums).resolve_all
+  end
+
   private
 
   def destroy_blob
