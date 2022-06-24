@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:mobile/components/Navbar.dart';
 import 'package:mobile/screens/login.dart';
 import 'package:mobile/screens/register.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -25,9 +26,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (token != null) {
-      return const MaterialApp(
+      return MaterialApp(
         title: 'Welcome to Flutter',
-        home: ScreenHome()
+        home: Navbar()
       ); 
     }
     else {

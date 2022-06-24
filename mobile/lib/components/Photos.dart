@@ -166,11 +166,9 @@ class _PhotosState extends State<Photos> {
             return GestureDetector(
               onTap: () {
                 if(index==0&&album==true){
-                Navigator.push(
+                Navigator.pop(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => Profile()
-                ));}else{
+                );}else{
                   Navigator.push(
                     context,
                     MaterialPageRoute(

@@ -118,8 +118,6 @@ class _ScreenPreview extends State<ScreenPreview> {
             )
           ],
         ),
-    
-      bottomNavigationBar: const Navbar(),
       backgroundColor: const Color.fromRGBO(2, 2, 39, 1),
     );
   }
