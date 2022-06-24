@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile/components/Navbar.dart';
 import 'package:mobile/screens/ScreenPreview.dart';
 
 import '../screens/ScreenChoosePicture.dart';
@@ -57,7 +58,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
       _selectedIndex = index;
     });
     if (_selectedIndex == 0) {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => ScreenChoosePicture(cameras: cameras)));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => Navbar(index: 1)));
     }
     if (_selectedIndex == 1) {
       savePicture();

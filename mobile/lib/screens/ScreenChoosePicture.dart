@@ -38,6 +38,7 @@ class _ScreenChoosePicture extends State<ScreenChoosePicture> {
       MaterialPageRoute(builder: (context) => TakePictureScreen(cameras: cameras)));
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
@@ -72,12 +73,7 @@ class _ScreenChoosePicture extends State<ScreenChoosePicture> {
           ),
         ),
       ),
-      bottomNavigationBar: const Navbar(),
       backgroundColor: const Color.fromRGBO(2, 2, 39, 1),
     );
   }
 }
-
-
-// Navigator.push(context, 
-//               MaterialPageRoute(builder: (context) => TakePictureScreen(cameras: widget.cameras)));
