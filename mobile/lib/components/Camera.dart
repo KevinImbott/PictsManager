@@ -27,6 +27,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   late bool camera;
   int _selectedIndex = 0;
 
+
   @override
   void initState() {
     super.initState();
