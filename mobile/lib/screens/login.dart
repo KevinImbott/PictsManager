@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:mobile/components/Navbar.dart';
 import 'package:mobile/screens/ScreenHome.dart';
 import 'package:mobile/screens/register.dart';
 import 'package:path/path.dart' as Path;
@@ -42,7 +43,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
   void sendLogin () async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final response = await http.post(
-    Uri.parse('http://127.0.0.1:3000/login'),
+    Uri.parse('http://10.0.2.2:3000/login'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
@@ -54,7 +55,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
     if (response.statusCode == 200) {
       print(json.decode(response.body)['token']);
       await prefs.setString('jwt', json.decode(response.body)['token']);
-      Navigator.push(context, MaterialPageRoute(builder: (context) => ScreenHome()));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => Navbar()));
     } else {
       print(response.statusCode);
       throw Exception('Failed to create USER.');
