@@ -1,9 +1,20 @@
 # frozen_string_literal: true
 
-class ApplicationController < ActionController::API
+class ApplicationController < ActionController::Base
+  protect_from_forgery with: :null_session
   include JsonWebToken
 
-  before_action :authenticate_request
+  rescue_from ActiveRecord::RecordNotFound do
+    render json: { error: 'Not Found' }, status: :not_found
+  end
+
+  rescue_from Pundit::NotDefinedError do
+    render json: { error: 'Not Found' }, status: :not_found
+  end
+
+  rescue_from Pundit::NotAuthorizedError do
+    render json: { error: 'You are not authorized to access this resource' }, status: :unauthorized
+  end
 
   private
 

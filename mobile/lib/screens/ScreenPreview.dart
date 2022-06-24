@@ -6,15 +6,16 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../components/Navbar.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 
 class ScreenPreview extends StatefulWidget {
-  const ScreenPreview({Key? key, required this.imgPath}) : super(key: key);
+  const ScreenPreview({Key? key, required this.imagePath}) : super(key: key);
 
-  final String imgPath;
+  final String imagePath;
 
   @override
   State<ScreenPreview> createState() => _ScreenPreview();
@@ -26,26 +27,34 @@ class _ScreenPreview extends State<ScreenPreview> {
   late Uri path;
   TextEditingController name = TextEditingController();
   TextEditingController description = TextEditingController();
+  late SharedPreferences prefs;
+  String token = '';
+  
 
   @override
   void initState() {
-    img = Image.file(File(widget.imgPath));
-    path = Uri.file(widget.imgPath);
+    initPref();
+    img = Image.file(File(widget.imagePath));
+    path = Uri.file(widget.imagePath);
   }
 
+  void initPref() async {
+    prefs = await SharedPreferences.getInstance();
+    token = prefs.getString('jwt') ?? '';
+  }
 
-  void sendPic() async {
-    var uri = Uri.parse('http://10.0.2.2:3000/pictures');
+  void sendPic () async {
+    prefs = await SharedPreferences.getInstance();
+    var uri = Uri.parse('http://127.0.0.1:3000/pictures');
     var req = http.MultipartRequest('POST', uri);
-    req.headers['Authorization'] = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozLCJleHAiOjE2NTUzNjc1NTV9.n2p11b2wYlPbzWnru8FYcyJpCxX6O8IyDNwLU70vMAM';
+    req.headers['Authorization'] = 'Bearer ' + token;
     req.fields['name'] = name.text;
     req.fields['description'] = description.text;
-    req.files.add(await http.MultipartFile.fromPath('img', widget.imgPath, contentType: MediaType('image', 'png')));
+    req.files.add(await http.MultipartFile.fromPath('img', widget.imagePath, contentType: MediaType('image', 'png')));
     req.send().then((response) {
       if (response.statusCode == 201) print("Uploaded!");
       else {
         print(response.toString());
-        print('Buuggugggugu');
       }
     }).catchError((onError) {
       print(onError);

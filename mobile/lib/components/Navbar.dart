@@ -2,6 +2,8 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile/screens/ScreenChoosePicture.dart';
 
+import '../screens/profile.dart';
+
 class Navbar extends StatefulWidget {
   const Navbar({Key? key}) : super(key: key);
 
@@ -21,6 +23,11 @@ class _NavbarState extends State<Navbar> {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => ScreenChoosePicture(cameras: cameras)));
+    }
+    if (_selectedIndex == 2) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const Profile()));
     }
   }
 

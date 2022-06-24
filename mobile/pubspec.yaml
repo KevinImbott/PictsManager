@@ -41,6 +41,7 @@ dependencies:
   path: ^1.8.0
   image: ^3.1.3
   flutter_image_compress: ^1.1.0
+  shared_preferences: ^2.0.15
 
 dev_dependencies:
   flutter_test:
@@ -72,7 +73,10 @@ flutter:
     - img/facebook.png
     - img/Vector.png
     - img/Vectorbot.png
-    
+    - img/folderAlbums.png
+    - img/VectorProfile.png
+    - img/folderCreate.png
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

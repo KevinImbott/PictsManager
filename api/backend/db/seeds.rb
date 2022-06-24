@@ -6,9 +6,23 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-
-u1 = User.create(pseudo: "test", email: "test@test.com", password: "password")
-u2 = User.create(pseudo: "test2", email: "test2@test2.com", password: "password")
-p1 = Picture.create(name: "First Picture", description: "This is my first Picture #seed")
-p2 = Picture.create(name: "Second Picture", description: "This is my second Picture #seed")
-a1 = Album.create(name: "First Album", users: [u1, u2], pictures: [p1, p2])
+10.times do |index|
+    name = Faker::JapaneseMedia::OnePiece.unique.character
+    u = User.create(pseudo: name, email: Faker::Internet.email(name: name), password: 'password')
+    Faker::Number.between(from: 1, to: 3).times do
+      a = Album.create(name: "Album de #{name}")
+      a.owner = u
+      a.users = [u]
+      Faker::Number.between(from: 1, to: 15).times do
+          picture_name = Faker::Creature::Cat.name
+          p = Picture.create(name: picture_name, description: Faker::JapaneseMedia::OnePiece.quote)
+          p.owner = u
+          p.users = [u]
+          file = Down.download(Faker::LoremFlickr.image)
+          p.img.attach(io: File.open(Down.download(Faker::LoremFlickr.image)), filename: picture_name)
+          p.save
+          a.pictures.push(p)
+          a.save
+      end
+    end
+end
