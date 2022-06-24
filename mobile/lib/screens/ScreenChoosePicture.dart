@@ -9,9 +9,8 @@ import 'package:mobile/screens/ScreenPreview.dart';
 import '../components/Navbar.dart';
 
 class ScreenChoosePicture extends StatefulWidget {
-  const ScreenChoosePicture({ Key? key, required this.cameras }) : super(key: key);
+  const ScreenChoosePicture({ Key? key }) : super(key: key);
   
-  final List<CameraDescription> cameras;
 
   @override
   State<ScreenChoosePicture> createState() => _ScreenChoosePicture();
@@ -33,6 +32,13 @@ class _ScreenChoosePicture extends State<ScreenChoosePicture> {
     }
   }
 
+  void initCam() async {
+    final cameras = await availableCameras();
+    Navigator.push(context,
+      MaterialPageRoute(builder: (context) => TakePictureScreen(cameras: cameras)));
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
@@ -51,8 +57,7 @@ class _ScreenChoosePicture extends State<ScreenChoosePicture> {
               iconSize: 80,
               color: const Color.fromRGBO(226, 101, 47, 1),
               onPressed: () {
-                Navigator.push(context,
-                MaterialPageRoute(builder: (context) => TakePictureScreen(cameras: widget.cameras)));
+                initCam();
               },),
               const VerticalDivider( color: Colors.white, thickness: 2, indent: 0, endIndent: 0),
               IconButton(icon: const Icon(Icons.photo_size_select_actual_rounded),
@@ -68,12 +73,7 @@ class _ScreenChoosePicture extends State<ScreenChoosePicture> {
           ),
         ),
       ),
-      bottomNavigationBar: const Navbar(),
       backgroundColor: const Color.fromRGBO(2, 2, 39, 1),
     );
   }
 }
-
-
-// Navigator.push(context, 
-//               MaterialPageRoute(builder: (context) => TakePictureScreen(cameras: widget.cameras)));

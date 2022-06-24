@@ -14,7 +14,34 @@ class ScreenHome extends StatefulWidget {
 
 class _ScreenHome extends State<ScreenHome> {
   SharedPreferences? prefs;
+  late int page;
+  late PaginationViewType paginationViewType;
+  late GlobalKey<PaginationViewState> key;
 
+  @override
+  void initState() {
+    page = -1;
+    paginationViewType = PaginationViewType.listView;
+    key = GlobalKey<PaginationViewState>();
+    super.initState();
+  }
+
+  Future<List<Pic>> pageFetch(int offset) async {
+    print(offset);
+    page = (offset / 20).round();
+    final Faker faker = Faker();
+    final List<Pic> nextPicsList = List.generate(
+      20,
+      (int index) => Pic(
+        faker.person.name() + ' - $page$index',
+        faker.internet.email(),
+      ),
+    );
+    await Future<List<Pic>>.delayed(Duration(seconds: 1));
+    return page == 5 ? [] : nextPicsList;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body:  PaginationView<Pic>(
@@ -47,24 +74,7 @@ class _ScreenHome extends State<ScreenHome> {
           child: CircularProgressIndicator(),
         ),
       ),
-      bottomNavigationBar: const Navbar(),
       backgroundColor: const Color.fromRGBO(2, 2, 39, 1),
     );
   }
 }
-
-// Container(
-//               margin: const EdgeInsets.only(left: 0, top: 10, right: 0, bottom: 10),
-//               width: 170,
-//               height: 50,
-//               child: ElevatedButton(
-//                 style: ElevatedButton.styleFrom(
-//                   primary: const Color.fromRGBO(226, 101, 47, 1)
-//                   ),
-//                 onPressed: () {
-
-//                 },
-//                 child: const Text('Prendre une photo',
-//                   style: TextStyle(color: Color.fromRGBO(236, 236, 254, 1) ))
-//                 )
-//             ),

@@ -35,10 +35,8 @@ class _ShowPicture extends State<ShowPicture> {
                         color: const Color.fromRGBO(226, 101, 47, 1),
                       ),
                       onPressed: () {
-                        Navigator.push(
+                        Navigator.pop(
                           context,
-                          MaterialPageRoute(
-                            builder: (context) => Profile()),
                         );
                       })),
           ),

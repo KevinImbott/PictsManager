@@ -37,7 +37,6 @@ class _Profile extends State<Profile> {
             ChooseButtonsProfile(),
 
           ])),
-      bottomNavigationBar: const Navbar(),
       backgroundColor: const Color.fromRGBO(2, 2, 39, 1),
     );
   }
