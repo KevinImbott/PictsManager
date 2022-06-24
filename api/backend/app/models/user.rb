@@ -14,4 +14,12 @@ class User < ActiveRecord::Base
 
   scope :by_recently_created, -> { order(created_at: :desc).limit(20) }
   scope :by_earliest_created, -> { order(created_at: :asc).limit(20) }
+
+  def owned_albums
+    Album.where(owner_id: id)
+  end
+
+  def owned_pictures
+    Picture.where(owner_id: id)
+  end
 end
