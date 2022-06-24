@@ -22,33 +22,29 @@ class ScreenChoosePicture extends StatefulWidget {
 
 class _ScreenChoosePicture extends State<ScreenChoosePicture> {
   File? image;
-  String imgPath = '';
+  String imagePath = '';
   late String imgPathconvert = '';
 
   Future pickImage() async {
     try {
       final image = await ImagePicker().pickImage(source: ImageSource.gallery);
       if (image == null) return;
-      imgPath = image.path;
+      imagePath = image.path;
       final imageTmp = File(image.path);
       setState(() => this.image = imageTmp);
     } on PlatformException catch (e) {
       print('Failed to pick image: $e');
     }
     print("testCompressFile");
-    
+
     final result = await FlutterImageCompress.compressWithFile(
-      imgPath,
+      imagePath,
       minWidth: 2,
       minHeight: 5,
       quality: 1,
     );
 
-    print("dg,sdlkhj");
-    print(result?.length);
-    print("dlsg,sdlkgnsdljbnsdlknsdlk,bnkldsn");
-    print("aiai" + imgPath);
-    print(result);
+    
     return result;
   }
 
@@ -86,12 +82,12 @@ class _ScreenChoosePicture extends State<ScreenChoosePicture> {
                 color: const Color.fromRGBO(226, 101, 47, 1),
                 onPressed: () async {
                   await pickImage();
-                  print("good " + imgPath);
+                  print("good " + imagePath);
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              ScreenPreview(imgPath: imgPath)));
+                              ScreenPreview(imagePath: imagePath)));
                 },
               )
             ],
