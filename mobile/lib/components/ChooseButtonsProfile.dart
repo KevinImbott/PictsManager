@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile/components/Photos.dart';
 
 import 'Albums.dart';
+import 'package:http/http.dart' as http;
 
 class ChooseButtonsProfile extends StatefulWidget {
 

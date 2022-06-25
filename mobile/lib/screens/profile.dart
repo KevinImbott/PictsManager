@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
-import 'package:mobile/components/ChooseButtons.dart';
+import 'package:mobile/components/ChooseButtonsProfile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../components/Navbar.dart';
 import '../components/ProfileInfos.dart';
@@ -43,7 +43,6 @@ class _Profile extends State<Profile> {
       },
     ).then((response) async {
       if (response.statusCode == 200) {
-        print(response.body);
         var data = json.decode(response.body);
         setState(() {
           email = data["email"];

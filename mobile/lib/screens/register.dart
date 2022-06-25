@@ -98,6 +98,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   },
                   validator: (val) => val!.isEmpty ? 'Pseudo manquant' : null,
                   decoration: InputDecoration(
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey),
+                    ),
                     focusedBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.orange),
                     ),
@@ -122,6 +125,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   },
                   validator: (val) => val!.isEmpty ? 'Email manquant' : null,
                   decoration: InputDecoration(
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey),
+                    ),
                     focusedBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.orange),
                     ),
@@ -147,6 +153,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   },
                   validator: (val) => val!.isEmpty ? 'Password manquant' : null,
                   decoration: InputDecoration(
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey),
+                    ),
                     focusedBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.orange),
                     ),
@@ -176,6 +185,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   onChanged: (val) {},
                   validator: (val) => val!.isEmpty ? 'Password manquant' : null,
                   decoration: InputDecoration(
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey),
+                    ),
                     focusedBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.orange),
                     ),

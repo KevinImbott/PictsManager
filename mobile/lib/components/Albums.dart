@@ -1,13 +1,11 @@
+import 'dart:convert';
 import 'dart:ffi';
-
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:mobile/components/Photos.dart';
 import 'package:mobile/screens/ShowPicture.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class AlbumItem {
-  final String name;
-  AlbumItem(this.name);
-}
 
 class Albums extends StatefulWidget {
   const Albums({Key? key, required this.album}) : super(key: key);
@@ -19,21 +17,47 @@ class Albums extends StatefulWidget {
 
 class _AlbumsState extends State<Albums> {
   bool get album => widget.album;
+  late List albumsList = [];
+  late List _albumsCreate = [("Nouveau")];
+  late List _albums = [];
 
-  late List<AlbumItem> albumsList = [];
-  late List<AlbumItem> _albumsCreate = [AlbumItem("Nouveau")];
-  List<AlbumItem> _albums = [
-    AlbumItem("main"),
-    AlbumItem("Perso"),
-    AlbumItem("Work"),
-  ];
+
+  Future<void> _loadAlbums() async {
+    var prefs = await SharedPreferences.getInstance();
+    var token = prefs.getString('jwt') ?? '';
+
+    token =
+        "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2NTY3NzkxNTV9.ICLwkXgJcbyOL2YV8ScR9lixc0YqGzNmIwlsbDxGjXY";
+    var url = Uri.parse('http://172.168.1.6:3000/albums');
+    await http.get(url, headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    }).then((response) async {
+      if (response.statusCode == 200) {
+        var tagsJson = jsonDecode(response.body);
+        List tags = List.from(tagsJson);
+        List tList = [];
+        for (int i = 0; i < tags.length; i++) {
+          tList.add(tags[i]["name"]);
+        }
+        setState(() {
+          _albums.addAll(tList);
+          print(_albums);
+        });
+      }
+    });
+  }
+
   @override
-  initState() {
+  void initState() {
     super.initState();
-    albumsList = [..._albumsCreate, ..._albums];
+    _loadAlbums();
   }
 
   Widget build(BuildContext context) {
+    albumsList = [..._albumsCreate, ..._albums];
+
     return SizedBox(
         height: 380, // Some height
         child: Column(children: [
@@ -46,8 +70,6 @@ class _AlbumsState extends State<Albums> {
                   ),
                   itemCount: albumsList.length,
                   itemBuilder: (context, index) {
-                    print(context);
-                    print(index);
                     return GestureDetector(
                         onTap: () {
                           if (index == 0 && album == true) {
@@ -82,10 +104,10 @@ class _AlbumsState extends State<Albums> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Text(
-                                  albumsList[index].name,
+                                  albumsList[index],
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 24,
+                                      fontSize: 18,
                                       color: Color.fromRGBO(226, 101, 47, 1)),
                                 ),
                               ],
@@ -112,16 +134,14 @@ void _CreateAlbumDialog(BuildContext context) {
                 style: TextStyle(
                     color: const Color.fromRGBO(0, 0, 0, 1.0),
                     fontSize: MediaQuery.of(context).size.height * 0.020),
-                onChanged: (val) {
-
-                },
+                onChanged: (val) {},
                 decoration: InputDecoration(
                   labelStyle: TextStyle(
                       color: const Color.fromRGBO(14, 14, 14, 1.0),
                       fontSize: MediaQuery.of(context).size.height * 0.020),
                   hintText: "Nom d'album",
-                  hintStyle:
-                      const TextStyle(color: Color.fromRGBO(105,105,105, 1.0)),
+                  hintStyle: const TextStyle(
+                      color: Color.fromRGBO(105, 105, 105, 1.0)),
                 ),
               ),
             ])),

@@ -109,7 +109,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
               height: MediaQuery.of(context).size.height * 0.05,
               width: MediaQuery.of(context).size.width * 0.70,
               child: TextFormField(
-                style: TextStyle(
+                  style: TextStyle(
                     color: const Color.fromRGBO(236, 236, 254, 1),
                     fontSize: MediaQuery.of(context).size.height * 0.020),
                 onChanged: (val) {
@@ -117,6 +117,10 @@ class _MyLoginPageState extends State<MyLoginPage> {
                 },
                 validator: (val) => val!.isEmpty ? 'Email manquant' : null,
                 decoration: InputDecoration(
+
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey),
+                  ),
                   focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.orange),
                   ),
@@ -144,6 +148,9 @@ class _MyLoginPageState extends State<MyLoginPage> {
                 },
                 validator: (val) => val!.isEmpty ? 'Password manquant' : null,
                 decoration: InputDecoration(
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey),
+                  ),
                   focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.orange),
                   ),

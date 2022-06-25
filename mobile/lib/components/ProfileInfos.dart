@@ -33,6 +33,7 @@ class _ProfileInfosState extends State<ProfileInfos> {
     emailController.dispose();
     super.dispose();
   }
+
   @override
   void initState() {
     super.initState();
@@ -42,15 +43,15 @@ class _ProfileInfosState extends State<ProfileInfos> {
     // Start listening to changes.
   }
 
-
   Future<void> _loadProfil() async {
     var prefs = await SharedPreferences.getInstance();
     var token = prefs.getString('jwt') ?? '';
 
     token =
-    "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2NTY3NzkxNTV9.ICLwkXgJcbyOL2YV8ScR9lixc0YqGzNmIwlsbDxGjXY";
+        "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2NTY3NzkxNTV9.ICLwkXgJcbyOL2YV8ScR9lixc0YqGzNmIwlsbDxGjXY";
     var url = Uri.parse('http://172.168.1.6:3000/profile');
-    await http.put(
+    await http
+        .put(
       url,
       headers: {
         'Content-Type': 'application/json',
@@ -58,16 +59,17 @@ class _ProfileInfosState extends State<ProfileInfos> {
         'Authorization': 'Bearer $token',
       },
       body: jsonEncode(<String, String>{
-        'email': emailUpdate != null?emailController.text:email,
-        'pseudo': usernameUpdate != null?usernameController.text:username,
+        'email': emailUpdate != null ? emailController.text : email,
+        'pseudo': usernameUpdate != null ? usernameController.text : username,
         'password': "password",
       }),
-    ).then((response) async {
+    )
+        .then((response) async {
       print(response.statusCode);
       if (response.statusCode == 204) {
         print(response.body);
-        Navigator.push(context, MaterialPageRoute(builder: (context) => Navbar(index: 2)));
-
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Navbar(index: 2)));
       }
     });
   }
