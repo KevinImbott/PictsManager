@@ -88,7 +88,8 @@ class _MyLoginPageState extends State<MyLoginPage> {
             },),
             Container(
               height: MediaQuery.of(context).size.height * 0.2,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
+
                           image: DecorationImage(
                             image: AssetImage("img/Vector.png"),
                             fit: BoxFit.fitWidth,
@@ -115,15 +116,19 @@ class _MyLoginPageState extends State<MyLoginPage> {
               width: MediaQuery.of(context).size.width * 0.70,
               
               child: TextFormField(
-                
+
                 style: TextStyle(
                     color: const Color.fromRGBO(236, 236, 254, 1),
                     fontSize: MediaQuery.of(context).size.height * 0.020),
+
                 onChanged: (val) {
                   setState(() => email = val);
                 },
                 validator: (val) => val!.isEmpty ? 'Email manquant' : null,
                 decoration: InputDecoration(
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide:  BorderSide(color: Colors.orange),
+                  ),
                   labelStyle: TextStyle(
                       color: const Color.fromRGBO(236, 236, 254, 1),
                       fontSize: MediaQuery.of(context).size.height * 0.020),
@@ -148,7 +153,11 @@ class _MyLoginPageState extends State<MyLoginPage> {
                 },
                 validator: (val) => val!.isEmpty ? 'Password manquant' : null,
                 decoration: InputDecoration(
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide:  BorderSide(color: Colors.orange),
+                  ),
                   labelStyle: TextStyle(
+
                       color: const Color.fromRGBO(236, 236, 254, 1),
                       fontSize: MediaQuery.of(context).size.height * 0.020),
                   hintText: 'Password',
@@ -163,7 +172,9 @@ class _MyLoginPageState extends State<MyLoginPage> {
             Row(
               children: [
                 Checkbox(
-                  fillColor: MaterialStateProperty.resolveWith(getColor),
+                  activeColor:Color.fromRGBO(226, 101, 47, 1),
+                  checkColor: Colors.white,
+                  side: choix1==true?BorderSide(width: 16.0, color: Colors.lightBlue.shade50):BorderSide(width: 16.0, color: Colors.lightBlue.shade50),
                   onChanged: (bool? value) {
                     setState(() {
                       choix1 = !choix1;

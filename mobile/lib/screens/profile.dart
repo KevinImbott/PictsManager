@@ -16,8 +16,8 @@ class Profile extends StatefulWidget {
 }
 
 class _Profile extends State<Profile> {
-  late String username;
-  late String email ;
+  late String username="username";
+  late String email="email";
   int nbrObject = 17;
   bool buttonChoose = false;
 
