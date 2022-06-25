@@ -1,8 +1,11 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:mobile/components/DialogChooseAlbums.dart';
 import 'package:mobile/screens/ShowPicture.dart';
 import 'package:mobile/screens/profile.dart';
+
+import 'DialogAlbumOrShare.dart';
 
 class PhotoItem {
   final String image;
@@ -11,7 +14,7 @@ class PhotoItem {
 }
 
 class Photos extends StatefulWidget {
-  const Photos({Key? key,required this.album}) : super(key: key);
+  const Photos({Key? key, required this.album}) : super(key: key);
   final bool album;
 
   @override
@@ -19,11 +22,12 @@ class Photos extends StatefulWidget {
 }
 
 class _PhotosState extends State<Photos> {
-
   bool get album => widget.album;
 
-  List<PhotoItem> TheListPictures=[];
-  List<PhotoItem> _itemsFolder = [PhotoItem("https://i.ibb.co/N3fg5JQ/Back-Folder.png", "Album Back")];
+  List<PhotoItem> TheListPictures = [];
+  List<PhotoItem> _itemsFolder = [
+    PhotoItem("https://i.ibb.co/N3fg5JQ/Back-Folder.png", "Album Back")
+  ];
   List<PhotoItem> _items = [
     PhotoItem(
         "https://images.pexels.com/photos/1758531/pexels-photo-1758531.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
@@ -66,7 +70,8 @@ class _PhotosState extends State<Photos> {
         "Vittorio Staffolani"),
     PhotoItem(
         "https://images.pexels.com/photos/592941/pexels-photo-592941.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-        "Tobi"),    PhotoItem(
+        "Tobi"),
+    PhotoItem(
         "https://images.pexels.com/photos/326119/pexels-photo-326119.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
         "Pixabay"),
     PhotoItem(
@@ -80,7 +85,8 @@ class _PhotosState extends State<Photos> {
         "Vittorio Staffolani"),
     PhotoItem(
         "https://images.pexels.com/photos/592941/pexels-photo-592941.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-        "Tobi"),    PhotoItem(
+        "Tobi"),
+    PhotoItem(
         "https://images.pexels.com/photos/326119/pexels-photo-326119.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
         "Pixabay"),
     PhotoItem(
@@ -94,7 +100,8 @@ class _PhotosState extends State<Photos> {
         "Vittorio Staffolani"),
     PhotoItem(
         "https://images.pexels.com/photos/592941/pexels-photo-592941.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-        "Tobi"),    PhotoItem(
+        "Tobi"),
+    PhotoItem(
         "https://images.pexels.com/photos/707344/pexels-photo-707344.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
         "Eberhard"),
     PhotoItem(
@@ -105,7 +112,8 @@ class _PhotosState extends State<Photos> {
         "Vittorio Staffolani"),
     PhotoItem(
         "https://images.pexels.com/photos/592941/pexels-photo-592941.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-        "Tobi"),    PhotoItem(
+        "Tobi"),
+    PhotoItem(
         "https://images.pexels.com/photos/707344/pexels-photo-707344.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
         "Eberhard"),
     PhotoItem(
@@ -116,7 +124,8 @@ class _PhotosState extends State<Photos> {
         "Vittorio Staffolani"),
     PhotoItem(
         "https://images.pexels.com/photos/592941/pexels-photo-592941.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-        "Tobi"),    PhotoItem(
+        "Tobi"),
+    PhotoItem(
         "https://images.pexels.com/photos/707344/pexels-photo-707344.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
         "Eberhard"),
     PhotoItem(
@@ -127,7 +136,8 @@ class _PhotosState extends State<Photos> {
         "Vittorio Staffolani"),
     PhotoItem(
         "https://images.pexels.com/photos/592941/pexels-photo-592941.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-        "Tobi"),    PhotoItem(
+        "Tobi"),
+    PhotoItem(
         "https://images.pexels.com/photos/707344/pexels-photo-707344.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
         "Eberhard"),
   ];
@@ -135,61 +145,69 @@ class _PhotosState extends State<Photos> {
   @override
   initState() {
     super.initState();
-    if(album==true){
+    if (album == true) {
       TheListPictures = [..._itemsFolder, ..._items];
-    }else{
+    } else {
       TheListPictures = [..._items];
     }
     print(TheListPictures);
   }
 
-
-
   Widget build(BuildContext context) {
-    return
-      SizedBox(
+    return SizedBox(
         height: MediaQuery.of(context).size.height, // Some height
-        child: Column(
-      children: [
-    Flexible(
-    child:GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisSpacing: 0,
-          mainAxisSpacing: 0,
-          crossAxisCount: 3,
-        ),
-        itemCount: _items.length,
-        itemBuilder: (context, index) {
-          print(context);
-          print(index);
-
-            return GestureDetector(
-              onTap: () {
-                if(index==0&&album==true){
-                Navigator.pop(
-                  context,
-                );}else{
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ShowPicture(
-                          image: TheListPictures[index].image, name: TheListPictures[index].name),
-                    ),
-                  );
-                }
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Color.fromRGBO(2, 2, 39, 1),
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: NetworkImage(TheListPictures[index].image),
+        child: Column(children: [
+          Flexible(
+              child: GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisSpacing: 0,
+                    mainAxisSpacing: 0,
+                    crossAxisCount: 3,
                   ),
-                ),
-              ),
-            );
-          })
-    )])
-    );
+                  itemCount: _items.length,
+                  itemBuilder: (context, index) {
+                    print(context);
+                    print(index);
+
+                    return GestureDetector(
+                          onTap: () {
+                            if (index == 0 && album == true) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Profile()));
+                            } else {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ShowPicture(
+                                      image: TheListPictures[index].image,
+                                      name: TheListPictures[index].name),
+                                ),
+                              );
+                            }
+                          },
+                          onLongPress: () {
+                            print("Add albums");
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => DialogAlbumOrShare()),
+                            );
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Color.fromRGBO(2, 2, 39, 1),
+                              image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image:
+                                    NetworkImage(TheListPictures[index].image),
+                              ),
+                            ),
+                          ),
+                    );
+                  }))
+        ]));
   }
 }
+

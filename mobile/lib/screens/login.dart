@@ -83,11 +83,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
           child: Text('HomePage'),
             onPressed: () {
               setState(() {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => ScreenHome()),
-                );
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Navbar()));
               });
             },),
             Container(
