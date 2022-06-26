@@ -258,7 +258,7 @@ class _ProfileInfosState extends State<ProfileInfos> {
             ),
             SizedBox(height: 20),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 FlatButton(
                   child: new Text("Annuler",

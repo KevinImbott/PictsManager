@@ -280,27 +280,31 @@ class _AlbumsState extends State<Albums> {
                 ),
               ])),
           actions: <Widget>[
-            new FlatButton(
-              child: new Text(
-                "Annuler",
-                style: TextStyle(color: Colors.white),
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            new FlatButton(
-              color: Colors.orange,
-              child: new Text(
-                "Créer",
-                style: TextStyle(color: Colors.white),
-              ),
-              onPressed: () {
-                _createAlbum();
-              },
-            ),
-          ],
-        );
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                new FlatButton(
+                  child: new Text(
+                    "Annuler",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                new FlatButton(
+                  color: Colors.orange,
+                  child: new Text(
+                    "Créer",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: () {
+                    _createAlbum();
+                  },
+                ),
+              ],
+            )
+      ]);
       },
     );
   }

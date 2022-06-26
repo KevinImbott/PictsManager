@@ -16,9 +16,7 @@ class DialogAlbumOrShare extends StatefulWidget {
 }
 
 class _DialogAlbumOrShare extends State<DialogAlbumOrShare> {
-
   Widget build(BuildContext context) {
-
     return AlertDialog(
       backgroundColor: Color.fromRGBO(64, 63, 102, 1),
       content: Column(
@@ -75,22 +73,36 @@ class _DialogAlbumOrShare extends State<DialogAlbumOrShare> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: Color.fromRGBO(64, 63, 102, 1),
-          title: new Text("Supression",style: TextStyle(color: Colors.white),),
-          content: Text("Voulez-vous vous supprimer la photo?",style: TextStyle(color: Colors.white),),
-          actions: <Widget>[
-            new FlatButton(
-              child: new Text("Annuler",style: TextStyle(color: Colors.white),),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
+            backgroundColor: Color.fromRGBO(64, 63, 102, 1),
+            title: new Text(
+              "Suppression",
+              style: TextStyle(color: Colors.white),
             ),
-            new FlatButton(
-                color: Colors.orange,
-                child: new Text("Supprimer",style: TextStyle(color: Colors.white)),
-                onPressed: () {}),
-          ],
-        );
+            content: Text(
+              "Voulez-vous vous supprimer la photo?",
+              style: TextStyle(color: Colors.white),
+            ),
+            actions: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  new FlatButton(
+                    child: new Text(
+                      "Annuler",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  new FlatButton(
+                      color: Colors.orange,
+                      child: new Text("Supprimer",
+                          style: TextStyle(color: Colors.white)),
+                      onPressed: () {}),
+                ],
+              )
+            ]);
       },
     );
   }
