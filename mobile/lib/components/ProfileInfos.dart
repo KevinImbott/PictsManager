@@ -179,25 +179,28 @@ class _ProfileInfosState extends State<ProfileInfos> {
             style: TextStyle(color: Colors.white),
           ),
           actions: <Widget>[
-            new FlatButton(
-              child: new Text(
-                "Annuler",
-                style: TextStyle(color: Colors.white),
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            new FlatButton(
-              color: Colors.orange,
-              child: new Text("Déconnexion", style: TextStyle(color: Colors.white),),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Login()),
-                );
-              },
-            ),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [new FlatButton(
+                  child: new Text(
+                    "Annuler",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                  new FlatButton(
+                    color: Colors.orange,
+                    child: new Text("Déconnexion", style: TextStyle(color: Colors.white),),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Login()),
+                      );
+                    },
+                  ),]
+            )
           ],
         );
       },
