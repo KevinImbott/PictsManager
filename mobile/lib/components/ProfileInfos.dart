@@ -190,7 +190,7 @@ class _ProfileInfosState extends State<ProfileInfos> {
             ),
             new FlatButton(
               color: Colors.orange,
-              child: new Text("Déconnexion"),
+              child: new Text("Déconnexion", style: TextStyle(color: Colors.white),),
               onPressed: () {
                 Navigator.push(
                   context,
