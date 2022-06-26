@@ -1,5 +1,5 @@
 class PicturePreviewSerializer < ActiveModel::Serializer
-  attributes :id, :name, :url
+  attributes :id, :url
 
   include Rails.application.routes.url_helpers
 
