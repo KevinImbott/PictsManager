@@ -37,10 +37,6 @@ class _ProfileInfosState extends State<ProfileInfos> {
   @override
   void initState() {
     super.initState();
-    usernameController.text = username;
-    emailController.text = email;
-
-    // Start listening to changes.
   }
 
   Future<void> _loadProfil() async {
@@ -59,17 +55,16 @@ class _ProfileInfosState extends State<ProfileInfos> {
         'Authorization': 'Bearer $token',
       },
       body: jsonEncode(<String, String>{
-        'email': emailUpdate != null ? emailController.text : email,
-        'pseudo': usernameUpdate != null ? usernameController.text : username,
+        'email': emailUpdate != null ? emailController.text : emailUpdate,
+        'pseudo': usernameUpdate != null ? usernameController.text : usernameUpdate,
         'password': "password",
       }),
     )
         .then((response) async {
       print(response.statusCode);
       if (response.statusCode == 204) {
-        print(response.body);
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => Navbar(index: 2)));
+           context, MaterialPageRoute(builder: (context) => Navbar(index: 2)));
       }
     });
   }
@@ -155,7 +150,7 @@ class _ProfileInfosState extends State<ProfileInfos> {
                                       borderRadius: BorderRadius.circular(18.0),
                                       side: BorderSide(color: Colors.white)))),
                       onPressed: () {
-                        _changeUserDialog(context);
+                        _changeUserDialog(context, username,email);
                       },
                     )
                   ])) //Positioned
@@ -207,7 +202,11 @@ class _ProfileInfosState extends State<ProfileInfos> {
     );
   }
 
-  void _changeUserDialog(BuildContext context) {
+  void _changeUserDialog(BuildContext context, username, email) {
+    print(username);
+    usernameController.text = username;
+    emailController.text = email;
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
