@@ -7,7 +7,9 @@ import 'package:mobile/screens/profile.dart';
 
 
 class DialogChooseAlbums extends StatefulWidget {
-  const DialogChooseAlbums({Key? key}) : super(key: key);
+
+  const DialogChooseAlbums({Key? key, required this.albumsId}) : super(key: key);
+  final String albumsId;
 
   @override
   State<DialogChooseAlbums> createState() => _DialogChooseAlbums();
@@ -17,18 +19,10 @@ class _DialogChooseAlbums extends State<DialogChooseAlbums> {
   Map<String, bool> _itemsAlbums = {
     'Main': true,
     'Summer': false,
-    'Picture': false,    'Main': true,
-    'Summer': false,
-    'Picture': false,    'Main': true,
-    'Summer': false,
-    'Picture': false,    'Main': true,
-    'Summer': false,
-    'Picture': false,    'Main': true,
-    'Summer': false,
-    'Picture': false,    'Main': true,
-    'Summer': false,
     'Picture': false,
   };
+  String get albumsId => widget.albumsId;
+
 
   Widget build(BuildContext context) {
     return Dialog(

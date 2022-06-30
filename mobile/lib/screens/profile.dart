@@ -2,11 +2,13 @@ import 'dart:convert';
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
-import 'package:mobile/components/ChooseButtons.dart';
+import 'package:mobile/components/ChooseButtonsProfile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../components/Navbar.dart';
 import '../components/ProfileInfos.dart';
 import 'package:http/http.dart' as http;
+
+import '../components/loading.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -16,8 +18,8 @@ class Profile extends StatefulWidget {
 }
 
 class _Profile extends State<Profile> {
-  late String username;
-  late String email ;
+  late String username="username";
+  late String email="email";
   int nbrObject = 17;
   bool buttonChoose = false;
 
@@ -43,7 +45,6 @@ class _Profile extends State<Profile> {
       },
     ).then((response) async {
       if (response.statusCode == 200) {
-        print(response.body);
         var data = json.decode(response.body);
         setState(() {
           email = data["email"];
