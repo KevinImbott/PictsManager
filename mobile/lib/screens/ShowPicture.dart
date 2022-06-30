@@ -4,20 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:mobile/screens/profile.dart';
 
 class ShowPicture extends StatefulWidget {
-  const ShowPicture({Key? key, required this.image, required this.name, required this.description})
+  const ShowPicture({Key? key, required this.image, required this.id})
       : super(key: key);
 
   final String image;
-  final String name;
-  final String description;
+  final String id;
+
   @override
   State<ShowPicture> createState() => _ShowPicture();
 }
 
 class _ShowPicture extends State<ShowPicture> {
   String get image => widget.image;
-  String get name => widget.name;
-  String get description => widget.description;
+  String get id => widget.id;
+  String name ='';
+  String description ='';
 
 
   Widget build(BuildContext context) {

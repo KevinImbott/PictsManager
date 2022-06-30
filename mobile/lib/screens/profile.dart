@@ -8,6 +8,8 @@ import '../components/Navbar.dart';
 import '../components/ProfileInfos.dart';
 import 'package:http/http.dart' as http;
 
+import '../components/loading.dart';
+
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
 

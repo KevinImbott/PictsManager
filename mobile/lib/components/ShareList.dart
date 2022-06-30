@@ -1,8 +1,4 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:mobile/screens/ShowPicture.dart';
-import 'package:mobile/screens/profile.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -20,14 +16,13 @@ class _ShareList extends State<ShareList> {
   @override
   void initState() {
     super.initState();
-   // _feedCheckLoad();
+    // _feedCheckLoad();
   }
 
   Future<void> _saveDB() async {
     try {
       var prefs = await SharedPreferences.getInstance();
       var token = prefs.getString('jwt') ?? '';
-
     } catch (e) {
       print(e);
     }
@@ -63,35 +58,44 @@ class _ShareList extends State<ShareList> {
     print("============");
   }
 
-
   Widget build(BuildContext context) {
     print(context);
-    return Flexible(
-      child: _buildList()
-    );
+    return _buildList();
   }
 
   Widget _buildList() {
     return Container(
         height: 400,
-        child:ListView(
-      padding: EdgeInsets.zero,
-      children:  albums.keys.map((String key) {
-        return CheckboxListTile(
-          tileColor:albums[key]==true?Color.fromRGBO(226, 101, 47, 0.75):null,
-          secondary:  Icon(Icons.account_circle, color: albums[key]==false?Color.fromRGBO(226, 101, 47, 1):Colors.white),
-          title: Text(key, style: TextStyle(color: Colors.white),),
-          activeColor:Colors.white,
-          checkColor: Color.fromRGBO(226, 101, 47, 1),
-          side: albums[key]==true?BorderSide(width: 16.0, color: Colors.lightBlue.shade50):BorderSide(width: 16.0, color: Colors.lightBlue.shade50),
-          value: albums[key],
-          onChanged: (bool? value) {
-            setState(() {
-              albums[key] = value!;
-            });
-          },
-        );
-      }).toList(),
-    ));
+        child: SingleChildScrollView(
+            padding: EdgeInsets.zero,
+            child: Column(
+              children: albums.keys.map((String key) {
+                return CheckboxListTile(
+                  tileColor: albums[key] == true
+                      ? Color.fromRGBO(226, 101, 47, 0.75)
+                      : null,
+                  secondary: Icon(Icons.account_circle,
+                      color: albums[key] == false
+                          ? Color.fromRGBO(226, 101, 47, 1)
+                          : Colors.white),
+                  title: Text(
+                    key,
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  activeColor: Colors.white,
+                  checkColor: Color.fromRGBO(226, 101, 47, 1),
+                  side: albums[key] == true
+                      ? BorderSide(width: 16.0, color: Colors.lightBlue.shade50)
+                      : BorderSide(
+                          width: 16.0, color: Colors.lightBlue.shade50),
+                  value: albums[key],
+                  onChanged: (bool? value) {
+                    setState(() {
+                      albums[key] = value!;
+                    });
+                  },
+                );
+              }).toList(),
+            )));
   }
 }
