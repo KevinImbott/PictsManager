@@ -3,12 +3,12 @@
 class PicturesController < AuthenticatedController
   def home
     pictures = PicturePolicy::Scope.new(current_user, current_user.albums).resolve_all
-    render json: pictures, each_serializer: PicturePreviewSerializer
+    render json: pictures.paginate(page: params[:page]), each_serializer: PicturePreviewSerializer
   end
 
   def index
     pictures = policy_scope(current_user.pictures)
-    render json: pictures, each_serializer: PicturePreviewSerializer
+    render json: pictures.paginate(page: params[:page]), each_serializer: PicturePreviewSerializer
   end
 
   def show

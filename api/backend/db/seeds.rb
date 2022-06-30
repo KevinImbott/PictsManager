@@ -18,8 +18,9 @@
           p = Picture.create(name: picture_name, description: Faker::JapaneseMedia::OnePiece.quote)
           p.owner = u
           p.users = [u]
-          file = Down.download(Faker::LoremFlickr.image)
-          p.img.attach(io: File.open(Down.download(Faker::LoremFlickr.image)), filename: picture_name)
+          # file = Down.download(Faker::LoremFlickr.image)
+          # p.img.attach(io: File.open(Down.download(Faker::LoremFlickr.image)), filename: picture_name)
+          p.img.attach(io: File.open("./public/image.jpeg"), filename: picture_name)
           p.save
           a.pictures.push(p)
           a.save

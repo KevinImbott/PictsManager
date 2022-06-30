@@ -1,19 +1,18 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:mobile/components/Navbar.dart';
 import 'package:mobile/screens/ScreenHome.dart';
 import 'package:mobile/screens/register.dart';
 import 'package:path/path.dart' as Path;
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 String fond = 'img/Fondbleu.png';
 String pseudo = '';
 String email = '';
 String password = '';
 bool choix1 = false;
-
 
 class Login extends StatelessWidget {
   Login({Key? key, this.token}) : super(key: key);
@@ -36,30 +35,26 @@ class MyLoginPage extends StatefulWidget {
   _MyLoginPageState createState() => _MyLoginPageState();
 }
 
-
 class _MyLoginPageState extends State<MyLoginPage> {
-
-  void sendLogin () async {
+  void sendLogin() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    final response = await http.post(
-    Uri.parse('http://127.0.0.1:3000/login'),
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-    body: jsonEncode(<String, String>{
-      'email': email,
-      'password': password
-    })
-    );
+    final response = await http.post(Uri.parse('http://10.0.2.2:3000/login'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body:
+            jsonEncode(<String, String>{'email': email, 'password': password}));
     if (response.statusCode == 200) {
       print(json.decode(response.body)['token']);
       await prefs.setString('jwt', json.decode(response.body)['token']);
-      Navigator.push(context, MaterialPageRoute(builder: (context) => ScreenHome()));
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => Navbar()));
     } else {
       print(response.statusCode);
       throw Exception('Failed to create USER.');
     }
   }
+
   @override
   Widget build(BuildContext context) {
     Color getColor(Set<MaterialState> states) {
@@ -76,26 +71,23 @@ class _MyLoginPageState extends State<MyLoginPage> {
         body: Container(
           height: double.infinity,
           width: double.infinity,
-          
           child: Column(children: [
-          ElevatedButton(
-          child: Text('HomePage'),
-            onPressed: () {
-              setState(() {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => ScreenHome()),
-                );
-              });
-            },),
+            ElevatedButton(
+              child: Text('HomePage'),
+              onPressed: () {
+                setState(() {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Navbar()));
+                });
+              },
+            ),
             Container(
               height: MediaQuery.of(context).size.height * 0.2,
-              decoration: const BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage("img/Vector.png"),
-                            fit: BoxFit.fitWidth,
-                          ),
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("img/Vector.png"),
+                  fit: BoxFit.fitWidth,
+                ),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -116,10 +108,8 @@ class _MyLoginPageState extends State<MyLoginPage> {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.05,
               width: MediaQuery.of(context).size.width * 0.70,
-              
               child: TextFormField(
-                
-                style: TextStyle(
+                  style: TextStyle(
                     color: const Color.fromRGBO(236, 236, 254, 1),
                     fontSize: MediaQuery.of(context).size.height * 0.020),
                 onChanged: (val) {
@@ -127,6 +117,13 @@ class _MyLoginPageState extends State<MyLoginPage> {
                 },
                 validator: (val) => val!.isEmpty ? 'Email manquant' : null,
                 decoration: InputDecoration(
+
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.orange),
+                  ),
                   labelStyle: TextStyle(
                       color: const Color.fromRGBO(236, 236, 254, 1),
                       fontSize: MediaQuery.of(context).size.height * 0.020),
@@ -143,14 +140,20 @@ class _MyLoginPageState extends State<MyLoginPage> {
                 style: TextStyle(
                     color: const Color.fromRGBO(236, 236, 254, 1),
                     fontSize: MediaQuery.of(context).size.height * 0.020),
-                    obscureText: true,
-                    enableSuggestions: false,
-                    autocorrect: false,
+                obscureText: true,
+                enableSuggestions: false,
+                autocorrect: false,
                 onChanged: (val) {
                   setState(() => password = val);
                 },
                 validator: (val) => val!.isEmpty ? 'Password manquant' : null,
                 decoration: InputDecoration(
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.orange),
+                  ),
                   labelStyle: TextStyle(
                       color: const Color.fromRGBO(236, 236, 254, 1),
                       fontSize: MediaQuery.of(context).size.height * 0.020),
@@ -160,13 +163,16 @@ class _MyLoginPageState extends State<MyLoginPage> {
                 ),
               ),
             ),
-            SizedBox(
-                width: MediaQuery.of(context).size.height
-            ),
+            SizedBox(width: MediaQuery.of(context).size.height),
             Row(
               children: [
                 Checkbox(
-                  fillColor: MaterialStateProperty.resolveWith(getColor),
+                  activeColor: Color.fromRGBO(226, 101, 47, 1),
+                  checkColor: Colors.white,
+                  side: choix1 == true
+                      ? BorderSide(width: 16.0, color: Colors.lightBlue.shade50)
+                      : BorderSide(
+                          width: 16.0, color: Colors.lightBlue.shade50),
                   onChanged: (bool? value) {
                     setState(() {
                       choix1 = !choix1;
@@ -231,10 +237,8 @@ class _MyLoginPageState extends State<MyLoginPage> {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => MyHomePage()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => MyHomePage()));
               },
               child: Container(
                 height: MediaQuery.of(context).size.height * 0.05,
@@ -250,16 +254,15 @@ class _MyLoginPageState extends State<MyLoginPage> {
               ),
             ),
             SizedBox(
-                height: MediaQuery.of(context).size.height * 0.1,
-                ),
+              height: MediaQuery.of(context).size.height * 0.1,
+            ),
             Container(
-              
               height: MediaQuery.of(context).size.height * 0.14,
               decoration: const BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage("img/Vectorbot.png"),
-                            fit: BoxFit.fitWidth,
-                          ),
+                image: DecorationImage(
+                  image: AssetImage("img/Vectorbot.png"),
+                  fit: BoxFit.fitWidth,
+                ),
               ),
             ),
           ]),

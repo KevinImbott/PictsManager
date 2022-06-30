@@ -3,7 +3,7 @@
 class AlbumsController < AuthenticatedController
   def index
     albums = policy_scope(@current_user.albums)
-    render json: albums, each_serializer: AlbumPreviewSerializer
+    render json: albums.paginate(page: params[:page]), each_serializer: AlbumPreviewSerializer
   end
 
   def show
