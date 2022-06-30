@@ -14,7 +14,8 @@ class ScreenHome extends StatefulWidget {
 
 class _ScreenHome extends State<ScreenHome> {
   SharedPreferences? prefs;
-  late int page;
+  bool morePage;
+  int page;
   late PaginationViewType paginationViewType;
   late GlobalKey<PaginationViewState> key;
 
