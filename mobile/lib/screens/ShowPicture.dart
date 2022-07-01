@@ -4,18 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:mobile/screens/profile.dart';
 
 class ShowPicture extends StatefulWidget {
-  const ShowPicture({Key? key, required this.image, required this.name})
+  const ShowPicture({Key? key, required this.image, required this.id})
       : super(key: key);
 
   final String image;
-  final String name;
+  final String id;
+
   @override
   State<ShowPicture> createState() => _ShowPicture();
 }
 
 class _ShowPicture extends State<ShowPicture> {
   String get image => widget.image;
-  String get name => widget.name;
+  String get id => widget.id;
+  String name ='';
+  String description ='';
+
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,17 +39,15 @@ class _ShowPicture extends State<ShowPicture> {
                         color: const Color.fromRGBO(226, 101, 47, 1),
                       ),
                       onPressed: () {
-                        Navigator.push(
+                        Navigator.pop(
                           context,
-                          MaterialPageRoute(
-                            builder: (context) => Profile()),
                         );
                       })),
           ),
             Column(
               children: [
                 AspectRatio(
-                  aspectRatio: 1,
+                  aspectRatio: 2,
                   child: Container(
                     width: double.infinity,
                     child: Image(
@@ -54,11 +56,19 @@ class _ShowPicture extends State<ShowPicture> {
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.all(20.0),
-                  child: Center(
+                  margin: const EdgeInsets.all(5.0),
                     child: Text(
                       name,
                       style: TextStyle(fontSize: 40, color: Color.fromRGBO(226, 101, 47, 1)),
+                    ),
+
+                ),
+                Container(
+                  margin: const EdgeInsets.all(10.0),
+                  child: Center(
+                    child: Text(
+                      description,
+                      style: TextStyle(fontSize: 20, color: Color.fromRGBO(226, 101, 47, 1)),
                     ),
                   ),
                 ),

@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile/components/Navbar.dart';
 import 'package:mobile/screens/ScreenPreview.dart';
 
 import '../screens/ScreenChoosePicture.dart';

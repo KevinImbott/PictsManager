@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile/components/Photos.dart';
 
 import 'Albums.dart';
+import 'package:http/http.dart' as http;
 
 class ChooseButtonsProfile extends StatefulWidget {
 
@@ -68,5 +69,29 @@ class _ChooseButtonsProfileState extends State<ChooseButtonsProfile> {
         select==false?Albums(album: !select,):Photos(album: !select)
       ],
       );
+  }
+  void _chooseDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Color.fromRGBO(64, 63, 102, 1),
+          title: new Text("Supression",style: TextStyle(color: Colors.white),),
+          content: Text("Voulez-vous vous supprimer la photo?",style: TextStyle(color: Colors.white),),
+          actions: <Widget>[
+            new FlatButton(
+              child: new Text("Annuler",style: TextStyle(color: Colors.white),),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            new FlatButton(
+                color: Colors.orange,
+                child: new Text("Supprimer",style: TextStyle(color: Colors.white)),
+                onPressed: () {}),
+          ],
+        );
+      },
+    );
   }
 }

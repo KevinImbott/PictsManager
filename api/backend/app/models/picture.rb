@@ -9,6 +9,8 @@ class Picture < ActiveRecord::Base
 
   after_destroy :destroy_blob
 
+  self.per_page = 10
+
   def owner
     User.find_by(id: owner_id)
   end
@@ -19,6 +21,10 @@ class Picture < ActiveRecord::Base
 
   def invited_users
     users.reject { |user| user == owner }
+  end
+
+  def all_invited
+    PicturePolicy::Scope.new(self, albums).resolve_all
   end
 
   private

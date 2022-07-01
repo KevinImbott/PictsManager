@@ -48,6 +48,13 @@ class _ScreenChoosePicture extends State<ScreenChoosePicture> {
     return image;
   }
 
+  void initCam() async {
+    final cameras = await availableCameras();
+    Navigator.push(context,
+      MaterialPageRoute(builder: (context) => TakePictureScreen(cameras: cameras)));
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
@@ -61,44 +68,27 @@ class _ScreenChoosePicture extends State<ScreenChoosePicture> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              IconButton(
-                icon: const Icon(Icons.photo_camera),
-                iconSize: 80,
-                color: const Color.fromRGBO(226, 101, 47, 1),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              TakePictureScreen(cameras: widget.cameras)));
-                },
-              ),
-              const VerticalDivider(
-                  color: Colors.white, thickness: 2, indent: 0, endIndent: 0),
-              IconButton(
-                icon: const Icon(Icons.photo_size_select_actual_rounded),
-                iconSize: 80,
-                color: const Color.fromRGBO(226, 101, 47, 1),
-                onPressed: () async {
-                  Image tmpImage = await pickImage();
-                  print("good " + imagePath);
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              ScreenPreview(image: tmpImage)));
-                },
-              )
+              IconButton(icon: const Icon(Icons.photo_camera),
+              iconSize: 80,
+              color: const Color.fromRGBO(226, 101, 47, 1),
+              onPressed: () {
+                initCam();
+              },),
+              const VerticalDivider( color: Colors.white, thickness: 2, indent: 0, endIndent: 0),
+              IconButton(icon: const Icon(Icons.photo_size_select_actual_rounded),
+              iconSize: 80,
+              color: const Color.fromRGBO(226, 101, 47, 1),
+              onPressed: () async {
+                await pickImage();
+                imagePath != '' ?
+                Navigator.push(context,
+                MaterialPageRoute(builder: (context) => ScreenPreview(image: imagePath))) : null;
+              },)
             ],
           ),
         ),
       ),
-      bottomNavigationBar: const Navbar(),
       backgroundColor: const Color.fromRGBO(2, 2, 39, 1),
     );
   }
 }
-
-
-// Navigator.push(context, 
-//               MaterialPageRoute(builder: (context) => TakePictureScreen(cameras: widget.cameras)));
