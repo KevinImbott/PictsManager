@@ -4,8 +4,9 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:image/image.dart' as img2;
 import 'package:mobile/components/Camera.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:image_picker/image_picker.dart' as img;
 import 'package:mobile/screens/ScreenPreview.dart';
 
 import '../components/Navbar.dart';
@@ -27,7 +28,8 @@ class _ScreenChoosePicture extends State<ScreenChoosePicture> {
 
   Future pickImage() async {
     try {
-      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      final image =
+          await img.ImagePicker().pickImage(source: img.ImageSource.gallery);
       if (image == null) return;
       imagePath = image.path;
       final imageTmp = File(image.path);
@@ -39,17 +41,14 @@ class _ScreenChoosePicture extends State<ScreenChoosePicture> {
 
     final result = await FlutterImageCompress.compressWithFile(
       imagePath,
-      minWidth: 2,
-      minHeight: 5,
       quality: 1,
     );
 
-    
-    return result;
+    Image image = Image.memory(result!);
+    return image;
   }
 
   Widget build(BuildContext context) {
-    testCompressFile(File(imgPath)) => imgPathconvert;
     return Scaffold(
       body: Container(
         alignment: Alignment.center,
@@ -81,13 +80,13 @@ class _ScreenChoosePicture extends State<ScreenChoosePicture> {
                 iconSize: 80,
                 color: const Color.fromRGBO(226, 101, 47, 1),
                 onPressed: () async {
-                  await pickImage();
+                  Image tmpImage = await pickImage();
                   print("good " + imagePath);
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              ScreenPreview(imagePath: imagePath)));
+                              ScreenPreview(image: tmpImage)));
                 },
               )
             ],

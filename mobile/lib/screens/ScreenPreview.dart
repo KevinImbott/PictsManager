@@ -13,9 +13,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 
 class ScreenPreview extends StatefulWidget {
-  const ScreenPreview({Key? key, required this.imagePath}) : super(key: key);
+  const ScreenPreview({Key? key, required this.image}) : super(key: key);
 
-  final String imagePath;
+  final Image image;
 
   @override
   State<ScreenPreview> createState() => _ScreenPreview();
@@ -29,13 +29,12 @@ class _ScreenPreview extends State<ScreenPreview> {
   TextEditingController description = TextEditingController();
   late SharedPreferences prefs;
   String token = '';
-  
 
   @override
   void initState() {
     initPref();
-    img = Image.file(File(widget.imagePath));
-    path = Uri.file(widget.imagePath);
+    img = widget.image;
+    // path = widget.image.path;
   }
 
   void initPref() async {
@@ -43,16 +42,17 @@ class _ScreenPreview extends State<ScreenPreview> {
     token = prefs.getString('jwt') ?? '';
   }
 
-  void sendPic () async {
+  void sendPic() async {
     prefs = await SharedPreferences.getInstance();
     var uri = Uri.parse('http://127.0.0.1:3000/pictures');
     var req = http.MultipartRequest('POST', uri);
     req.headers['Authorization'] = 'Bearer ' + token;
     req.fields['name'] = name.text;
     req.fields['description'] = description.text;
-    req.files.add(await http.MultipartFile.fromPath('img', widget.imagePath, contentType: MediaType('image', 'png')));
+    // req.files.add(await http.MultipartFile.fromPath('img', widget.image, contentType: MediaType('image', 'png')));
     req.send().then((response) {
-      if (response.statusCode == 201) print("Uploaded!");
+      if (response.statusCode == 201)
+        print("Uploaded!");
       else {
         print(response.toString());
       }
@@ -62,7 +62,6 @@ class _ScreenPreview extends State<ScreenPreview> {
   }
 
   Widget build(BuildContext context) {
-    
     return Scaffold(
       body: Column(
         children: [
@@ -114,7 +113,7 @@ class _ScreenPreview extends State<ScreenPreview> {
           SizedBox(
             width: 550,
             height: 400,
-            child: img,
+            child: widget.image,
           ),
           TextButton(
               style: TextButton.styleFrom(
@@ -126,7 +125,7 @@ class _ScreenPreview extends State<ScreenPreview> {
                 sendPic();
               },
               child: const Text('Submit')),
-          
+
           //add container for image
         ],
       ),
