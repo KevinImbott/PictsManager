@@ -3,7 +3,7 @@ ActiveAdmin.register Picture do
     attributes_table do
       row :id
       row :name
-      row :description
+      row :tags
       row :owner do |picture|
         link_to picture.owner.pseudo, admin_user_path(picture.owner)
       end

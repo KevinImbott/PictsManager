@@ -2,9 +2,9 @@
 
 class UsersController < AuthenticatedController
   def index
-    @users = User.by_recently_created
-    authorize @users
-    render json: @users, each_serializer: UserPreviewSerializer
+    users = User.all
+    authorize users
+    render json: handle_sort(users).paginate(page: params[:page]), each_serializer: UserPreviewSerializer
   end
 
   def show
@@ -26,12 +26,18 @@ class UsersController < AuthenticatedController
   end
 
   def profile
-    render json: current_user
+    render json: current_user, serializer: ProfileSerializer
   end
 
   private
 
   def permitted_params
     params.permit([:email, :pseudo, :password])
+  end
+
+  def handle_sort(users)
+    return users if params[:pseudo].nil?
+
+    users.where('pseudo ILIKE ?', "%#{params[:pseudo]}%") if params[:pseudo]
   end
 end

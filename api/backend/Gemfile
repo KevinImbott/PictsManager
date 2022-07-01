@@ -72,6 +72,8 @@ gem 'activeadmin'
 
 # Factories for Rspec
 gem 'factory_bot'
+# Pagination
+gem 'will_paginate', '~> 3.3'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

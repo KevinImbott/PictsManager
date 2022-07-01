@@ -1,11 +1,11 @@
 class PicturePreviewSerializer < ActiveModel::Serializer
-  attributes :id, :name, :url
+  attributes :id, :url
 
   include Rails.application.routes.url_helpers
 
   def url
     return unless object.img.key
 
-    ActiveStorage::Blob.service.path_for(object&.img&.key)
+    rails_blob_path(object.img, only_path: true)
   end
 end

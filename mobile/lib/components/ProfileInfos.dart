@@ -1,7 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:mobile/screens/login.dart';
+import 'package:mobile/screens/profile.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
-import 'Albums.dart';
+import 'Navbar.dart';
 
 class ProfileInfos extends StatefulWidget {
   const ProfileInfos({Key? key, required this.username, required this.email})
@@ -17,6 +22,52 @@ class _ProfileInfosState extends State<ProfileInfos> {
   String get username => widget.username;
   String get email => widget.email;
   String get initial => widget.username.substring(0, 2).toUpperCase();
+  String usernameUpdate = "";
+  String emailUpdate = "";
+  final usernameController = TextEditingController();
+  final emailController = TextEditingController();
+
+  @override
+  void dispose() {
+    usernameController.dispose();
+    emailController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  Future<void> _loadProfil() async {
+    var prefs = await SharedPreferences.getInstance();
+    var token = prefs.getString('jwt') ?? '';
+
+    token =
+        "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2NTY3NzkxNTV9.ICLwkXgJcbyOL2YV8ScR9lixc0YqGzNmIwlsbDxGjXY";
+    var url = Uri.parse('http://172.168.1.6:3000/profile');
+    await http
+        .put(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode(<String, String>{
+        'email': emailUpdate != null ? emailController.text : emailUpdate,
+        'pseudo': usernameUpdate != null ? usernameController.text : usernameUpdate,
+        'password': "password",
+      }),
+    )
+        .then((response) async {
+      print(response.statusCode);
+      if (response.statusCode == 204) {
+        Navigator.push(
+           context, MaterialPageRoute(builder: (context) => Navbar(index: 2)));
+      }
+    });
+  }
 
   Widget build(BuildContext context) {
     return Column(children: [
@@ -84,55 +135,155 @@ class _ProfileInfosState extends State<ProfileInfos> {
                       textAlign: TextAlign.left,
                     ),
                     TextButton(
-                        child: Text("MODIFIER".toUpperCase(),
-                            style: TextStyle(fontSize: 10)),
-                        style: ButtonStyle(
-                            padding: MaterialStateProperty.all<EdgeInsets>(
-                                EdgeInsets.only(right: 35, left: 35)),
-                            foregroundColor:
-                                MaterialStateProperty.all<Color>(Colors.black),
-                            backgroundColor:
-                                MaterialStateProperty.all<Color>(Colors.white),
-                            shape: MaterialStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(18.0),
-                                    side: BorderSide(color: Colors.white)))),
-                        onPressed: () => null),
+                      child: Text("MODIFIER".toUpperCase(),
+                          style: TextStyle(fontSize: 10)),
+                      style: ButtonStyle(
+                          padding: MaterialStateProperty.all<EdgeInsets>(
+                              EdgeInsets.only(right: 35, left: 35)),
+                          foregroundColor:
+                              MaterialStateProperty.all<Color>(Colors.black),
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.white),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(18.0),
+                                      side: BorderSide(color: Colors.white)))),
+                      onPressed: () {
+                        _changeUserDialog(context, username,email);
+                      },
+                    )
                   ])) //Positioned
         ],
       ),
     ]);
   }
-}
 
+  void _disconnectDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Color.fromRGBO(64, 63, 102, 1),
+          title: new Text(
+            "Déconnexion",
+            style: TextStyle(color: Colors.white),
+          ),
+          content: Text(
+            "Voulez-vous vous déconnecter?",
+            style: TextStyle(color: Colors.white),
+          ),
+          actions: <Widget>[
+            Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [new FlatButton(
+                  child: new Text(
+                    "Annuler",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                  new FlatButton(
+                    color: Colors.orange,
+                    child: new Text("Déconnexion", style: TextStyle(color: Colors.white),),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Login()),
+                      );
+                    },
+                  ),]
+            )
+          ],
+        );
+      },
+    );
+  }
 
-void _disconnectDialog(BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: new Text("Déconnexion"),
-        content: Text("Voulez-vous vous déconnecter?"),
-        actions: <Widget>[
-          new FlatButton(
-            child: new Text("Annuler"),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
+  void _changeUserDialog(BuildContext context, username, email) {
+    print(username);
+    usernameController.text = username;
+    emailController.text = email;
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Color.fromRGBO(64, 63, 102, 1),
+          title: new Text(
+            "Modifier",
+            style: TextStyle(color: Colors.white),
           ),
-          new FlatButton(
-            color: Colors.red,
-            child: new Text("Déconnexion"),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => Login()),
-              );            },
-          ),
-        ],
-      );
-    },
-  );
+          actions: <Widget>[
+            Theme(
+              data: ThemeData(
+                  textSelectionTheme:
+                      TextSelectionThemeData(selectionColor: Colors.orange)),
+              child: TextField(
+                cursorColor: Colors.orange,
+                style: TextStyle(color: Colors.white),
+                controller: usernameController,
+                decoration: InputDecoration(
+                    focusedBorder: const OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.orange),
+                    ),
+                    border: OutlineInputBorder(),
+                    labelText: 'Uername',
+                    labelStyle: TextStyle(color: Colors.white)),
+                onChanged: (text) {
+                  setState(() {
+                    usernameUpdate = usernameController.text;
+                  });
+                },
+              ),
+            ),
+            SizedBox(height: 20),
+            TextField(
+              cursorColor: Colors.orange,
+              style: TextStyle(color: Colors.white),
+              controller: emailController,
+              decoration: InputDecoration(
+                focusedBorder: const OutlineInputBorder(
+                  borderSide: const BorderSide(color: Colors.orange),
+                ),
+                border: OutlineInputBorder(),
+                labelText: 'Email ',
+                labelStyle: TextStyle(color: Colors.white),
+              ),
+              onChanged: (text) {
+                setState(() {
+                  emailUpdate = emailController.text;
+                });
+              },
+            ),
+            SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                FlatButton(
+                  child: new Text("Annuler",
+                      style: TextStyle(color: Colors.white)),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                new FlatButton(
+                  color: Colors.orange,
+                  child: new Text(
+                    "Sauvegarder",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: () {
+                    _loadProfil();
+                  },
+                ),
+              ],
+            )
+          ],
+        );
+      },
+    );
+  }
 }
