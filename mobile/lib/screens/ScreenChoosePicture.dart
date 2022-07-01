@@ -41,7 +41,7 @@ class _ScreenChoosePicture extends State<ScreenChoosePicture> {
 
     final result = await FlutterImageCompress.compressWithFile(
       imagePath,
-      quality: 1,
+      quality: 10,
     );
 
     Image image = Image.memory(result!);
