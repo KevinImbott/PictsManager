@@ -5,7 +5,6 @@ class Picture < ActiveRecord::Base
   has_one_attached :img
 
   validates :name, presence: true
-  validates :description, presence: true
 
   after_destroy :destroy_blob
 

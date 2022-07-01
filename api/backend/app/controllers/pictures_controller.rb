@@ -24,6 +24,7 @@ class PicturesController < AuthenticatedController
 
   def create
     new_picture = Picture.new(permitted_params)
+    new_picture.tags = JSON.parse(params[:tags]) if params[:tags]
     new_picture.owner = current_user
     new_picture.img.attach(params['img'])
     if new_picture.save
@@ -77,15 +78,23 @@ class PicturesController < AuthenticatedController
   private
 
   def permitted_params
-    params.permit([:name, :description, :url])
+    params.permit([:name, :url])
   end
 
   def handle_sort(pictures)
-    return pictures if params[:name].nil? && params[:description].nil? && params[:sort_by].nil?
+    return pictures if params[:name].nil? && params[:tags].nil? && params[:sort_by].nil?
 
-    parsed_pictures = pictures.where('name ILIKE ?', "%#{params[:name]}%") if params[:name]
-    parsed_pictures = pictures.where('description ILIKE ?', "%#{params[:description]}%") if params[:description]
-    parsed_pictures = pictures.order(created_at: params[:sort_by]) if params[:sort_by]
+    sorted_pictures = pictures
+    sorted_pictures = pictures.order(created_at: params[:sort_by]) if params[:sort_by]
+
+    return sorted_pictures.where('name ILIKE ?', "%#{params[:name]}%") if params[:name]
+    if params[:tags]
+      ids = []
+      sorted_pictures.each do |picture|
+        picture.tags.any? { |tag| tag.downcase.include?(params[:tags].downcase) } ? ids << picture.id : nil
+      end
+      parsed_pictures = Picture.where(id: ids)
+    end
     parsed_pictures
   end
 
