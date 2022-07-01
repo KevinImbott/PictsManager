@@ -72,7 +72,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
           height: double.infinity,
           width: double.infinity,
           child: Column(children: [
-          /*  ElevatedButton(
+          ElevatedButton(
               child: Text('HomePage'),
               onPressed: () {
                 setState(() {
@@ -80,7 +80,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
                       MaterialPageRoute(builder: (context) => Navbar()));
                 });
               },
-            ),*/
+            ),
             Container(
               height: MediaQuery.of(context).size.height * 0.2,
               decoration: BoxDecoration(
@@ -161,7 +161,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
                   labelStyle: TextStyle(
                       color: const Color.fromRGBO(236, 236, 254, 1),
                       fontSize: MediaQuery.of(context).size.height * 0.020),
-                  hintText: 'Password',
+                  hintText: 'Mot de passe',
                   hintStyle:
                       const TextStyle(color: Color.fromRGBO(236, 236, 254, 1)),
                 ),
