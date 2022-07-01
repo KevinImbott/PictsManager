@@ -4,10 +4,6 @@ class PicturePolicy < ApplicationPolicy
     def resolve
       scope.where(owner_id: user.id)
     end
-
-    def resolve_all
-      scope.where.not(owner_id: user.id).map{ |album| album.pictures }.flatten
-    end
   end
 
   attr_reader :user, :picture
