@@ -5,7 +5,7 @@ class PictureSerializer < ActiveModel::Serializer
   def url
     return unless object.img.key
 
-    ActiveStorage::Blob.service.path_for(object&.img&.key)
+    rails_blob_path(object.img, only_path: true)
   end
 
   def albums
