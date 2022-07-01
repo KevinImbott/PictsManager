@@ -2,8 +2,14 @@
 
 class PicturesController < AuthenticatedController
   def home
-    pictures = PicturePolicy::Scope.new(current_user, current_user.albums).resolve_all
-    render json: pictures.paginate(page: params[:page]), each_serializer: PicturePreviewSerializer
+    pictures_ids = current_user.albums.each do |album|
+      album.pictures.ids
+    end
+    scope = Picture.where(id: pictures_ids.flatten)
+
+    pictures = HomePolicy::Scope.new(current_user, scope).resolve
+    render json: handle_sort(pictures).paginate(page: params[:page]),
+    each_serializer: HomeSerializer
   end
 
   def index
@@ -72,6 +78,18 @@ class PicturesController < AuthenticatedController
 
   def permitted_params
     params.permit([:name, :description, :url])
+  end
+
+  def handle_sort(pictures)
+    return pictures if params[:name].nil? && params[:description].nil?
+
+    if params[:name]
+      parsed_pictures = pictures.where('name ILIKE ?', "%#{params[:name]}%")
+    end
+    if params[:description]
+      parsed_pictures = pictures.where('description ILIKE ?', "%#{params[:description]}%")
+    end
+    parsed_pictures
   end
 
   def user_exist_in_picture?
