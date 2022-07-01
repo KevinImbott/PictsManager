@@ -1,21 +1,27 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   ActiveAdmin.routes(self)
-  post "/login", to: "authentication#login"
-  post "/signup", to: "authentication#signup"
 
-  put "/profile", to: "users#update"
-  get "/profile", to: "users#profile"
-  delete "/profile", to: "users#destroy"
+  # LOGIN / SIGNUP ROUTES
+  post '/login', to: 'authentication#login'
+  post '/signup', to: 'authentication#signup'
 
-  resources :users
+  # PROFILE ROUTES
+  put '/profile', to: 'users#update'
+  get '/profile', to: 'users#profile'
+  delete '/profile', to: 'users#destroy'
+
+  # ALBUMS ROUTES
   resources :albums
-  post "/albums/:id/add_or_delete_user", to: "albums#add_or_delete_user"
-  post "/pictures/:id/add_or_delete_user", to: "pictures#add_or_delete_user"
-  get "/pictures/home", to: "pictures#home"
-  post "/pictures/:id/add_or_delete_album", to: "pictures#add_or_delete_album"
-  resources :pictures
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  post '/albums/:id/add_or_delete_user', to: 'albums#add_or_delete_user'
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+  # PICTURES ROUTES
+  resources :pictures
+  get '/home', to: 'pictures#home'
+  post '/pictures/:id/add_or_delete_user', to: 'pictures#add_or_delete_user'
+  post '/pictures/:id/add_or_delete_album', to: 'pictures#add_or_delete_album'
+
+  # USERS ROUTES
+  resources :users
 end
