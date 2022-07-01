@@ -56,6 +56,7 @@ class PicturesController < AuthenticatedController
   end
 
   def add_or_delete_album
+    authorize album
     authorize picture
     if picture_exist_in_album?
       picture.albums.delete(album)
