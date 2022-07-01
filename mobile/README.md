@@ -17,3 +17,9 @@ samples, guidance on mobile development, and a full API reference.
 
 Example compress image:
 https://github.com/OpenFlutter/flutter_image_compress/blob/master/example/lib/main.dart
+
+resolve null safety: flutter run --no-sound-null-safety
+
+icon app: https://appicon.co/#app-icon
+
+build apk:  flutter build apk --release --no-sound-null-safety

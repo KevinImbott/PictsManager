@@ -92,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: TextFormField(
                   style: TextStyle(
                       color: const Color.fromRGBO(236, 236, 254, 1),
-                      fontSize: MediaQuery.of(context).size.height * 0.020),
+                      fontSize: 20.0),
                   onChanged: (val) {
                     setState(() => pseudo = val);
                   },
@@ -114,12 +114,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               SizedBox(
+                height: 15,
+              ),
+              SizedBox(
                 height: MediaQuery.of(context).size.height * 0.05,
                 width: MediaQuery.of(context).size.width * 0.70,
                 child: TextFormField(
                   style: TextStyle(
                       color: const Color.fromRGBO(236, 236, 254, 1),
-                      fontSize: MediaQuery.of(context).size.height * 0.020),
+                    fontSize: 20.0),
                   onChanged: (val) {
                     setState(() => email = val);
                   },
@@ -133,7 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     labelStyle: TextStyle(
                         color: const Color.fromRGBO(236, 236, 254, 1),
-                        fontSize: MediaQuery.of(context).size.height * 0.020),
+                        fontSize: 20.0),
                     hintText: 'Email',
                     hintStyle: const TextStyle(
                         color: Color.fromRGBO(236, 236, 254, 1)),
@@ -141,11 +144,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               SizedBox(
+                height: 15,
+              ),
+              SizedBox(
                 height: MediaQuery.of(context).size.height * 0.05,
                 width: MediaQuery.of(context).size.width * 0.70,
                 child: TextFormField(
                   style: TextStyle(
-                      color: fond == 'img/Fondbleu.png'
+                      fontSize: 20.0,
+                    color: fond == 'img/Fondbleu.png'
                           ? const Color.fromARGB(255, 255, 255, 255)
                           : const Color.fromARGB(255, 0, 0, 0)),
                   onChanged: (val) {
@@ -175,10 +182,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               SizedBox(
+                height: 15,
+              ),
+              SizedBox(
                 height: MediaQuery.of(context).size.height * 0.05,
                 width: MediaQuery.of(context).size.width * 0.70,
                 child: TextFormField(
                   style: TextStyle(
+                      fontSize: 20.0,
                       color: fond == 'img/Fondbleu.png'
                           ? const Color.fromARGB(255, 255, 255, 255)
                           : const Color.fromARGB(255, 0, 0, 0)),
@@ -209,65 +220,7 @@ class _MyHomePageState extends State<MyHomePage> {
               SizedBox(
                   height: MediaQuery.of(context).size.height * 0.1,
                   width: MediaQuery.of(context).size.height * 0.70,
-                  child: Center(
-                    child: Text(
-                      'Ou',
-                      style: TextStyle(
-                          color: fond == 'img/Fondbleu.png'
-                              ? const Color.fromARGB(255, 255, 255, 255)
-                              : const Color.fromARGB(255, 0, 0, 0),
-                          fontSize: MediaQuery.of(context).size.height * 0.02),
-                    ),
-                  )),
-              SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.10,
-                  width: MediaQuery.of(context).size.height * 0.70,
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Container(
-                          height: MediaQuery.of(context).size.height * 0.08,
-                          width: MediaQuery.of(context).size.height * 0.08,
-                          decoration: const BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage("img/google.png"),
-                              fit: BoxFit.fitWidth,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          height: MediaQuery.of(context).size.height * 0.08,
-                          width: MediaQuery.of(context).size.height * 0.08,
-                          decoration: const BoxDecoration(
-                            image: DecorationImage(
-                              image: const AssetImage("img/facebook.png"),
-                              fit: BoxFit.fitWidth,
-                            ),
-                          ),
-                        ),
-                      ])),
-              Row(
-                children: [
-                  Checkbox(
-                    activeColor: Color.fromRGBO(226, 101, 47, 1),
-                    checkColor: Colors.white,
-                    side: choix1 == true
-                        ? BorderSide(
-                            width: 16.0, color: Colors.lightBlue.shade50)
-                        : BorderSide(
-                            width: 16.0, color: Colors.lightBlue.shade50),
-                    onChanged: (bool? value) {
-                      setState(() {
-                        choix1 = !choix1;
-                      });
-                    },
-                    value: choix1,
-                  ),
-                  const Text('Se souvenir de moi.',
-                      style:
-                          TextStyle(color: Color.fromARGB(255, 255, 255, 255))),
-                ],
-              ),
+                 ),
               GestureDetector(
                 onTap: () {
                   sendLogin();
@@ -306,21 +259,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
               ),
-              TextButton(
-                  onPressed: () {
-                    Navigator.push(context, MaterialPageRoute<void>(
-                        builder: (BuildContext context) {
-                      return MyLoginPage();
-                    }));
-                  },
-                  child: Text(
-                    'Deja un compte',
-                    style: TextStyle(
-                        color: Color.fromARGB(255, 255, 255, 255),
-                        fontSize: MediaQuery.of(context).size.height * 0.015),
-                  )),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.04,
+                height: MediaQuery.of(context).size.height * 0.09,
               ),
               Container(
                 height: MediaQuery.of(context).size.height * 0.14,
