@@ -72,7 +72,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
           height: double.infinity,
           width: double.infinity,
           child: Column(children: [
-            ElevatedButton(
+          /*  ElevatedButton(
               child: Text('HomePage'),
               onPressed: () {
                 setState(() {
@@ -80,7 +80,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
                       MaterialPageRoute(builder: (context) => Navbar()));
                 });
               },
-            ),
+            ),*/
             Container(
               height: MediaQuery.of(context).size.height * 0.2,
               decoration: BoxDecoration(
@@ -111,7 +111,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
               child: TextFormField(
                   style: TextStyle(
                     color: const Color.fromRGBO(236, 236, 254, 1),
-                    fontSize: MediaQuery.of(context).size.height * 0.020),
+                    fontSize: 20.0),
                 onChanged: (val) {
                   setState(() => email = val);
                 },
@@ -134,12 +134,16 @@ class _MyLoginPageState extends State<MyLoginPage> {
               ),
             ),
             SizedBox(
+              height: 15,
+            ),
+            SizedBox(
               height: MediaQuery.of(context).size.height * 0.05,
               width: MediaQuery.of(context).size.width * 0.70,
               child: TextFormField(
                 style: TextStyle(
                     color: const Color.fromRGBO(236, 236, 254, 1),
-                    fontSize: MediaQuery.of(context).size.height * 0.020),
+                  fontSize: 20.0,
+                ),
                 obscureText: true,
                 enableSuggestions: false,
                 autocorrect: false,
@@ -164,54 +168,11 @@ class _MyLoginPageState extends State<MyLoginPage> {
               ),
             ),
             SizedBox(width: MediaQuery.of(context).size.height),
-            Row(
-              children: [
-                Checkbox(
-                  activeColor: Color.fromRGBO(226, 101, 47, 1),
-                  checkColor: Colors.white,
-                  side: choix1 == true
-                      ? BorderSide(width: 16.0, color: Colors.lightBlue.shade50)
-                      : BorderSide(
-                          width: 16.0, color: Colors.lightBlue.shade50),
-                  onChanged: (bool? value) {
-                    setState(() {
-                      choix1 = !choix1;
-                    });
-                  },
-                  value: choix1,
-                ),
-                const Text('Se souvenir de moi.',
-                    style:
-                        TextStyle(color: Color.fromARGB(255, 255, 255, 255))),
-              ],
-            ),
+
             SizedBox(
                 height: MediaQuery.of(context).size.height * 0.10,
                 width: MediaQuery.of(context).size.height * 0.70,
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Container(
-                        height: MediaQuery.of(context).size.height * 0.08,
-                        width: MediaQuery.of(context).size.height * 0.08,
-                        decoration: const BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage("img/google.png"),
-                            fit: BoxFit.fitWidth,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        height: MediaQuery.of(context).size.height * 0.08,
-                        width: MediaQuery.of(context).size.height * 0.08,
-                        decoration: const BoxDecoration(
-                          image: DecorationImage(
-                            image: const AssetImage("img/facebook.png"),
-                            fit: BoxFit.fitWidth,
-                          ),
-                        ),
-                      ),
-                    ])),
+            ),
             SizedBox(
                 height: MediaQuery.of(context).size.height * 0.1,
                 width: MediaQuery.of(context).size.height),
@@ -254,7 +215,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
               ),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.1,
+              height: MediaQuery.of(context).size.height * 0.17,
             ),
             Container(
               height: MediaQuery.of(context).size.height * 0.14,

@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:splashscreen/splashscreen.dart';
 import 'screens/ScreenHome.dart';
 
 void main() {
@@ -16,6 +17,7 @@ void main() {
     print(e.code);
     print(e.description);
   }
+
   runApp(MyApp());
 }
 
@@ -25,17 +27,28 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (token != null) {
-      return MaterialApp(
-        title: 'Welcome to Flutter',
-        home: Navbar()
-      ); 
-    }
-    else {
-      return MaterialApp(
-        title: 'Welcome to Flutter',
-        home: MyLoginPage(token: token)
-      ); 
+    return MaterialApp(
+        title: 'App starting...',
+        home: SplashScreen(
+          seconds: 3,
+          navigateAfterSeconds: token != null?Navbar(): MyLoginPage(token: token),
+          title: new Text(
+            'PictsManager',
+            style: new TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 28.0,
+                color: Colors.orange),
+          ),
+          //backgroundColor: Color.fromRGBO(2, 2, 39, 1),
+          gradientBackground: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [
+              Color.fromRGBO(2, 2, 39, 1),
+              Color.fromRGBO(9, 9, 79, 1.0),
+            ],
+          ),
+          loaderColor: Colors.orange,
+        ));
     }
   }
-}
