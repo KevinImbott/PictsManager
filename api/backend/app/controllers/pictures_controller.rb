@@ -56,6 +56,7 @@ class PicturesController < AuthenticatedController
   end
 
   def add_or_delete_album
+    authorize album
     authorize picture
     if picture_exist_in_album?
       picture.albums.delete(album)
@@ -85,17 +86,15 @@ class PicturesController < AuthenticatedController
     return pictures if params[:name].nil? && params[:tags].nil? && params[:sort_by].nil?
 
     sorted_pictures = pictures
-    sorted_pictures = pictures.order(created_at: params[:sort_by]) if params[:sort_by]
-
-    return sorted_pictures.where('name ILIKE ?', "%#{params[:name]}%") if params[:name]
+    sorted_pictures = pictures.where('name ILIKE ?', "%#{params[:name]}%") if params[:name]
     if params[:tags]
       ids = []
-      sorted_pictures.each do |picture|
+      pictures.each do |picture|
         picture.tags.any? { |tag| tag.downcase.include?(params[:tags].downcase) } ? ids << picture.id : nil
       end
-      parsed_pictures = Picture.where(id: ids)
+      sorted_pictures = Picture.where(id: ids)
     end
-    parsed_pictures
+    sorted_pictures.order(created_at: params[:sort_by]) if params[:sort_by]
   end
 
   def user_exist_in_picture?
