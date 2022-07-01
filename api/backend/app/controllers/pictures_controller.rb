@@ -2,11 +2,11 @@
 
 class PicturesController < AuthenticatedController
   def home
-    pictures_ids = current_user.albums.each do |album|
-      album.pictures.ids
+    pictures_ids = []
+    current_user.albums.each do |album|
+      pictures_ids << album.pictures.ids
     end
     scope = Picture.where(id: pictures_ids.flatten)
-
     pictures = HomePolicy::Scope.new(current_user, scope).resolve
     render json: handle_sort(pictures).paginate(page: params[:page]),
     each_serializer: HomeSerializer
@@ -81,14 +81,11 @@ class PicturesController < AuthenticatedController
   end
 
   def handle_sort(pictures)
-    return pictures if params[:name].nil? && params[:description].nil?
+    return pictures if params[:name].nil? && params[:description].nil? && params[:sort_by].nil?
 
-    if params[:name]
-      parsed_pictures = pictures.where('name ILIKE ?', "%#{params[:name]}%")
-    end
-    if params[:description]
-      parsed_pictures = pictures.where('description ILIKE ?', "%#{params[:description]}%")
-    end
+    parsed_pictures = pictures.where('name ILIKE ?', "%#{params[:name]}%") if params[:name]
+    parsed_pictures = pictures.where('description ILIKE ?', "%#{params[:description]}%") if params[:description]
+    parsed_pictures = pictures.order(created_at: params[:sort_by]) if params[:sort_by]
     parsed_pictures
   end
 
