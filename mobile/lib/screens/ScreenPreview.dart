@@ -19,7 +19,7 @@ class _ScreenPreview extends State<ScreenPreview> {
   late Image img;
   late Uri path;
   TextEditingController name = TextEditingController();
-  TextEditingController description = TextEditingController();
+  TextEditingController tags = TextEditingController();
   late SharedPreferences prefs;
   String token = '';
   
@@ -42,9 +42,10 @@ class _ScreenPreview extends State<ScreenPreview> {
     var req = http.MultipartRequest('POST', uri);
     req.headers['Authorization'] = 'Bearer ' + token;
     req.fields['name'] = name.text;
-    req.fields['description'] = description.text;
+    req.fields['tags'] = tags.text;
     req.files.add(await http.MultipartFile.fromPath('img', widget.imagePath, contentType: MediaType('image', 'jpeg')));
     req.send().then((response) {
+      print(response.statusCode);
       if (response.statusCode == 201) print("Uploaded!");
       else {
         print(response.toString());
@@ -83,7 +84,7 @@ class _ScreenPreview extends State<ScreenPreview> {
                   width: 80,
                   margin: const EdgeInsets.only(top: 50, bottom: 20, left: 5),
                   child: TextFormField(
-                    controller: description,
+                    controller: tags,
                     style: const TextStyle(color: Color.fromRGBO(255, 255, 255, 1)),
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.only(left: 25),
