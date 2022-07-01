@@ -38,7 +38,7 @@ class _ScreenPreview extends State<ScreenPreview> {
 
   void sendPic () async {
     prefs = await SharedPreferences.getInstance();
-    var uri = Uri.parse('http://127.0.0.1:3000/pictures');
+    var uri = Uri.parse('http://10.0.2.2:3000/pictures');
     var req = http.MultipartRequest('POST', uri);
     req.headers['Authorization'] = 'Bearer ' + token;
     req.fields['name'] = name.text;

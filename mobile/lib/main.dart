@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         title: 'App starting...',
         home: SplashScreen(
-          seconds: 3,
+          seconds: 0,
           navigateAfterSeconds: token != null?Navbar(): MyLoginPage(token: token),
           title: new Text(
             'PictsManager',
