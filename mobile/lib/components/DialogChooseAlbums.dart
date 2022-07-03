@@ -6,6 +6,8 @@ import 'package:mobile/components/AlbumsList.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'Navbar.dart';
+
 class DialogChooseAlbums extends StatefulWidget {
   const DialogChooseAlbums({Key? key, required this.pictureId})
       : super(key: key);
@@ -33,15 +35,11 @@ class _DialogChooseAlbums extends State<DialogChooseAlbums> {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     }).then((response) async {
-      print(response.statusCode);
       if (response.statusCode == 200) {
         var tagsJson = jsonDecode(response.body);
         tagsJson = tagsJson["albums"];
         List tags = List.from(tagsJson);
-        print(tags);
         for (int i = 0; i < tagsJson.length; i++) {
-          print(tagsJson[i]);
-          print(tags[i]);
           setState(() {
             _itemsAlbumsCheckBox.add({
               "id": tags[i]["id"],
@@ -75,7 +73,6 @@ class _DialogChooseAlbums extends State<DialogChooseAlbums> {
               'album_id': album_id.toString(),
             }))
         .then((response) async {
-      print(response.statusCode);
       if (response.statusCode == 200) {
 
       }
@@ -121,7 +118,13 @@ class _DialogChooseAlbums extends State<DialogChooseAlbums> {
                 ),
                 onPressed: () async {
                   setState(() {
-                    Navigator.pop(context);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Navbar(
+                              index: 2,
+                            )));
+
                   });
                 },
               ),
