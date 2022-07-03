@@ -66,7 +66,7 @@ class _ChooseButtonsProfileState extends State<ChooseButtonsProfile> {
         ),
         SizedBox(height: 5),
 
-        select==false?Albums(album: !select,):Photos(album: !select)
+        select==false?Albums():Photos(album: "")
       ],
       );
   }

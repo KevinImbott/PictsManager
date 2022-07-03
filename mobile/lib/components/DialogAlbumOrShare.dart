@@ -36,12 +36,12 @@ class _DialogAlbumOrShare extends State<DialogAlbumOrShare> {
     var token = prefs.getString('jwt') ?? '';
 
     token =
-    "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2NTY3NzkxNTV9.ICLwkXgJcbyOL2YV8ScR9lixc0YqGzNmIwlsbDxGjXY";
+    "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2NTc0NjYzMDV9.zc7UkDGzNgNwNt5dIU5tYfQcOX7z1GNfnAAXxDGH8gA";
     var url = Uri.parse("");
     if(albumsId!="") {
-      url = Uri.parse('http://localhost:3000/albums/'+albumsId);
+      url = Uri.parse('http://172.168.1.6:3000/albums/'+albumsId);
     }else {
-      url = Uri.parse('http://localhost:3000/pictures/'+pictureId);
+      url = Uri.parse('http://172.168.1.6:3000/pictures/'+pictureId);
     }
     print(url);
     await http.delete(url, headers: {
@@ -70,7 +70,7 @@ class _DialogAlbumOrShare extends State<DialogAlbumOrShare> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => DialogChooseAlbums(albumsId: albumsId,)));
+                        builder: (context) => DialogChooseAlbums(pictureId: pictureId,)));
               }),
           ListTile(
             leading: Icon(Icons.share, color: Color.fromRGBO(226, 101, 47, 1)),

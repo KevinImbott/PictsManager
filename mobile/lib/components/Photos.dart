@@ -17,33 +17,27 @@ class PhotoItem {
 
 class Photos extends StatefulWidget {
   const Photos({Key? key, required this.album}) : super(key: key);
-  final bool album;
+  final String album;
 
   @override
   State<Photos> createState() => _PhotosState();
 }
 
 class _PhotosState extends State<Photos> {
-  bool get album => widget.album;
+  String get album => widget.album;
 
-  List<PhotoItem> TheListPictures = [];
-  List<PhotoItem> _itemsFolder = [
-    PhotoItem("0", "https://i.ibb.co/N3fg5JQ/Back-Folder.png")
-  ];
+  List TheListPictures = [];
+  List<PhotoItem> _itemsFolder = [PhotoItem('0', "https://i.ibb.co/N3fg5JQ/Back-Folder.png" )];
+  List _items = [];
 
-  List<PhotoItem> _items = [
-    PhotoItem(
-      "0",
-      "https://random.imagecdn.app/500/150",
-    )
-  ];
+
 
   Future<void> _loadPhotos() async {
     var prefs = await SharedPreferences.getInstance();
     var token = prefs.getString('jwt') ?? '';
 
     token =
-        "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2NTY3NzkxNTV9.ICLwkXgJcbyOL2YV8ScR9lixc0YqGzNmIwlsbDxGjXY";
+        "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2NTc0NjYzMDV9.zc7UkDGzNgNwNt5dIU5tYfQcOX7z1GNfnAAXxDGH8gA";
     var url = Uri.parse('http://172.168.1.6:3000/pictures');
     await http.get(url, headers: {
       'Content-Type': 'application/json',
@@ -56,9 +50,33 @@ class _PhotosState extends State<Photos> {
         print(tags);
         for (int i = 0; i < tags.length; i++) {
           setState(() {
-//            _items.add(PhotoItem(tags[i]["id"].toString(),tags[i]["url"]));
-            _items.add(PhotoItem(tags[i]["id"].toString(),
-                "https://images-na.ssl-images-amazon.com/images/I/51igunD6VmL._SX353_BO1,204,203,200_.jpg"));
+            _items.add(PhotoItem(tags[i]["id"].toString(),"http://172.168.1.6:3000/"+tags[i]["url"]));
+          });
+        }
+      }
+    });
+  }
+
+  Future<void> _loadPhotosAlbumId(albumId) async {
+    var prefs = await SharedPreferences.getInstance();
+    var token = prefs.getString('jwt') ?? '';
+
+    token =
+    "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2NTc0NjYzMDV9.zc7UkDGzNgNwNt5dIU5tYfQcOX7z1GNfnAAXxDGH8gA";
+    var url = Uri.parse('http://172.168.1.6:3000/albums/'+albumId);
+    await http.get(url, headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    }).then((response) async {
+      if (response.statusCode == 200) {
+        var tagsJson = jsonDecode(response.body);
+        tagsJson=tagsJson["pictures"];
+        List tags = List.from(tagsJson);
+        print(tags);
+        for (int i = 0; i < tags.length; i++) {
+          setState(() {
+            _items.add(PhotoItem(tags[i]["id"].toString(),"http://172.168.1.6:3000/"+tags[i]["url"]));
           });
         }
       }
@@ -68,22 +86,29 @@ class _PhotosState extends State<Photos> {
   @override
   initState() {
     super.initState();
-    _loadPhotos();
-    print("_items");
-    print(_items[0]);
-    print(_itemsFolder);
-    print("_items");
 
-    if (album == true) {
+    print("album");
+    print(album);
+    print("album");
+    if(album=="") {
+      print("baisetes morts");
+      _loadPhotos();
+    }else{
+      print("coucou");
+      _loadPhotosAlbumId(album);
+    }
+  }
+
+  Widget build(BuildContext context) {
+
+    if (album != "") {
       TheListPictures = [..._itemsFolder, ..._items];
     } else {
       TheListPictures = [..._items];
     }
-    print(TheListPictures.length);
-  }
+    print(TheListPictures);
 
-  Widget build(BuildContext context) {
-    print(TheListPictures.length);
+
 
     return SizedBox(
         height: MediaQuery.of(context).size.height, // Some height
@@ -102,7 +127,7 @@ class _PhotosState extends State<Photos> {
 
                     return GestureDetector(
                       onTap: () {
-                        if (index == 0 && album == true) {
+                        if (index == 0 && album != null) {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -124,7 +149,8 @@ class _PhotosState extends State<Photos> {
                           context: context,
                           builder: (context) => DialogAlbumOrShare(pictureId: TheListPictures[index].id,albumsId: "",)
                       ),
-                      child: Container(
+                      child:
+                      Container(
                         decoration: BoxDecoration(
                           color: Color.fromRGBO(2, 2, 39, 1),
                           image: DecorationImage(
@@ -132,7 +158,7 @@ class _PhotosState extends State<Photos> {
                             image: NetworkImage(TheListPictures[index].image),
                           ),
                         ),
-                      ),
+                      )
                     );
                   }))
         ]));
