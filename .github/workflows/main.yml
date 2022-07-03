@@ -1,59 +1,65 @@
-name: CI RSpec Tests
-
-on: [push, pull_request]
-  push:
-   paths:
-   - 'api/**'
-  pull_request:
-    paths:
-    - 'api/**'
+name: Rails
+on: push
 
 jobs:
-  build:
-    name: CI
+  verify:
+    name: Build
     runs-on: ubuntu-latest
-    env:
-      api-dir: ./api/backend
 
     services:
       postgres:
-        image: postgres:11.6
+        image: postgres:11
+        env:
+          POSTGRES_USER: rails_github_actions
+          POSTGRES_DB: rails_github_actions_test
+          POSTGRES_PASSWORD: postgres
         ports: ["5432:5432"]
-        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
-      redis:
-        image: redis
-        ports: ["6379:6379"]
-      elasticsearch:
-        image: elasticsearch:6.8.8
-        ports: ["9200:9200"]
-        options: -e="discovery.type=single-node" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+      # if you need redis
+      # redis:
+      #   image: redis
+      #   ports:
+      #   - 6379:6379
+      #   options: --entrypoint redis-server
 
     steps:
       - uses: actions/checkout@v1
-      - uses: actions/setup-ruby@v1
+      - name: Set up Ruby
+        uses: actions/setup-ruby@v1
         with:
-          ruby-version: 2.6.6
-
-      - name: Install PostgreSQL
-        run: sudo apt-get -yqq install libpq-dev
-
-      - name: Run bundle install
-        working-directory: ${{env.api-dir}}
+          ruby-version: 2.6.x
+      - name: Set up Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10.13.0
+      - name: Install dependencies
         run: |
+          sudo apt-get -yqq install libpq-dev build-essential libcurl4-openssl-dev
           gem install bundler
           bundle install --jobs 4 --retry 3
-      - name: Setup Database
-        working-directory: ${{env.api-dir}}
+          yarn install
+      - name: Setup test database
         env:
           RAILS_ENV: test
           PGHOST: localhost
-          PGUSER: postgres
-        run: bin/rails db:create db:schema:load
+          POSTGRES_DB: rails_github_actions_test
+          POSTGRES_USER: rails_github_actions
+          POSTGRES_PASSWORD: postgres
+        run: |
+          cp config/database.ci.yml config/database.yml
+          rake db:create db:migrate
 
-      - name: Build and test with rspec
-        working-directory: ${{env.api-dir}}
+      - name: Run tests
         env:
-          RAILS_ENV: test
           PGHOST: localhost
-          PGUSER: postgres
-        run: bundle exec rspec spec
+          POSTGRES_DB: rails_github_actions_test
+          POSTGRES_USER: rails_github_actions
+          POSTGRES_PASSWORD: postgres
+          PGPORT: ${{ job.services.postgres.ports[5432] }}
+          RAILS_ENV: test
+        run: rspec
