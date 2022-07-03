@@ -1,5 +1,5 @@
 class PictureSerializer < ActiveModel::Serializer
-  attributes :id, :name, :description, :created_at, :updated_at, :url, :albums
+  attributes :id, :name, :tags, :created_at, :updated_at, :url, :albums
   has_many :invited_users, serializer: UserPreviewSerializer
 
   include Rails.application.routes.url_helpers

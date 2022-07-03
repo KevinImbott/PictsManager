@@ -8,12 +8,9 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :albums
   has_and_belongs_to_many :pictures
 
-  validates :email, presence: true
+  validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :password, presence: true
   validates :pseudo, presence: true
-
-  scope :by_recently_created, -> { order(created_at: :desc) }
-  scope :by_earliest_created, -> { order(created_at: :asc) }
 
   def owned_albums
     Album.where(owner_id: id)

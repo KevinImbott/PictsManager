@@ -70,6 +70,8 @@ gem 'active_storage_validations'
 # BackOffice
 gem 'activeadmin'
 
+# Factories for Rspec
+gem 'factory_bot'
 # Pagination
 gem 'will_paginate', '~> 3.3'
 

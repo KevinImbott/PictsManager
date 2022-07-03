@@ -16,7 +16,7 @@ admin = User.create(pseudo: "Admin", email: "admin@admin.com", password: 'passwo
       a.users = [u, admin]
       Faker::Number.between(from: 1, to: 15).times do
           picture_name = Faker::Creature::Cat.name
-          p = Picture.create(name: picture_name, description: Faker::JapaneseMedia::OnePiece.quote)
+          p = Picture.create(name: picture_name, tags: ["seed"])
           p.owner = u
           p.users = [u]
           # file = Down.download(Faker::LoremFlickr.image)

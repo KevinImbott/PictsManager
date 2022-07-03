@@ -1,5 +1,5 @@
 class HomeSerializer < ActiveModel::Serializer
-  attributes :id, :url, :name, :owner_name
+  attributes :id, :url, :name, :owner_name, :tags
 
   include Rails.application.routes.url_helpers
 

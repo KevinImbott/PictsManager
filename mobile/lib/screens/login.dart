@@ -45,7 +45,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
         body:
             jsonEncode(<String, String>{'email': email, 'password': password}));
     if (response.statusCode == 200) {
-      print(json.decode(response.body)['token']);
+      //print(json.decode(response.body)['token']);
       await prefs.setString('jwt', json.decode(response.body)['token']);
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => Navbar()));
