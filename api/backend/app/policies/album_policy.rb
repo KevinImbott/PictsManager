@@ -13,6 +13,10 @@ class AlbumPolicy < ApplicationPolicy
     @album = album
   end
 
+  def create?
+    true
+  end
+
   def show?
     album.users.include?(user)
   end

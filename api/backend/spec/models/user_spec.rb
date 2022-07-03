@@ -13,6 +13,10 @@ RSpec.describe User, type: :model do
       user.email = nil
       expect(user).to_not be_valid
     end
+    it 'bad email' do
+      user.email = 'bademail'
+      expect(user).to_not be_valid
+    end
     it 'no password' do
       user.password = nil
       expect(user).to_not be_valid
