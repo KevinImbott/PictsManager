@@ -46,7 +46,6 @@ class _ScreenPreview extends State<ScreenPreview> {
     req.fields['tags'] = json.encode(arr);
     req.files.add(await http.MultipartFile.fromPath('img', widget.imagePath, contentType: MediaType('image', 'jpeg')));
     req.send().then((response) {
-      print(response);
       if (response.statusCode == 201) print("Uploaded!");
       else {
         print(response.toString());
