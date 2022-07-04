@@ -27,7 +27,7 @@ class _ChooseButtonsProfileState extends State<ChooseButtonsProfile> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               ElevatedButton(
-                child: Text('Album'),
+                child: Text('Albums'),
                 onPressed: () {
                   setState(() {
                     select=false;
@@ -66,7 +66,7 @@ class _ChooseButtonsProfileState extends State<ChooseButtonsProfile> {
         ),
         SizedBox(height: 5),
 
-        select==false?Albums(album: !select,):Photos(album: !select)
+        select==false?Albums():Photos(album: "")
       ],
       );
   }

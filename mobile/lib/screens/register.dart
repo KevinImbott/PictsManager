@@ -79,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   width: MediaQuery.of(context).size.height * 0.70,
                   child: Center(
                     child: Text(
-                      'Register',
+                      'Inscription',
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Color.fromRGBO(236, 236, 254, 1),
@@ -172,7 +172,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           : const Color.fromARGB(255, 0, 0, 0),
                       fontWeight: FontWeight.bold,
                     ),
-                    hintText: 'Password',
+                    hintText: 'Mot de passe',
                     hintStyle: TextStyle(
                         color: fond == 'img/Fondbleu.png'
                             ? const Color.fromARGB(255, 255, 255, 255)
@@ -208,7 +208,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           : const Color.fromARGB(255, 0, 0, 0),
                       fontWeight: FontWeight.bold,
                     ),
-                    hintText: 'Password confirm',
+                    hintText: 'Confirmer le mot de passe',
                     hintStyle: TextStyle(
                         color: fond == 'img/Fondbleu.png'
                             ? const Color.fromARGB(255, 255, 255, 255)
@@ -233,7 +233,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       borderRadius: BorderRadius.circular(25)),
                   child: Center(
                     child: Text(
-                      'Register',
+                      'Inscription',
                       style: TextStyle(
                           color: Color.fromARGB(255, 255, 255, 255),
                           fontSize: MediaQuery.of(context).size.height * 0.025),
@@ -251,7 +251,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   width: MediaQuery.of(context).size.width * 0.75,
                   child: Center(
                     child: Text(
-                      'Deja un compte ?',
+                      'Déjà un compte ?',
                       style: TextStyle(
                           color: Color.fromARGB(255, 255, 255, 255),
                           fontSize: MediaQuery.of(context).size.height * 0.025),
@@ -260,7 +260,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.09,
+                height: MediaQuery.of(context).size.height * 0.1,
               ),
               Container(
                 height: MediaQuery.of(context).size.height * 0.14,

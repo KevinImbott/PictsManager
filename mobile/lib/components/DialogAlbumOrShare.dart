@@ -25,31 +25,27 @@ class DialogAlbumOrShare extends StatefulWidget {
 }
 
 class _DialogAlbumOrShare extends State<DialogAlbumOrShare> {
-
   String get albumsId => widget.albumsId;
   String get pictureId => widget.pictureId;
 
-
-
-  Future<void> _requestDeletes(albumsId,pictureId) async {
+  Future<void> _requestDeletes(albumsId, pictureId) async {
     var prefs = await SharedPreferences.getInstance();
     var token = prefs.getString('jwt') ?? '';
 
     token =
-    "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2NTY3NzkxNTV9.ICLwkXgJcbyOL2YV8ScR9lixc0YqGzNmIwlsbDxGjXY";
+        "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2NTc0NjYzMDV9.zc7UkDGzNgNwNt5dIU5tYfQcOX7z1GNfnAAXxDGH8gA";
     var url = Uri.parse("");
-    if(albumsId!="") {
-      url = Uri.parse('http://localhost:3000/albums/'+albumsId);
-    }else {
-      url = Uri.parse('http://localhost:3000/pictures/'+pictureId);
+    if (albumsId != "") {
+      url = Uri.parse('http://172.168.1.6:3000/albums/' + albumsId);
+    } else {
+      url = Uri.parse('http://172.168.1.6:3000/pictures/' + pictureId);
     }
     print(url);
     await http.delete(url, headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
-    }).then((response) async {
-    });
+    }).then((response) async {});
   }
 
   Widget build(BuildContext context) {
@@ -62,16 +58,16 @@ class _DialogAlbumOrShare extends State<DialogAlbumOrShare> {
             height: 15,
           ),
           ListTile(
-              leading: Icon(Icons.folder_copy,
-                  color: Color.fromRGBO(226, 101, 47, 1)),
-              title: Text("Albums",
-                  style: TextStyle(color: Color.fromRGBO(226, 101, 47, 1))),
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => DialogChooseAlbums(albumsId: albumsId,)));
-              }),
+            leading:
+                Icon(Icons.folder_copy, color: Color.fromRGBO(226, 101, 47, 1)),
+            title: Text("Albums",
+                style: TextStyle(color: Color.fromRGBO(226, 101, 47, 1))),
+            onTap: () => showDialog(
+                context: context,
+                builder: (context) => DialogChooseAlbums(
+                      pictureId: pictureId,
+                    )),
+          ),
           ListTile(
             leading: Icon(Icons.share, color: Color.fromRGBO(226, 101, 47, 1)),
             title: Text("Partager",
@@ -136,13 +132,13 @@ class _DialogAlbumOrShare extends State<DialogAlbumOrShare> {
                       child: new Text("Supprimer",
                           style: TextStyle(color: Colors.white)),
                       onPressed: () {
-                          _requestDeletes(albumsId, pictureId);
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Navbar(
-                                    index: 2,
-                                  )));
+                        _requestDeletes(albumsId, pictureId);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Navbar(
+                                      index: 2,
+                                    )));
                       }),
                 ],
               )

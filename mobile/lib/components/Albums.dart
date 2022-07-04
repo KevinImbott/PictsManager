@@ -10,15 +10,13 @@ import 'DialogChooseShare.dart';
 import 'Navbar.dart';
 
 class Albums extends StatefulWidget {
-  const Albums({Key? key, required this.album}) : super(key: key);
-  final bool album;
+  const Albums({Key? key}) : super(key: key);
 
   @override
   State<Albums> createState() => _AlbumsState();
 }
 
 class _AlbumsState extends State<Albums> {
-  bool get album => widget.album;
   late List albumsList = [];
   late List _albumsCreate = [
     {"id": -1, "name": "nouveau"}
@@ -43,7 +41,7 @@ class _AlbumsState extends State<Albums> {
     var token = prefs.getString('jwt') ?? '';
 
     token =
-        "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2NTY3NzkxNTV9.ICLwkXgJcbyOL2YV8ScR9lixc0YqGzNmIwlsbDxGjXY";
+        "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2NTc0NjYzMDV9.zc7UkDGzNgNwNt5dIU5tYfQcOX7z1GNfnAAXxDGH8gA";
     var url = Uri.parse('http://172.168.1.6:3000/albums');
     await http.get(url, headers: {
       'Content-Type': 'application/json',
@@ -82,21 +80,19 @@ class _AlbumsState extends State<Albums> {
                   itemBuilder: (context, index) {
                     return GestureDetector(
                         onTap: () {
-                          if (index == 0 && album == true) {
-                            print("openAlert");
+                          if (index == 0) {
                             _CreateAlbumDialog(context);
                           } else {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Photos(album: true)),
+                                  builder: (context) => Photos(album: albumsList[index]["id"].toString())),
                             );
                           }
                         },
                         onLongPress: () {
                           print(index);
-                          print(album);
-                          if (index != 0 && album == true) {
+                          if (index != 0) {
 
                             DialogAlbum(context, albumsList[index]["name"],
                                 albumsList[index]["id"].toString());
@@ -242,7 +238,7 @@ class _AlbumsState extends State<Albums> {
       var token = prefs.getString('jwt') ?? '';
 
       token =
-          "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2NTY3NzkxNTV9.ICLwkXgJcbyOL2YV8ScR9lixc0YqGzNmIwlsbDxGjXY";
+          "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2NTc0NjYzMDV9.zc7UkDGzNgNwNt5dIU5tYfQcOX7z1GNfnAAXxDGH8gA";
       var url = Uri.parse("http://172.168.1.6:3000/albums/$idToDelete");
       await http.delete(url, headers: {
         'Content-Type': 'application/json',
@@ -321,7 +317,7 @@ class _AlbumsState extends State<Albums> {
     var token = prefs.getString('jwt') ?? '';
     if (albumController != null) {
       token =
-          "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2NTY3NzkxNTV9.ICLwkXgJcbyOL2YV8ScR9lixc0YqGzNmIwlsbDxGjXY";
+          "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2NTc0NjYzMDV9.zc7UkDGzNgNwNt5dIU5tYfQcOX7z1GNfnAAXxDGH8gA";
       var url = Uri.parse('http://172.168.1.6:3000/albums');
       await http
           .post(url,

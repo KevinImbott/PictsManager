@@ -44,7 +44,7 @@ class _ProfileInfosState extends State<ProfileInfos> {
     var token = prefs.getString('jwt') ?? '';
 
     token =
-        "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2NTY3NzkxNTV9.ICLwkXgJcbyOL2YV8ScR9lixc0YqGzNmIwlsbDxGjXY";
+        "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2NTc0NjYzMDV9.zc7UkDGzNgNwNt5dIU5tYfQcOX7z1GNfnAAXxDGH8gA";
     var url = Uri.parse('http://172.168.1.6:3000/profile');
     await http
         .put(
