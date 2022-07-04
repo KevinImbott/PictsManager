@@ -42,10 +42,11 @@ class _ScreenPreview extends State<ScreenPreview> {
     var req = http.MultipartRequest('POST', uri);
     req.headers['Authorization'] = 'Bearer ' + token;
     req.fields['name'] = name.text;
-    req.fields['tags'] = tags.text;
+    List<dynamic> arr = tags.text.split(',');
+    req.fields['tags'] = json.encode(arr);
     req.files.add(await http.MultipartFile.fromPath('img', widget.imagePath, contentType: MediaType('image', 'jpeg')));
     req.send().then((response) {
-      print(response.statusCode);
+      print(response);
       if (response.statusCode == 201) print("Uploaded!");
       else {
         print(response.toString());
