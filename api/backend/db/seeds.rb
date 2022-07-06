@@ -19,9 +19,10 @@ admin = User.create(pseudo: "Admin", email: "admin@admin.com", password: 'passwo
           p = Picture.create(name: picture_name, tags: ["seed"])
           p.owner = u
           p.users = [u]
+          sleep(1)
           # file = Down.download(Faker::LoremFlickr.image)
-          # p.img.attach(io: File.open(Down.download(Faker::LoremFlickr.image)), filename: picture_name)
-          p.img.attach(io: File.open("./public/image.jpeg"), filename: picture_name)
+          p.img.attach(io: File.open(Down.download('https://source.unsplash.com/random/200x200')), filename: picture_name)
+          # p.img.attach(io: File.open("./public/image.jpeg"), filename: picture_name)
           p.save
           a.pictures.push(p)
           a.save
