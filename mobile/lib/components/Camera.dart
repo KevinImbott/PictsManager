@@ -17,6 +17,8 @@ class TakePictureScreen extends StatefulWidget {
   }) : super(key: key);
 
   final List<CameraDescription> cameras;
+  
+  get tmpImage => null;
 
   @override
   TakePictureScreenState createState() => TakePictureScreenState();
@@ -27,6 +29,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   late Future<void> _initializeControllerFuture;
   late bool camera;
   int _selectedIndex = 0;
+  late ScreenChoosePicture tmpImage;
 
   @override
   void initState() {
@@ -81,7 +84,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             builder: (context) => ScreenPreview(
               // Pass the automatically generated path to
               // the DisplayPictureScreen widget.
-              imagePath: image.path,
+              image: widget.tmpImage,
             ),
           ),
         );

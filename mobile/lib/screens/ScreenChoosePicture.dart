@@ -1,16 +1,18 @@
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:image/image.dart' as img2;
 import 'package:mobile/components/Camera.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:image_picker/image_picker.dart' as img;
 import 'package:mobile/screens/ScreenPreview.dart';
 
 import '../components/Navbar.dart';
 
 class ScreenChoosePicture extends StatefulWidget {
-  const ScreenChoosePicture({ Key? key }) : super(key: key);
-  
+  const ScreenChoosePicture({Key? key}) : super(key: key);
 
   @override
   State<ScreenChoosePicture> createState() => _ScreenChoosePicture();
@@ -19,10 +21,12 @@ class ScreenChoosePicture extends StatefulWidget {
 class _ScreenChoosePicture extends State<ScreenChoosePicture> {
   File? image;
   String imgPath = '';
+  late String imgPathconvert = '';
 
   Future pickImage() async {
     try {
-      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      final image =
+          await img.ImagePicker().pickImage(source: img.ImageSource.gallery);
       if (image == null) return;
       imgPath = image.path;
       final imageTmp = File(image.path);
@@ -30,12 +34,29 @@ class _ScreenChoosePicture extends State<ScreenChoosePicture> {
     } on PlatformException catch (e) {
       print('Failed to pick image: $e');
     }
+    final result = await FlutterImageCompress.compressWithFile(
+      imgPath,
+      quality: 1,
+    );
+
+    Image image = Image.memory(result!);
+    return image;
   }
 
-  void initCam() async {
+  Future initCam() async {
     final cameras = await availableCameras();
-    Navigator.push(context,
-      MaterialPageRoute(builder: (context) => TakePictureScreen(cameras: cameras)));
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => TakePictureScreen(cameras: cameras)));
+
+    final result = await FlutterImageCompress.compressWithFile(
+      imgPath,
+      quality: 1,
+    );
+
+    Image image = Image.memory(result!);
+    return image;
   }
 
   @override
@@ -47,28 +68,34 @@ class _ScreenChoosePicture extends State<ScreenChoosePicture> {
           width: 300,
           height: 150,
           decoration: BoxDecoration(
-            color: const Color.fromRGBO(236, 236, 254, 0.25),
-            borderRadius: BorderRadius.circular(10)
-          ),
+              color: const Color.fromRGBO(236, 236, 254, 0.25),
+              borderRadius: BorderRadius.circular(10)),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              IconButton(icon: const Icon(Icons.photo_camera),
-              iconSize: 80,
-              color: const Color.fromRGBO(226, 101, 47, 1),
-              onPressed: () {
-                initCam();
-              },),
-              const VerticalDivider( color: Colors.white, thickness: 2, indent: 0, endIndent: 0),
-              IconButton(icon: const Icon(Icons.photo_size_select_actual_rounded),
-              iconSize: 80,
-              color: const Color.fromRGBO(226, 101, 47, 1),
-              onPressed: () async {
-                await pickImage();
-                imgPath != '' ?
-                Navigator.push(context,
-                MaterialPageRoute(builder: (context) => ScreenPreview(imagePath: imgPath))) : null;
-              },)
+              IconButton(
+                icon: const Icon(Icons.photo_camera),
+                iconSize: 80,
+                color: const Color.fromRGBO(226, 101, 47, 1),
+                onPressed: () async {
+                 Future tmpImage = initCam();
+                },
+              ),
+              const VerticalDivider(
+                  color: Colors.white, thickness: 2, indent: 0, endIndent: 0),
+              IconButton(
+                icon: const Icon(Icons.photo_size_select_actual_rounded),
+                iconSize: 80,
+                color: const Color.fromRGBO(226, 101, 47, 1),
+                onPressed: () async {
+                  Image tmpImage = await pickImage();
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              ScreenPreview(image: tmpImage)));
+                },
+              )
             ],
           ),
         ),

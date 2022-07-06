@@ -72,7 +72,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
           height: double.infinity,
           width: double.infinity,
           child: Column(children: [
-          /*  ElevatedButton(
+            ElevatedButton(
               child: Text('HomePage'),
               onPressed: () {
                 setState(() {
@@ -80,7 +80,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
                       MaterialPageRoute(builder: (context) => Navbar()));
                 });
               },
-            ),*/
+            ),
             Container(
               height: MediaQuery.of(context).size.height * 0.2,
               decoration: BoxDecoration(
