@@ -7,6 +7,8 @@ import 'package:path/path.dart' as Path;
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../components/Navbar.dart';
+
 String fond = 'img/Fondbleu.png';
 String pseudo = '';
 String email = '';
@@ -24,7 +26,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   void sendLogin() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    final response = await http.post(Uri.parse('http://127.0.0.1:3000/signup'),
+    final response = await http.post(Uri.parse('http://54.36.191.51:3000/signup'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -37,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
       print(json.decode(response.body)['token']);
       await prefs.setString('jwt', json.decode(response.body)['token']);
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => ScreenHome()));
+          context, MaterialPageRoute(builder: (context) => Navbar()));
     } else {
       print(response.statusCode);
       throw Exception('Failed to create USER.');

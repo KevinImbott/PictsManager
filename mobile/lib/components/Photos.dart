@@ -36,9 +36,8 @@ class _PhotosState extends State<Photos> {
     var prefs = await SharedPreferences.getInstance();
     var token = prefs.getString('jwt') ?? '';
 
-    token =
-        "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2NTc0NjYzMDV9.zc7UkDGzNgNwNt5dIU5tYfQcOX7z1GNfnAAXxDGH8gA";
-    var url = Uri.parse('http://172.168.1.6:3000/pictures');
+    //
+    var url = Uri.parse('http://54.36.191.51:3000/pictures');
     await http.get(url, headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -50,7 +49,7 @@ class _PhotosState extends State<Photos> {
         print(tags);
         for (int i = 0; i < tags.length; i++) {
           setState(() {
-            _items.add(PhotoItem(tags[i]["id"].toString(),"http://172.168.1.6:3000/"+tags[i]["url"]));
+            _items.add(PhotoItem(tags[i]["id"].toString(),"http://54.36.191.51:3000/"+tags[i]["url"]));
           });
         }
       }
@@ -61,9 +60,7 @@ class _PhotosState extends State<Photos> {
     var prefs = await SharedPreferences.getInstance();
     var token = prefs.getString('jwt') ?? '';
 
-    token =
-    "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2NTc0NjYzMDV9.zc7UkDGzNgNwNt5dIU5tYfQcOX7z1GNfnAAXxDGH8gA";
-    var url = Uri.parse('http://172.168.1.6:3000/albums/'+albumId);
+    var url = Uri.parse('http://54.36.191.51:3000/albums/'+albumId);
     await http.get(url, headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -76,7 +73,7 @@ class _PhotosState extends State<Photos> {
         print(tags);
         for (int i = 0; i < tags.length; i++) {
           setState(() {
-            _items.add(PhotoItem(tags[i]["id"].toString(),"http://172.168.1.6:3000/"+tags[i]["url"]));
+            _items.add(PhotoItem(tags[i]["id"].toString(),"http://54.36.191.51:3000/"+tags[i]["url"]));
           });
         }
       }

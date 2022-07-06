@@ -43,9 +43,8 @@ class _ProfileInfosState extends State<ProfileInfos> {
     var prefs = await SharedPreferences.getInstance();
     var token = prefs.getString('jwt') ?? '';
 
-    token =
-        "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2NTc0NjYzMDV9.zc7UkDGzNgNwNt5dIU5tYfQcOX7z1GNfnAAXxDGH8gA";
-    var url = Uri.parse('http://172.168.1.6:3000/profile');
+    
+    var url = Uri.parse('http://54.36.191.51:3000/profile');
     await http
         .put(
       url,
@@ -188,7 +187,10 @@ class _ProfileInfosState extends State<ProfileInfos> {
                   new FlatButton(
                     color: Colors.orange,
                     child: new Text("Déconnexion", style: TextStyle(color: Colors.white),),
-                    onPressed: () {
+                    onPressed: () async {
+                      SharedPreferences prefs = await SharedPreferences.getInstance();
+                      await prefs.setString('jwt', "");
+
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => Login()),

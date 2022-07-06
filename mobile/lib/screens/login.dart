@@ -38,7 +38,7 @@ class MyLoginPage extends StatefulWidget {
 class _MyLoginPageState extends State<MyLoginPage> {
   void sendLogin() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    final response = await http.post(Uri.parse('http://10.0.2.2:3000/login'),
+    final response = await http.post(Uri.parse('http://54.36.191.51:3000/login'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -72,17 +72,8 @@ class _MyLoginPageState extends State<MyLoginPage> {
           height: double.infinity,
           width: double.infinity,
           child: Column(children: [
-          ElevatedButton(
-              child: Text('HomePage'),
-              onPressed: () {
-                setState(() {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Navbar()));
-                });
-              },
-            ),
             Container(
-              height: MediaQuery.of(context).size.height * 0.2,
+              height: MediaQuery.of(context).size.height * 0.16,
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage("img/Vector.png"),
@@ -126,7 +117,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
                   ),
                   labelStyle: TextStyle(
                       color: const Color.fromRGBO(236, 236, 254, 1),
-                      fontSize: MediaQuery.of(context).size.height * 0.020),
+                      fontSize: MediaQuery.of(context).size.height * 0.02),
                   hintText: 'Email',
                   hintStyle:
                       const TextStyle(color: Color.fromRGBO(236, 236, 254, 1)),
@@ -218,7 +209,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
               height: MediaQuery.of(context).size.height * 0.17,
             ),
             Container(
-              height: MediaQuery.of(context).size.height * 0.14,
+              height: MediaQuery.of(context).size.height * 0.17,
               decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage("img/Vectorbot.png"),

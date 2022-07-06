@@ -52,11 +52,11 @@ class _ScreenHome extends State<ScreenHome> {
       await initPref();
       if (search.isEmpty) {
         nextPageThreshold = 5;
-        url = Uri.parse("http://10.0.2.2:3000/home?page=" + pageNumber.toString());
+        url = Uri.parse("http://54.36.191.51:3000/home?page=" + pageNumber.toString());
       }
       else {
         nextPageThreshold = -1;
-        url = Uri.parse("http://10.0.2.2:3000/home?page=" + pageNumber.toString() + "&name=" + search);
+        url = Uri.parse("http://54.36.191.51:3000/home?page=" + pageNumber.toString() + "&name=" + search);
       }
       final response = await http.get(url,
       headers: {
@@ -222,7 +222,7 @@ class Photo {
       id: parsedJson['id'],
       name: parsedJson['name'],
       owner_name: parsedJson['owner_name'],
-      url: "http://10.0.2.2:3000" + parsedJson['url'],
+      url: "http://54.36.191.51:3000" + parsedJson['url'],
     );
   }
 
