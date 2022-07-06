@@ -38,7 +38,8 @@ class _ScreenPreview extends State<ScreenPreview> {
 
   void sendPic () async {
     prefs = await SharedPreferences.getInstance();
-    var uri = Uri.parse('http://10.0.2.2:3000/pictures');
+
+    var uri = Uri.parse('http://54.36.191.51:3000/pictures');
     var req = http.MultipartRequest('POST', uri);
     req.headers['Authorization'] = 'Bearer ' + token;
     req.fields['name'] = name.text;
@@ -46,7 +47,13 @@ class _ScreenPreview extends State<ScreenPreview> {
     req.fields['tags'] = json.encode(arr);
     req.files.add(await http.MultipartFile.fromPath('img', widget.imagePath, contentType: MediaType('image', 'jpeg')));
     req.send().then((response) {
-      if (response.statusCode == 201) print("Uploaded!");
+      print(response.statusCode);
+      print(response.toString());
+      if (response.statusCode == 201) {
+        print("Uploaded!");
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Navbar(index: 2)));
+      }
       else {
         print(response.toString());
       }

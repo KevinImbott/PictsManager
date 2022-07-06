@@ -27,9 +27,8 @@ class _DialogChooseAlbums extends State<DialogChooseAlbums> {
     var prefs = await SharedPreferences.getInstance();
     var token = prefs.getString('jwt') ?? '';
 
-    token =
-        "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2NTc0NjYzMDV9.zc7UkDGzNgNwNt5dIU5tYfQcOX7z1GNfnAAXxDGH8gA";
-    var url = Uri.parse('http://172.168.1.6:3000/pictures/' + pictureId);
+    //
+    var url = Uri.parse('http://54.36.191.51:3000/pictures/' + pictureId);
     await http.get(url, headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -56,9 +55,8 @@ class _DialogChooseAlbums extends State<DialogChooseAlbums> {
     var prefs = await SharedPreferences.getInstance();
     var token = prefs.getString('jwt') ?? '';
 
-    token =
-        "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2NTc0NjYzMDV9.zc7UkDGzNgNwNt5dIU5tYfQcOX7z1GNfnAAXxDGH8gA";
-    var url = Uri.parse("http://172.168.1.6:3000/pictures/" +
+    
+    var url = Uri.parse("http://54.36.191.51:3000/pictures/" +
         pictureId +
         "/add_or_delete_album");
 

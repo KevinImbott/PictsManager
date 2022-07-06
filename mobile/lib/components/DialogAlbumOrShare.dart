@@ -32,13 +32,12 @@ class _DialogAlbumOrShare extends State<DialogAlbumOrShare> {
     var prefs = await SharedPreferences.getInstance();
     var token = prefs.getString('jwt') ?? '';
 
-    token =
-        "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2NTc0NjYzMDV9.zc7UkDGzNgNwNt5dIU5tYfQcOX7z1GNfnAAXxDGH8gA";
+    //
     var url = Uri.parse("");
     if (albumsId != "") {
-      url = Uri.parse('http://172.168.1.6:3000/albums/' + albumsId);
+      url = Uri.parse('http://54.36.191.51:3000/albums/' + albumsId);
     } else {
-      url = Uri.parse('http://172.168.1.6:3000/pictures/' + pictureId);
+      url = Uri.parse('http://54.36.191.51:3000/pictures/' + pictureId);
     }
     print(url);
     await http.delete(url, headers: {
