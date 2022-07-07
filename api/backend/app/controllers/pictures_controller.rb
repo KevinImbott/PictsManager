@@ -85,16 +85,7 @@ class PicturesController < AuthenticatedController
   def handle_sort(pictures)
     return pictures if params[:name].nil? && params[:tags].nil? && params[:sort_by].nil?
 
-    sorted_pictures = pictures
-    sorted_pictures = pictures.where('name ILIKE ?', "%#{params[:name]}%") if params[:name]
-    if params[:tags]
-      ids = []
-      pictures.each do |picture|
-        picture.tags.any? { |tag| tag.downcase.include?(params[:tags].downcase) } ? ids << picture.id : nil
-      end
-      sorted_pictures = Picture.where(id: ids)
-    end
-    sorted_pictures.order(created_at: params[:sort_by]) if params[:sort_by]
+    pictures.where('name ILIKE ?', "%#{params[:name]}%") if params[:name]
   end
 
   def user_exist_in_picture?
