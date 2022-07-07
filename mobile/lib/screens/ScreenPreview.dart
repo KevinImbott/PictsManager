@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../components/Navbar.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 
 class ScreenPreview extends StatefulWidget {
   const ScreenPreview({ Key? key, required this.imagePath }) : super(key: key);
@@ -26,14 +27,23 @@ class _ScreenPreview extends State<ScreenPreview> {
 
   @override
   void initState() {
-    initPref();
     img = Image.file(File(widget.imagePath));
     path = Uri.file(widget.imagePath);
+    initPref();
+    super.initState();
   }
 
   void initPref() async {
+    final result = await FlutterImageCompress.compressWithFile(
+      widget.imagePath,
+      quality: 80,
+    );
+    
     prefs = await SharedPreferences.getInstance();
     token = prefs.getString('jwt') ?? '';
+    setState(() {
+      img = Image.memory(result!);
+    });
   }
 
   void sendPic () async {
