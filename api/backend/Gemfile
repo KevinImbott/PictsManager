@@ -61,6 +61,8 @@ gem 'active_model_serializers', '~> 0.10.2'
 # Variants for images
 gem 'image_processing'
 
+gem 'rswag'
+
 # Active storage Validations
 gem 'active_storage_validations'
 
@@ -82,6 +84,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'faker'
   gem "rspec-rails"
+  gem "rswag-specs"
 end
 
 group :development do

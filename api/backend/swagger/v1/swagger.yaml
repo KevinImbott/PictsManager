@@ -1,0 +1,320 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/albums":
+    get:
+      summary: list albums
+      tags:
+      - Albums
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create album
+      tags:
+      - Albums
+      responses:
+        '200':
+          description: successful
+  "/albums/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show album
+      tags:
+      - Albums
+      responses:
+        '200':
+          description: successful
+    put:
+      summary: update album
+      tags:
+      - Albums
+      responses:
+        '200':
+          description: successful
+    delete:
+      summary: delete album
+      tags:
+      - Albums
+      responses:
+        '200':
+          description: successful
+  "/albums/{id}/add_or_delete_user":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    post:
+      summary: add_or_delete_user album
+      tags:
+      - Albums
+      responses:
+        '200':
+          description: successful
+  "/login":
+    post:
+      summary: login authentication
+      tags:
+      - Login
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: admin@admin.com
+                password:
+                  type: string
+                  example: password
+              required:
+              - email
+              - password
+  "/signup":
+    post:
+      summary: signup authentication
+      tags:
+      - Login
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pseudo:
+                  type: string
+                  example: admin
+                email:
+                  type: string
+                  example: admin@admin.com
+                password:
+                  type: string
+                  example: password
+              required:
+              - pseudo
+              - email
+              - password
+  "/pictures":
+    get:
+      summary: list pictures
+      tags:
+      - Pictures
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create picture
+      tags:
+      - Pictures
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                img:
+                  type: file
+                name:
+                  type: string
+                  example: Picture name
+                tags:
+                  type: array
+                  example:
+                  - tags
+                  - tags2
+              required:
+              - img
+              - name
+  "/pictures/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show picture
+      tags:
+      - Pictures
+      responses:
+        '200':
+          description: successful
+    put:
+      summary: update picture
+      tags:
+      - Pictures
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: New Picture name
+                tags:
+                  type: array
+                  example:
+                  - New tag
+                  - tags2
+              required:
+              - img
+              - name
+    delete:
+      summary: delete picture
+      tags:
+      - Pictures
+      responses:
+        '200':
+          description: successful
+  "/home":
+    get:
+      summary: home picture
+      tags:
+      - Home
+      responses:
+        '200':
+          description: successful
+  "/pictures/{id}/add_or_delete_user":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    post:
+      summary: add_or_delete_user picture
+      tags:
+      - Pictures
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: string
+                  example: '1'
+              required:
+              - user_id
+  "/pictures/{id}/add_or_delete_album":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    post:
+      summary: add_or_delete_album picture
+      tags:
+      - Pictures
+      responses:
+        '200':
+          description: successful
+  "/profile":
+    put:
+      summary: update user
+      tags:
+      - Profile
+      responses:
+        '200':
+          description: successful
+    get:
+      summary: profile user
+      tags:
+      - Profile
+      responses:
+        '200':
+          description: successful
+    delete:
+      summary: delete user
+      tags:
+      - Profile
+      responses:
+        '200':
+          description: successful
+  "/users":
+    get:
+      summary: list users
+      tags:
+      - Users
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create user
+      tags:
+      - Users
+      responses:
+        '200':
+          description: successful
+  "/users/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show user
+      tags:
+      - Users
+      responses:
+        '200':
+          description: successful
+    put:
+      summary: update user
+      tags:
+      - Users
+      responses:
+        '200':
+          description: successful
+    delete:
+      summary: delete user
+      tags:
+      - Users
+      responses:
+        '200':
+          description: successful
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: www.example.com
